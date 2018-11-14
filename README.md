@@ -48,8 +48,8 @@ along with a very brief caption:**
 ## Paper Prototype
 
 **[Add images/photos that show your paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
-
-![](https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif)
+![](untitled_page.png?raw=true)
+*Explore the cities is an app to track places you have visited and compete with your friends on how well you know your city or other cities you visit*
 
 
 ## External Dependencies
