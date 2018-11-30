@@ -23,7 +23,7 @@ export default {
       if (user) {
         this.user = user;
         console.log("redirect");
-        this.$router.push('/todos');
+        this.$router.push('/map');
       }
     });
   },

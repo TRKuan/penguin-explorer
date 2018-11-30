@@ -1,6 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from '@/views/Home.vue'
+import Map from '@/views/Map.vue'
+import Place from '@/views/Place.vue'
+import Profile from '@/views/Profile.vue'
+import City from '@/views/City.vue'
+import Wishlist from '@/views/Wishlist.vue'
+import NotFound from '@/views/NotFound.vue'
+
+
 
 Vue.use(Router)
 
@@ -15,39 +23,39 @@ let router = new Router({
       meta: { requiresAuth: false }
     },
     {
-      path: '/todos',
-      name: 'todos',
-      component: () => import('./views/Todos.vue'),
+      path: '/map',
+      name: 'map',
+      component: Map,
       meta: { requiresAuth: true }
     },
     {
-      path: '/todos/:category',
-      name: 'todos',
-      component: () => import('./views/Todos.vue'),
+      path: '/place/:id',
+      name: 'place',
+      component: Place,
       meta: { requiresAuth: true }
     },
     {
-      path: '/done',
-      name: 'done',
-      component: () => import('./views/Done.vue'),
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
       meta: { requiresAuth: true }
     },
     {
-      path: '/done/:category',
-      name: 'done',
-      component: () => import('./views/Done.vue'),
+      path: '/profile/:city',
+      name: 'city',
+      component: City,
       meta: { requiresAuth: true }
     },
     {
-      path: '/todo/:id',
-      name: 'todo',
-      component: () => import('./views/Todo.vue'),
+      path: '/wishlist',
+      name: 'wishlist',
+      component: Wishlist,
       meta: { requiresAuth: true }
     },
     {
       path: '/404',
       name: 'notFound',
-      component: () => import('./views/NotFound.vue'),
+      component: NotFound,
       meta: { requiresAuth: false }
     },
     {
@@ -55,7 +63,7 @@ let router = new Router({
       redirect: '/404',
     }
   ],
-  mode: 'history',
+  mode: 'history'
 })
 
 router.beforeEach((to, from, next) => {
