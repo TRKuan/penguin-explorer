@@ -2,8 +2,8 @@
   <div id="app">
     <div id="nav">
       <template v-if="user">
-      <router-link to="/todos">Your To-dos</router-link>
-      |<router-link to="/done">Done</router-link>
+      <router-link to="/map">Map</router-link>
+      |<router-link to="/profile">Profile</router-link>
       </template>
       <Auth style="margin-left: 20px;"/>
     </div>
