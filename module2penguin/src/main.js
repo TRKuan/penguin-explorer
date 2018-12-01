@@ -5,6 +5,14 @@ import router from './router'
 import {auth} from "./firebaseConfig";
 const fb = require('./firebaseConfig.js')
 import firebase from 'firebase'
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyDwLDlQ82BrKXcU930SJOoZWcj4_zVY4FU",
+    libraries: "places" // necessary for places input
+  }
+});
 Vue.use(VueFire);
 
 Vue.config.productionTip = false

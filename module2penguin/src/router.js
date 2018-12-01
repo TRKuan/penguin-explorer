@@ -45,6 +45,12 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: '/map',
+      name: 'map',
+      component: () => import('./views/Map.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/404',
       name: 'notFound',
       component: () => import('./views/NotFound.vue'),
