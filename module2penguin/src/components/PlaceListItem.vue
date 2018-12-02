@@ -30,6 +30,9 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+a {
+  color: black;
+}
 div.name {
   white-space: nowrap;
   overflow: hidden;
