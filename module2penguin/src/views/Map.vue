@@ -19,13 +19,6 @@ export default {
     return {
       done: false,
     };
-  },
-
-  computed() {
-    
-  },
-
-  methods() {
   }
 }
 </script>
@@ -36,5 +29,4 @@ p {
  display: -webkit-inline-box;
  margin: 0px;
 }
-
 </style>
