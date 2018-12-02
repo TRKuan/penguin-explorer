@@ -23,18 +23,18 @@ export default {
 }
 .city-img {
   width: 100%;
-  height: 350px;
-  background-image: url(https://www.roadtrips.com/wp-content/uploads/2017/12/minneapolis.jpg);
+  height: 250px;
+  background-image: url(https://ak5.picdn.net/shutterstock/videos/18964145/thumb/1.jpg);
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: 0 -30%;
   background-attachment: fixed;
   background-clip: border-box;
   background-size: 100% auto;
 }
 @media (max-width: 767px/*sm*/) {
   .city-img {
-    background-size: 200% auto;
     height: 150px;
+      background-position: 0 0;
   }
 }
 .city-name {
