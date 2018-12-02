@@ -63,6 +63,15 @@ html, body {
   color: #2c3e50;
   align: center;
 }
+/*app*/
+#app {
+  padding-top: 1rem;
+}
+@media (max-width: 767px/*md*/) {
+  #app {
+    padding: 0;
+  }
+}
 /*nav bar*/
 #nav {
   z-index: 1;
