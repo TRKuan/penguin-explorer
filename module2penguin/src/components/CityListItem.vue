@@ -1,5 +1,5 @@
 <template lang="html">
-  <router-link :to="{name:'city', params:{city:cityName}}" class="list-group-item" exact>
+  <router-link :to="{name:'city', params:{city:cityName/*you may want to replace this with id*/}}" class="list-group-item flex-column flex-md-row" exact>
     <div class="name">
       {{cityName}}
     </div>
@@ -31,6 +31,7 @@ div.name {
 }
 div.star {
   width: 4rem;
+  margin-left: auto;
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
