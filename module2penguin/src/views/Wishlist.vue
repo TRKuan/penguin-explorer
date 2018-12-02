@@ -1,24 +1,25 @@
 <template lang="html">
   <div class="wishlist">
-    <router-link :to="{name:'city'}"><h2>City</h2></router-link>
+    <h1 class="title">Wishlist</h1>
+    <router-link :to="{name:'city'}" class="city"><h2>City</h2></router-link>
     <div class="place-list list-group">
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
     </div>
     <br />
-    <router-link :to="{name:'city'}"><h2>City</h2></router-link>
+    <router-link :to="{name:'city'}" class="city"><h2>City</h2></router-link>
     <div class="place-list list-group">
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
     </div>
     <br />
-    <router-link :to="{name:'city'}"><h2>City</h2></router-link>
+    <router-link :to="{name:'city'}" class="city"><h2>City</h2></router-link>
     <div class="place-list list-group">
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
-      <router-link :to="{name:'place'}" class="list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
+      <router-link :to="{name:'place'}" class="place list-group-item" exact>Place</router-link>
     </div>
   </div>
 </template>
@@ -30,8 +31,23 @@ export default {
 </script>
 
 <style lang="css" scoped>
-h2 {
-  margin-left: 0.5rem;
+.wishlist {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.title {
+  margin-bottom: 2rem;
+}
+.city, .place {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list-group {
+  width: 100%;
 }
 a {
   color: black;
