@@ -37,15 +37,7 @@ import { auth } from "@/firebaseConfig";
         this.user = user;
       }
     });
-  },
-
-  // methods: {
-  //   expand () {
-  //     let mainNav = document.getElementById('js-menu');
-  //     mainNav.classList.toggle('active');
-  //   }
-
-  // }
+  }
 };
 </script>
 
@@ -67,7 +59,7 @@ html, body {
 #app {
   padding-top: 1rem;
 }
-@media (max-width: 767px/*md*/) {
+@media (max-width: 767px/*sm*/) {
   #app {
     padding: 0;
   }
@@ -80,7 +72,7 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-@media (max-width: 767px/*md*/) {
+@media (max-width: 767px/*sm*/) {
   #nav {
     position: fixed;
     left: 0;
