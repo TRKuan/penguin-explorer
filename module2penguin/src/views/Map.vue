@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { db, auth } from "@/firebaseConfig";
 import GoogleMap from "@/components/GoogleMap.vue"
 export default {
   name: 'Map',

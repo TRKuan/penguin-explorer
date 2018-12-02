@@ -15,30 +15,23 @@
       <gmap-map
       :center="center"
       :zoom="12"
-      style="width:100%;  height: 75vh;"
+      style="width:100%;  height: 75vh; "
       >
         <gmap-marker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          @click="center=m.position">
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            @click="addInfoWindow(index)">
+            <gmap-info-window
+              :position="m.position"
+              :opened="infoWindows[index].open"
+              @closeclick="infoWindows[index].open=false">
+              <p>{{ m.position }}</p>
+          </gmap-info-window>
         </gmap-marker>
       </gmap-map>
     </div>
-    <!-- <div style="width:100%;  height: 400px;">
-    <gmap-map
-      :center="center"
-      :zoom="12"
-      style="width:100%;  height: 100%;"
-      >
-      <gmap-marker
-        :key="index"
-        v-for="(m, index) in markers"
-        :position="m.position"
-        @click="center=m.position"
-      ></gmap-marker>
-    </gmap-map>
-    </div> -->
   </div>
 </template>
 
@@ -49,15 +42,21 @@ export default {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
+      map: null,
       center: { lat: 45.508, lng: -73.587 },
       markers: [],
       places: [],
-      currentPlace: null
+      currentPlace: null,
+      infoWindows: []
     };
   },
 
   mounted() {
     this.geolocate();
+    this.markers.map(marker => {
+      this.$set(marker, 'open', true);
+      return marker;
+    });
   },
 
   methods: {
@@ -73,10 +72,16 @@ export default {
         };
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
+        this.infoWindows.push({open : false});
         this.center = marker;
         this.currentPlace = null;
       }
     },
+
+    addInfoWindow(index) {
+      this.infoWindows[index].open = true;
+    },
+
     geolocate: function() {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
@@ -90,6 +95,8 @@ export default {
 </script>
 
 <style>
-
+.infowindow {
+  visibility: hidden;
+}
 </style>
 
