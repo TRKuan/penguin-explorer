@@ -57,7 +57,7 @@ html, body {
 }
 /*app*/
 #app {
-  padding-top: 1rem;
+  padding-top: 50px;
 }
 @media (max-width: 767px/*sm*/) {
   #app {
@@ -71,6 +71,7 @@ html, body {
   background-color: white;
   justify-content: center;
   align-items: center;
+  position: fixed;
 }
 @media (max-width: 767px/*sm*/) {
   #nav {
