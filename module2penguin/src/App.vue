@@ -1,29 +1,22 @@
 <template>
-  <div id="app">
-    <!-- <nav class="navbar">
-      <span  @click="expand" class="navbar-toggle js-navbar-toggle" >
-        <i class="fas fa-bars"></i>
-        <p>+</p>
-      </span>
-      <auth/>
-      <ul class="main-nav" id="js-menu">
-        <li>
-          <router-link to="/map" class="nav-links">Map</router-link>
-        </li>
-        <li>
-          <router-link to="/profile" class="nav-links">Profile</router-link>
-        </li>
-      </ul>
-    </nav> -->
-    <div id="nav">
-      <template v-if="user">
-      <router-link to="/map">Map</router-link>
-      |<router-link to="/profile">Profile</router-link>
-      </template>
-      <Auth/>
+  <div>
+    <ul id="nav" class="nav nav-pills">
+      <li class="nav-item">
+        <router-link :to="{name:'map'}" class="nav-link">Map</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link :to="{name:'wishlist'}" class="nav-link">Wishlist</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link :to="{name:'profile'}" class="nav-link">Profile</router-link>
+      </li>
+      <li class="d-none d-md-block"><auth class="auth"/></li>
+    </ul>
+    <div id="app" class="container">
+      <router-view :key="$route.fullPath" id = "page_contents"/>
     </div>
-    <router-view :key="$route.fullPath" id = "page_contents"/>
   </div>
+
 </template>
 
 <script>
@@ -47,36 +40,55 @@ import { auth } from "@/firebaseConfig";
         this.user = user;
       }
     });
-  },
-
-  // methods: {
-  //   expand () {
-  //     let mainNav = document.getElementById('js-menu');
-  //     mainNav.classList.toggle('active');
-  //   }
-
-  // }
+  }
 };
 </script>
 
 <style>
-#app {
+/*general setting*/
+* {
+    box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  align: center;
 }
+/*app*/
+#app {
+  padding-top: 50px;
+  padding-bottom: 2rem;
+}
+@media (max-width: 767px/*sm*/) {
+  #app {
+    padding: 0;
+    padding-bottom: 50px;
+  }
+}
+/*nav bar*/
 #nav {
-  padding: 30px;
+  z-index: 1;
+  width: 100%;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+@media (max-width: 767px/*sm*/) {
+  #nav {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
+  #nav li{
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    text-align: center;
+  }
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 </style>

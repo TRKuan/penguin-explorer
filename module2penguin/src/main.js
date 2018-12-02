@@ -6,6 +6,13 @@ import {auth} from "./firebaseConfig";
 const fb = require('./firebaseConfig.js')
 import firebase from 'firebase'
 import * as VueGoogleMaps from "vue2-google-maps";
+//style
+import 'bootstrap'; import 'bootstrap/dist/css/bootstrap.min.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faStar, faCalendar } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faStar, faCalendar)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueGoogleMaps, {
   load: {

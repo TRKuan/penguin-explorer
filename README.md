@@ -58,7 +58,9 @@ along with a very brief caption:**
 Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
 * Library or service name: description of use
-* ...
+* Bootstrap
+* Font Awesome
+* momentjs
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that

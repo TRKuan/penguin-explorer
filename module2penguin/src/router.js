@@ -53,12 +53,6 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/map',
-      name: 'map',
-      component: () => import('./views/Map.vue'),
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/404',
       name: 'notFound',
       component: NotFound,
@@ -69,7 +63,8 @@ let router = new Router({
       redirect: '/404',
     }
   ],
-  mode: 'history'
+  mode: 'history',
+  linkExactActiveClass: 'active'
 })
 
 router.beforeEach((to, from, next) => {
