@@ -2,10 +2,10 @@
   <div>
     <ul id="nav" class="nav nav-pills">
       <li class="nav-item">
-        <router-link to="/map" class="nav-link">Map</router-link>
+        <router-link :to="{name:'map'}" class="nav-link">Map</router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/profile" class="nav-link">Profile</router-link>
+        <router-link :to="{name:'profile'}" class="nav-link">Profile</router-link>
       </li>
       <li class="d-none d-md-block"><auth class="auth"/></li>
     </ul>
