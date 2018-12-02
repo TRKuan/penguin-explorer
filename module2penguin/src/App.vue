@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <ul id="nav" class="nav nav-pills">
       <li class="nav-item">
         <router-link to="/map" class="nav-link">Map</router-link>
@@ -9,8 +9,11 @@
       </li>
       <li class="d-none d-md-block"><auth class="auth"/></li>
     </ul>
-    <router-view :key="$route.fullPath" id = "page_contents"/>
+    <div id="app" class="container">
+      <router-view :key="$route.fullPath" id = "page_contents"/>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -52,24 +55,27 @@ import { auth } from "@/firebaseConfig";
     box-sizing: border-box;
 }
 html, body {
+  width: 100%;
+  height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  align: center;
 }
 /*nav bar*/
 #nav {
-  width: 100%;
   z-index: 1;
+  width: 100%;
   background-color: white;
   justify-content: center;
   align-items: center;
 }
-@media (max-width: 991.98px/*md*/) {
+@media (max-width: 767px/*md*/) {
   #nav {
     position: fixed;
-    bottom: 0;
     left: 0;
+    bottom: 0;
   }
   #nav li{
     flex-grow: 1;
