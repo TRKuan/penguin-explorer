@@ -73,9 +73,9 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  /*eslint no-console: "error"*/
   const currentUser = auth.currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  console.log(currentUser, requiresAuth);
 
   if (requiresAuth && !currentUser) {
    next('/');

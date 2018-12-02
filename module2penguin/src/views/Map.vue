@@ -10,7 +10,7 @@
 import { db, auth } from "@/firebaseConfig";
 import GoogleMap from "@/components/GoogleMap.vue"
 export default {
-  name: 'Todos',
+  name: 'Map',
   components: {
     GoogleMap,
   },
@@ -20,6 +20,13 @@ export default {
       done: false,
     };
   },
+
+  computed() {
+    
+  },
+
+  methods() {
+  }
 }
 </script>
 
