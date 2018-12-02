@@ -61,10 +61,12 @@ html, body {
 /*app*/
 #app {
   padding-top: 50px;
+  padding-bottom: 2rem;
 }
 @media (max-width: 767px/*sm*/) {
   #app {
     padding: 0;
+    padding-bottom: 50px;
   }
 }
 /*nav bar*/
@@ -89,5 +91,4 @@ html, body {
     text-align: center;
   }
 }
-
 </style>
