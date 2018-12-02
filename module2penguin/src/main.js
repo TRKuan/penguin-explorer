@@ -7,6 +7,8 @@ const fb = require('./firebaseConfig.js')
 import firebase from 'firebase'
 import * as VueGoogleMaps from "vue2-google-maps";
 
+import 'bootstrap'; import 'bootstrap/dist/css/bootstrap.min.css'
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyDwLDlQ82BrKXcU930SJOoZWcj4_zVY4FU",
