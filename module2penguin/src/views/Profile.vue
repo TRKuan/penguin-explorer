@@ -31,5 +31,6 @@ export default {
 }
 .city-list {
   width: 100%;
+  max-width: 600px;
 }
 </style>

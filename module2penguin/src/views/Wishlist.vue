@@ -48,6 +48,7 @@ export default {
 }
 .list-group {
   width: 100%;
+  max-width: 600px;
 }
 a {
   color: black;

@@ -42,4 +42,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.city {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.place-list {
+  width: 100%;
+  max-width: 700px;
+}
 </style>
