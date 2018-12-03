@@ -6,7 +6,7 @@
     </template>
 
     <template v-if="user">
-      <img :src="user.photoURL" alt="avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+      <img :src="user.photoURL" alt="avatar" class="d-none d-md-inline-block" style="width: 30px; height: 30px; border-radius: 50%;">
       <a href @click.prevent="signOut">Sign Out</a>
     </template>
   </div>

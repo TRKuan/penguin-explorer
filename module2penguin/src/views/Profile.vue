@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="proflie">
+    <auth class="auth d-md-none"/>
     <user-info />
     <div class="city-list list-group">
       <city-list-item cityName="Minneapolis" :startNum="114"/>
@@ -12,11 +13,13 @@
 <script>
 import UserInfo from '@/components/UserInfo.vue'
 import CityListItem from '@/components/CityListItem.vue'
+import Auth from "@/components/Auth.vue"
 export default {
   name: 'Profile',
   components: {
     UserInfo,
-    CityListItem
+    CityListItem,
+    Auth
   }
 }
 </script>
@@ -28,6 +31,14 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+@media (max-width: 767px/*sm*/) {
+  .proflie {
+    margin-top: 0;
+  }
+}
+.auth {
+  margin-left: auto;
 }
 .city-list {
   width: 100%;
