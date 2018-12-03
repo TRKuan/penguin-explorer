@@ -1,5 +1,5 @@
 <template lang="html">
-  <router-link :to="{name:'city', params:{city:cityName/*you may want to replace this with id*/}}" class="list-group-item flex-column flex-md-row" exact>
+  <router-link :to="{name:'city', params:{city:cityName/*you may want to replace this with id*/}}" class="list-group-item" exact>
     <div class="name">
       {{cityName}}
     </div>
