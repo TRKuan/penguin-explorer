@@ -73,10 +73,16 @@ html, body {
 #nav {
   z-index: 1;
   width: 100%;
-  background-color: rgb(228, 233, 255);
+  background-color: rgb(37, 53, 103);
   justify-content: center;
   align-items: center;
   position: fixed;
+}
+#nav a {
+  color: white;
+}
+#nav .nav-link.active {
+  background-color: green;
 }
 @media (max-width: 767px/*sm*/) {
   #nav li{
