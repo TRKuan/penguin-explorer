@@ -71,7 +71,7 @@ html, body {
 }
 /*nav bar*/
 #nav {
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   background-color: rgb(37, 53, 103);
   justify-content: center;
