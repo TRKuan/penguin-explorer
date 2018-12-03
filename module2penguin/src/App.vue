@@ -12,7 +12,7 @@
       </li>
       <li class="d-none d-md-block"><auth class="auth"/></li>
     </ul>
-    <div id="app" class="container">
+    <div id="app">
       <router-view :key="$route.fullPath" id = "page_contents"/>
     </div>
   </div>
@@ -60,6 +60,7 @@ html, body {
 }
 /*app*/
 #app {
+  width: 100%;
   padding-top: 50px;
   padding-bottom: 2rem;
 }
