@@ -5,7 +5,7 @@
         <div class="container-fluid text-center">
             <header>
                 <h1>Penguin Explorer</h1>
-                <h3 class="slogan text-center">Explorer the cities with Penguins!</h3>
+                <h3 class="slogan text-center">Penguins and where to find them</h3>
             </header>
             <button class="btn btn-primary" @click="signInWithGoogle">Get Started</button>
             <div class="scroll-down-div">
@@ -63,10 +63,11 @@ h1 {
 .jumbotron{
   width: 100%;
   height: 100%;
-  /*background-image: url("/images/cover.jpg");*/
+  background-image: url("http://gimesy.com/wp-content/gallery/things-with-wings/Gimesy-3315.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  color: white;
 }
 .jumbotron{
   padding-top: 0;
