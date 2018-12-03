@@ -63,7 +63,7 @@ h1 {
 .jumbotron{
   width: 100%;
   height: 100%;
-  background-image: url("http://gimesy.com/wp-content/gallery/things-with-wings/Gimesy-3315.jpg");
+  background-image: url("http://gimesy.com/wp-content/gallery/things-with-wings/Gimesy-4298.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -82,7 +82,7 @@ h1 {
 .jumbotron .slogan{
   font-style: italic;
   font-size: 2rem;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 /**button**/
 .btn-primary {
