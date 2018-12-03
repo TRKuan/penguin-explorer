@@ -10,7 +10,22 @@
 
 <script>
 export default {
-  name: 'CityInfo'
+  name: 'CityInfo',
+  data() {
+    return {
+      // default to Montreal to keep it simple
+      // change this to whatever makes sense
+      cityInfo: null,
+    };
+  },
+  firestore() {
+    return {
+      cityInfo: db.collection("users").doc(auth.currentUser.uid)
+                  .collection("cities").where("cityName","==",this.$route.params.cityName),
+      cityPlaces: db.collection("users").doc(auth.currentUser.uid)
+                  .collection("cities").where("cityName","==",this.$route.params.cityName).collection("places")
+    };
+  },
 }
 </script>
 

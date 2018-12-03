@@ -13,7 +13,6 @@ export default {
   components: {
     GoogleMap,
   },
-
   data() {
     return {
       done: false,

@@ -4,7 +4,7 @@
       {{cityName}}
     </div>
     <div class="star">
-      <font-awesome-icon icon="star" class="star-icon"/>{{startNum}}
+      <font-awesome-icon icon="star" class="star-icon"/>{{starNum}}
     </div>
   </router-link>
 </template>
@@ -15,7 +15,20 @@ export default {
   props: {
     cityName: String,
     startNum: Number
-  }
+  },
+  data() {
+    return {
+      cityName: [],
+      starNum
+    };
+  },
+  firestore() {
+    return {
+      starNum: db.collection("users")
+                  .doc(auth.currentUser.uid)
+                  .collection("cities").doc(cityName).starNum
+    };
+  },
 }
 </script>
 

@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import {db, auth, users} from "@/firebaseConfig.js"
 export default {
   name: "GoogleMap",
   data() {
@@ -50,7 +51,6 @@ export default {
       infoWindows: []
     };
   },
-
   mounted() {
     this.geolocate();
     this.markers.map(marker => {
@@ -74,6 +74,16 @@ export default {
         this.places.push(this.currentPlace);
         this.infoWindows.push({open : false});
         this.center = marker;
+        console.log(this.currentPlace)
+        db.collection('users').doc(auth.currentUser.uid).get().then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            db.collection('users').doc(auth.currentUser.uid).collection("places").add({place:this.currentPlace})
+          } else {
+            db.collection('users').doc(auth.currentUser.uid).set({userid:auth.currentUser.uid})
+            db.collection('users').doc(auth.currentUser.uid).collection("places").add({place:this.currentPlace})
+          }
+        });
+        
         this.currentPlace = null;
       }
     },
