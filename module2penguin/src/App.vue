@@ -1,6 +1,7 @@
 <template>
   <div>
     <ul id="nav" class="nav nav-pills">
+      <li class="brand d-none d-md-block">PenguinExplorer</li>
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'map'}" class="nav-link">Map</router-link>
       </li>
@@ -10,7 +11,7 @@
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'profile'}" class="nav-link">Profile</router-link>
       </li>
-      <li class="d-none d-md-block"><auth class="auth"/></li>
+      <li class="auth d-none d-md-block"><auth class="auth"/></li>
     </ul>
     <div id="app">
       <router-view :key="$route.fullPath" id = "page_contents"/>
@@ -83,6 +84,15 @@ html, body {
 }
 #nav .nav-link.active {
   background-color: green;
+}
+#nav .brand {
+  margin-right: auto;
+  margin-left: 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+}
+#nav .auth {
+  margin-left: auto;
 }
 @media (max-width: 767px/*sm*/) {
   #nav li{
