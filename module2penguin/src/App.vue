@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <ul id="nav" class="nav nav-pills">
       <li class="brand d-none d-md-block">PenguinExplorer</li>
       <li v-if="user" class="nav-item">
@@ -60,8 +60,13 @@ html, body {
   align: center;
 }
 /*app*/
+.main {
+  width: 100%;
+  height: 100%;
+}
 #app {
   width: 100%;
+  height: 100%;
   padding-top: 50px;
   padding-bottom: 2rem;
 }
@@ -74,10 +79,16 @@ html, body {
 #nav {
   z-index: 2;
   width: 100%;
+  height: 50px;
   background-color: rgb(37, 53, 103);
   justify-content: center;
   align-items: center;
   position: fixed;
+}
+@media (max-width: 767px/*sm*/) {
+  #nav {
+    height: 40px;
+  }
 }
 #nav a {
   color: white;
