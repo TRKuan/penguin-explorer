@@ -66,25 +66,19 @@ html, body {
 }
 @media (max-width: 767px/*sm*/) {
   #app {
-    padding: 0;
-    padding-bottom: 50px;
+    padding-top: 40px;
   }
 }
 /*nav bar*/
 #nav {
   z-index: 1;
   width: 100%;
-  background-color: white;
+  background-color: rgb(228, 233, 255);
   justify-content: center;
   align-items: center;
   position: fixed;
 }
 @media (max-width: 767px/*sm*/) {
-  #nav {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-  }
   #nav li{
     flex-grow: 1;
     flex-shrink: 1;
