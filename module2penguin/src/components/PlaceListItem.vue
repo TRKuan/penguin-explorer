@@ -4,7 +4,7 @@
       {{placeName}}
     </div>
     <div class="date">
-      <font-awesome-icon icon="calendar" class="calendar-icon"/>{{date}}
+      {{date}}
     </div>
   </router-link>
 </template>
@@ -44,6 +44,8 @@ div.date {
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
+  color: gray;
+  text-align: right;
 }
 .calendar-icon {
   margin-right: 2px;
