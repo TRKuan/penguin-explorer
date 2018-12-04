@@ -3,8 +3,8 @@
     <div class="name">
       {{cityName}}
     </div>
-    <div class="star">
-      <font-awesome-icon icon="star" class="star-icon"/>{{startNum}}
+    <div class="penguin">
+      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">{{penguinNum}}
     </div>
   </router-link>
 </template>
@@ -14,7 +14,7 @@ export default {
   name: 'CityListItem',
   props: {
     cityName: String,
-    startNum: Number
+    penguinNum: Number
   }
 }
 </script>
@@ -32,14 +32,16 @@ div.name {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-div.star {
+div.penguin {
   width: 4rem;
   margin-left: auto;
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
 }
-.star-icon {
-  color: yellow;
+.penguin-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.3rem;
 }
 </style>

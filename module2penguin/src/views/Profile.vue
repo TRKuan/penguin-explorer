@@ -3,9 +3,9 @@
     <auth class="auth d-md-none"/>
     <user-info />
     <div class="city-list list-group">
-      <city-list-item cityName="Minneapolis" :startNum="114"/>
-      <city-list-item cityName="St. Paul" :startNum="23"/>
-      <city-list-item cityName="New York" :startNum="5"/>
+      <city-list-item cityName="Minneapolis" :penguinNum="114"/>
+      <city-list-item cityName="St. Paul" :penguinNum="23"/>
+      <city-list-item cityName="New York" :penguinNum="5"/>
     </div>
   </div>
 </template>
