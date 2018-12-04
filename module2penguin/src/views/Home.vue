@@ -83,7 +83,7 @@
         <div class="row col-12 align-items-center justify-content-center flex-sm-row-reverse">
             <article class="col-12 col-sm-6 col-md-7">
               <div>
-                <h2 class="article_title">Can't wait to start explor?</h2>
+                <h2 class="article_title">Can't Wait to Start Explor?</h2>
                 <button class="btn btn-primary" @click="signInWithGoogle">Get Started</button>
               </div>
             </article>
