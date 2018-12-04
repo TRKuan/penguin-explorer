@@ -2,12 +2,12 @@
   <div class="main">
     <ul id="nav" class="nav nav-pills">
       <li class="brand d-none d-md-block">PenguinExplorer</li>
-      <li vif="$route.path=='/'" class="brand d-block d-md-none">PenguinExplorer</li>
+      <li v-if="$route.path==='/'" class="brand d-block d-md-none">PenguinExplorer</li>
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'map'}" class="nav-link">Map</router-link>
       </li>
       <li v-if="user" class="nav-item">
-        <router-link :to="{name:'wishlist'}" class="nav-link">Wishlist</router-link>
+        <router-link :to="{name:'places'}" class="nav-link">Places</router-link>
       </li>
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'profile'}" class="nav-link">Profile</router-link>
