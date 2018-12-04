@@ -1,24 +1,107 @@
 <template>
   <div class="home">
     <!--jumbotron-->
-    <div class="jumbotron jumbotron-fluid d-flex align-items-center">
-        <div class="container-fluid text-center">
+    <div class="jumbotron jumbotron-fluid d-flex align-items-center justify-content-around flex-column text-center section-dark">
             <header>
-                <h1>Penguin Explorer</h1>
+                <h1>PenguinExplorer</h1>
                 <h3 class="slogan text-center">Penguins and where to find them</h3>
             </header>
             <button class="btn btn-primary" @click="signInWithGoogle">Get Started</button>
             <div class="scroll-down-div">
-              <a class="text-center scroll-down-btn" href="#section1"><i class="fas fa-angle-down fa-3x"></i></a>
+              <a href="#section1">
+                <font-awesome-icon icon="angle-down" class="fa fa-3x"/>
+              </a>
+            </div>
+
+    </div>
+    <!--main article-->
+    <section id="section1" class="container-fluid d-flex align-items-center justify-content-center section-dark">
+        <div class="row col-12 align-items-center justify-content-center">
+          <article class="col-12 col-sm-6 col-md-7">
+            <header>
+              <h2 class="article_title">"There are lots of penguins in the city. You just need to know where to find them."</h2>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </article>
+          <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
+            <img class="img-fluid" src="https://image.flaticon.com/icons/svg/141/141726.svg" alt="penguin image" >
+          </div>
+          <div class="scroll-down-div col-12 text-center">
+            <a href="#section2">
+              <font-awesome-icon icon="angle-down" class="fa fa-3x"/>
+            </a>
+          </div>
+        </div>
+    </section>
+
+    <section id="section2" class="container-fluid d-flex align-items-center justify-content-center">
+        <div class="row col-12  justify-content-center flex-sm-row-reverse">
+          <article class="col-12 col-sm-6 col-md-7">
+            <header>
+              <h2 class="article_title">Explor the Cities</h2>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </article>
+          <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
+            <img class="img-fluid" src="https://image.flaticon.com/icons/svg/119/119583.svg" alt="city image" >
+          </div>
+          <div class="scroll-down-div col-12 text-center">
+            <a href="#section3">
+              <font-awesome-icon icon="angle-down" class="fa fa-3x"/>
+            </a>
+          </div>
+        </div>
+    </section>
+
+    <section id="section3" class="container-fluid d-flex align-items-center justify-content-center section-dark">
+        <div class="row col-12 align-items-center justify-content-center">
+          <article class="col-12 col-sm-6 col-md-7">
+            <header>
+              <h2 class="article_title">Checkout Local Places and Restaurants</h2>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </article>
+          <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
+            <img class="img-fluid" src="https://image.flaticon.com/icons/svg/1329/1329642.svg" alt="image" >
+          </div>
+          <div class="scroll-down-div col-12 text-center">
+            <a href="#section4">
+              <font-awesome-icon icon="angle-down" class="fa fa-3x"/>
+            </a>
+          </div>
+        </div>
+    </section>
+
+    <!--summary-->
+    <section id="section4" class="container-fluid d-flex align-items-center justify-content-center">
+        <div class="row col-12 align-items-center justify-content-center flex-sm-row-reverse">
+            <article class="col-12 col-sm-6 col-md-7">
+              <div>
+                <h2 class="article_title">Can't wait to start explor?</h2>
+                <button class="btn btn-primary" @click="signInWithGoogle">Get Started</button>
+              </div>
+            </article>
+            <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
+              <img class="img-fluid" src="https://image.flaticon.com/icons/svg/1090/1090661.svg" alt="image" >
             </div>
         </div>
+    </section>
+    <div class="footer">
+      <div>Group Penguin</div>
+      <div class="cite">Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     </div>
   </div>
 </template>
 
 <script>
-import { auth, provider } from "@/firebaseConfig";
-
+import { auth, provider } from "@/firebaseConfig"
+import jquery from 'jquery'
 export default {
   name: 'home',
   data() {
@@ -34,6 +117,12 @@ export default {
         this.$router.push('/map');
       }
     });
+    jquery(function() {
+      jquery('a[href*="#"]').on('click', function(e) {
+        e.preventDefault()
+        jquery('html, body').animate({ scrollTop: jquery(jquery(this).attr('href')).offset().top-parseInt(jquery('#app').css('padding-top'))}, 'slow', 'swing');
+      })
+    })
   },
   methods: {
     signInWithGoogle: function() {
@@ -54,10 +143,19 @@ export default {
   height: 100%;
 }
 header {
-  margin: 3rem;
+  margin-bottom: 1rem;
 }
+section {
+  min-height: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+section div.row{max-width: 1000px;}
 h1 {
   margin-bottom: 1rem;
+}
+img {
+  width:250px;
 }
 /**Jumbotron**/
 .jumbotron{
@@ -98,5 +196,30 @@ h1 {
 .btn-primary:active{
   background: rgb(37, 53, 103);
   color: white;
+}
+.scroll-down-div {
+  margin-top: 1rem;
+}
+.fa {
+  color: black;
+}
+/**Different section backgrounds**/
+.section-dark{
+  color: white;
+  background-color: rgb(37, 53, 103);
+}
+.section-dark .scroll-down-div .fa {
+  color: white;
+}
+/**footer**/
+div.footer {
+  min-height: 50px;
+  padding: 1rem;
+  background-color: rgb(37, 53, 103);
+  color: white;
+  text-align: center;
+}
+.cite {
+  margin-top: 0.5rem;
 }
 </style>

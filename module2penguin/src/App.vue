@@ -2,6 +2,7 @@
   <div class="main">
     <ul id="nav" class="nav nav-pills">
       <li class="brand d-none d-md-block">PenguinExplorer</li>
+      <li vif="$route.path=='/'" class="brand d-block d-md-none">PenguinExplorer</li>
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'map'}" class="nav-link">Map</router-link>
       </li>
@@ -68,7 +69,6 @@ html, body {
   width: 100%;
   height: 100%;
   padding-top: 50px;
-  padding-bottom: 2rem;
 }
 @media (max-width: 767px/*sm*/) {
   #app {

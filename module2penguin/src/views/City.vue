@@ -47,6 +47,7 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
+  padding-bottom: 2rem;
 }
 .place-list {
   width: 100%;

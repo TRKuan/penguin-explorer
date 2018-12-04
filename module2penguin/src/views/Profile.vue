@@ -31,6 +31,7 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
+  padding-bottom: 2rem;
 }
 @media (max-width: 767px/*sm*/) {
   .proflie {
