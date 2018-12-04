@@ -58,6 +58,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  background-color: rgb(37, 53, 103);
   align: center;
 }
 /*app*/
