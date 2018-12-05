@@ -5,7 +5,7 @@ import Map from '@/views/Map.vue'
 import Place from '@/views/Place.vue'
 import Profile from '@/views/Profile.vue'
 import City from '@/views/City.vue'
-import Wishlist from '@/views/Wishlist.vue'
+import Places from '@/views/Places.vue'
 import NotFound from '@/views/NotFound.vue'
 
 
@@ -47,9 +47,9 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/wishlist',
-      name: 'wishlist',
-      component: Wishlist,
+      path: '/places',
+      name: 'places',
+      component: Places,
       meta: { requiresAuth: true }
     },
     {

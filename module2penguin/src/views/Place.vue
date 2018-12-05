@@ -1,10 +1,14 @@
 <template lang="html">
-  <h1>Place</h1>
+  <PlaceSummary/>
 </template>
 
 <script>
+import PlaceSummary from '@/components/PlaceSummary.vue'
 export default {
-  name: 'Place'
+  name: 'Place',
+  components: {
+    PlaceSummary,
+  },
 }
 </script>
 

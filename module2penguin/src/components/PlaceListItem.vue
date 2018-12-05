@@ -2,9 +2,11 @@
   <router-link :to="{name:'place', params:{id:placeName/*you may want to replace this with id*/}}" class="list-group-item flex-column flex-md-row" exact>
     <div class="name">
       {{placeName}}
+      <span v-if="visited" class="badge badge-success">Visited</span>
+      <span v-if="!visited" class="badge badge-dark">Wishlist</span>
     </div>
-    <div class="date">
-      <font-awesome-icon icon="calendar" class="calendar-icon"/>{{date}}
+    <div v-if="visited" class="date">
+      {{date}}
     </div>
   </router-link>
 </template>
@@ -15,7 +17,8 @@ export default {
   name: 'PlaceListItem',
   props: {
     placeName: String,
-    visiteDate: String
+    visiteDate: String,
+    visited: Boolean
   },
   computed: {
     date: function(){
@@ -44,8 +47,10 @@ div.date {
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
+  color: gray;
+  text-align: right;
 }
-.calendar-icon {
-  margin-right: 2px;
+.badge {
+  margin-left: 0.5rem;
 }
 </style>

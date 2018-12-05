@@ -2,8 +2,8 @@
   <div class="city-info">
       <div class="city-img"></div>
       <p class="city-name">{{name}}Minneapolis</p>
-      <div class="star">
-        <font-awesome-icon icon="star" class="star-icon"/>114 {{starNum}}
+      <div class="penguin">
+        <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">114
       </div>
   </div>
 </template>
@@ -48,11 +48,14 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-div.star {
+div.penguin {
+  font-size: 1.5rem;
   white-space: nowrap;
   overflow: hidden;
 }
-.star-icon {
-  color: yellow;
+.penguin-icon {
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.3rem;
 }
 </style>

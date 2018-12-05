@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="main">
     <ul id="nav" class="nav nav-pills">
+      <li class="brand d-none d-md-block">PenguinExplorer</li>
+      <li v-if="$route.path==='/'" class="brand d-block d-md-none">PenguinExplorer</li>
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'map'}" class="nav-link">Map</router-link>
       </li>
       <li v-if="user" class="nav-item">
-        <router-link :to="{name:'wishlist'}" class="nav-link">Wishlist</router-link>
+        <router-link :to="{name:'places'}" class="nav-link">Places</router-link>
       </li>
       <li v-if="user" class="nav-item">
         <router-link :to="{name:'profile'}" class="nav-link">Profile</router-link>
       </li>
-      <li class="d-none d-md-block"><auth class="auth"/></li>
+      <li class="auth d-none d-md-block"><auth class="auth"/></li>
     </ul>
     <div id="app">
       <router-view :key="$route.fullPath" id = "page_contents"/>
@@ -59,10 +61,14 @@ html, body {
   align: center;
 }
 /*app*/
+.main {
+  width: 100%;
+  height: 100%;
+}
 #app {
   width: 100%;
+  height: 100%;
   padding-top: 50px;
-  padding-bottom: 2rem;
 }
 @media (max-width: 767px/*sm*/) {
   #app {
@@ -71,12 +77,33 @@ html, body {
 }
 /*nav bar*/
 #nav {
-  z-index: 1;
+  z-index: 2;
   width: 100%;
-  background-color: rgb(228, 233, 255);
+  height: 50px;
+  background-color: rgb(37, 53, 103);
   justify-content: center;
   align-items: center;
   position: fixed;
+}
+@media (max-width: 767px/*sm*/) {
+  #nav {
+    height: 40px;
+  }
+}
+#nav a {
+  color: white;
+}
+#nav .nav-link.active {
+  background-color: green;
+}
+#nav .brand {
+  margin-right: auto;
+  margin-left: 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+}
+#nav .auth {
+  margin-left: auto;
 }
 @media (max-width: 767px/*sm*/) {
   #nav li{

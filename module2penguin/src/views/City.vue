@@ -6,28 +6,28 @@
       <template v-for="(place, idx) in cityPlaces">
       <place-list-item :placeName="place.cityName" :key="idx" :visiteDate="place.date"/>
       </template>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018"/>
-      <place-list-item placeName="Place2" visiteDate="2-21-2018"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017"/>
+      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
+      <place-list-item placeName="Place2" visiteDate="2-21-2018" :visited="false"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
+      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
     </div>
   </div>
 </template>
@@ -67,6 +67,7 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
+  padding-bottom: 2rem;
 }
 .place-list {
   width: 100%;
