@@ -57,6 +57,15 @@ export default {
       this.$set(marker, 'open', true);
       return marker;
     });
+    users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
+            if (!docSnapshot.exists) {
+              users.doc(auth.currentUser.uid).set({
+                userid:auth.currentUser.uid,
+                photo: auth.currentUser.photoURL,
+                name: auth.currentUser.displayName
+                })
+            } 
+          });
   },
 
   methods: {
@@ -66,8 +75,21 @@ export default {
     },
     addMarker() {
       if (this.currentPlace) {
-        const name = this.currentPlace.name
-        const address = this.currentPlace.formatted_address
+        const marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+        };
+        this.markers.push({ position: marker });
+        this.places.push(this.currentPlace);
+        this.infoWindows.push({open : false});
+        this.center = marker;
+        addVisited(this.currentPlace)        
+        this.currentPlace = null;
+      }
+    },
+    addVisited(currentPlace){
+        const name = currentPlace.name
+        const address = currentPlace.formatted_address
         const visited = true;
         const wishlist = false;
         let addressArray = address.replace(/,/g, '').split(" ")
@@ -79,32 +101,11 @@ export default {
         else{tempName = addressArray[l-4]+"-"+addressArray[l-3]+"-"+addressArray[l-1]}
         const cityName = tempName
         const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lat: currentPlace.geometry.location.lat(),
+          lng: currentPlace.geometry.location.lng()
         };
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
-        this.infoWindows.push({open : false});
-        this.center = marker;
-        console.log(this.currentPlace.formatted_address)
-        users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
-            if (docSnapshot.exists) {
-              users.doc(auth.currentUser.uid)
-                .collection("places").add({name, address,cityName,marker, visited, wishlist})
-            } else {
-              users.doc(auth.currentUser.uid).set({
-                userid:auth.currentUser.uid,
-                photo: auth.currentUser.photoURL,
-                name: auth.currentUser.displayName
-                })
-                users.doc(auth.currentUser.uid)
-                .collection("places").add({name, address,cityName,marker, visited, wishlist})
-            } 
-          }
-        });
-        
-        this.currentPlace = null;
-      }
+        console.log(currentPlace.formatted_address)
+        users.doc(auth.currentUser.uid).collection("places").add({name, address,cityName,marker,visited,wishlist})
     },
 
     addInfoWindow(index) {

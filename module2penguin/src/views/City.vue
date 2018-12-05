@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="city">
-    <city-info :name="cityInfo.name" :starNum="cityInfo.starNum"/>
+    <city-info :name="this.$route.params.city" :starNum="starNum"/>
     <br />
     <div class="place-list list-group">
       <template v-for="(place, idx) in cityPlaces">
@@ -52,12 +52,21 @@ export default {
   },
   firestore() {
     return {
-      cityInfo: users.doc(auth.currentUser.uid)
-                  .collection("cities").doc(this.$route.params.city),
       cityPlaces: users.doc(auth.currentUser.uid)
-                  .collection("cities").doc(this.$route.params.city).collection("places")
+                  .collection("places").where("cityName","==",this.$route.params.city)
     };
   },
+  computed:{
+    starNum(){
+      return this.cityPlaces.filter(c=>c.visited==true).length
+    },
+    visited(){
+      return this.cityPlaces.filter(c=>c.visited==true)
+    },
+    wishlist(){
+      return this.cityPlaces.filter(c=>c.wishlist==true)
+    }
+  }
 }
 </script>
 

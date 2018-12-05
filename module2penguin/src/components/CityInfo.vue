@@ -3,7 +3,7 @@
       <div class="city-img"></div>
       <p class="city-name">{{name}}Minneapolis</p>
       <div class="penguin">
-        <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">114
+        <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">{{starNum}}114
       </div>
   </div>
 </template>

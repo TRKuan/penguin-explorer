@@ -1,7 +1,7 @@
 <template lang="html">
   <router-link :to="{name:'city', params:{city:cityName/*you may want to replace this with id*/}}" class="list-group-item" exact>
     <div class="name">
-      {{cityName}}
+      {{cityName.replace("-",", ")}}
     </div>
     <div class="penguin">
       <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">{{penguinNum}}
