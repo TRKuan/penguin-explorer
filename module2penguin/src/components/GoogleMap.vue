@@ -45,6 +45,8 @@
 </template>
 
 <script>
+
+import { auth, users} from "@/firebaseConfig.js"
 import {gmapApi} from 'vue2-google-maps'
 import PlaceListItem from './PlaceListItem.vue'
 
@@ -85,6 +87,18 @@ export default {
 
     addMarker() {
       if (this.currentPlace) {
+        const name = this.currentPlace.name
+        const address = this.currentPlace.formatted_address
+        const visited = true;
+        const wishlist = false;
+        let addressArray = address.replace(/,/g, '').split(" ")
+        let l = addressArray.length
+        let tempName;
+        if(isNaN(addressArray[l-2])){
+          tempName = addressArray[l-3]+"-"+addressArray[l-2]+"-"+addressArray[l-1]
+        }
+        else{tempName = addressArray[l-4]+"-"+addressArray[l-3]+"-"+addressArray[l-1]}
+        const cityName = tempName
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
@@ -92,8 +106,23 @@ export default {
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
         this.center = marker;
-        this.currentPlace = null;
-      }
+        console.log(this.currentPlace.formatted_address)
+        users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
+            if (docSnapshot.exists) {
+              users.doc(auth.currentUser.uid)
+                .collection("places").add({name, address,cityName,marker, visited, wishlist})
+            } else {
+              users.doc(auth.currentUser.uid).set({
+                userid:auth.currentUser.uid,
+                photo: auth.currentUser.photoURL,
+                name: auth.currentUser.displayName
+                })
+                users.doc(auth.currentUser.uid)
+                .collection("places").add({name, address,cityName,marker, visited, wishlist})
+            } 
+          })
+        };
+      this.currentPlace = null;
     },
 
     showPlace() {

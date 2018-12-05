@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="city-info">
       <div class="city-img"></div>
-      <p class="city-name">Minneapolis</p>
+      <p class="city-name">{{name}}Minneapolis</p>
       <div class="penguin">
         <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">114
       </div>
@@ -10,7 +10,11 @@
 
 <script>
 export default {
-  name: 'CityInfo'
+  name: 'CityInfo',
+  props: {
+    name: String,
+    starNum: Number
+  },
 }
 </script>
 
