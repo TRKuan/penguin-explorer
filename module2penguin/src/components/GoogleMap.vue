@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {db, auth, users} from "@/firebaseConfig.js"
+import { auth, users} from "@/firebaseConfig.js"
 export default {
   name: "GoogleMap",
   data() {
@@ -66,6 +66,18 @@ export default {
     },
     addMarker() {
       if (this.currentPlace) {
+        const name = this.currentPlace.name
+        const address = this.currentPlace.formatted_address
+        const visited = true;
+        const wishlist = false;
+        let addressArray = address.replace(/,/g, '').split(" ")
+        let l = addressArray.length
+        let tempName;
+        if(isNaN(addressArray[l-2])){
+          tempName = addressArray[l-3]+"-"+addressArray[l-2]+"-"+addressArray[l-1]
+        }
+        else{tempName = addressArray[l-4]+"-"+addressArray[l-3]+"-"+addressArray[l-1]}
+        const cityName = tempName
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
@@ -74,13 +86,20 @@ export default {
         this.places.push(this.currentPlace);
         this.infoWindows.push({open : false});
         this.center = marker;
-        console.log(this.currentPlace)
-        db.collection('users').doc(auth.currentUser.uid).get().then((docSnapshot) => {
-          if (docSnapshot.exists) {
-            db.collection('users').doc(auth.currentUser.uid).collection("places").add({place:this.currentPlace})
-          } else {
-            db.collection('users').doc(auth.currentUser.uid).set({userid:auth.currentUser.uid})
-            db.collection('users').doc(auth.currentUser.uid).collection("places").add({place:this.currentPlace})
+        console.log(this.currentPlace.formatted_address)
+        users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
+            if (docSnapshot.exists) {
+              users.doc(auth.currentUser.uid)
+                .collection("places").add({name, address,cityName,marker, visited, wishlist})
+            } else {
+              users.doc(auth.currentUser.uid).set({
+                userid:auth.currentUser.uid,
+                photo: auth.currentUser.photoURL,
+                name: auth.currentUser.displayName
+                })
+                users.doc(auth.currentUser.uid)
+                .collection("places").add({name, address,cityName,marker, visited, wishlist})
+            } 
           }
         });
         

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="proflie">
     <auth class="auth d-md-none"/>
-    <user-info />
+    <user-info :photo="profileInfo.photo" :name="profileInfo.name"/>
     <div class="city-list list-group">
       <city-list-item cityName="Minneapolis" :startNum="114"/>
       <city-list-item cityName="St. Paul" :startNum="23"/>
@@ -14,13 +14,24 @@
 import UserInfo from '@/components/UserInfo.vue'
 import CityListItem from '@/components/CityListItem.vue'
 import Auth from "@/components/Auth.vue"
+import {auth, users} from "@/firebaseConfig.js"
 export default {
   name: 'Profile',
   components: {
     UserInfo,
     CityListItem,
     Auth
-  }
+  },
+  data() {
+    return {
+      profileInfo: []
+    };
+  },
+  firestore() {
+    return {
+      profileInfo: users.doc(auth.currentUser.uid),
+    };
+  },
 }
 </script>
 

@@ -16,19 +16,6 @@ export default {
     cityName: String,
     startNum: Number
   },
-  data() {
-    return {
-      cityName: [],
-      starNum
-    };
-  },
-  firestore() {
-    return {
-      starNum: db.collection("users")
-                  .doc(auth.currentUser.uid)
-                  .collection("cities").doc(cityName).starNum
-    };
-  },
 }
 </script>
 

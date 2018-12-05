@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="city-info">
       <div class="city-img"></div>
-      <p class="city-name">Minneapolis</p>
+      <p class="city-name">{{name}}Minneapolis</p>
       <div class="star">
-        <font-awesome-icon icon="star" class="star-icon"/>114
+        <font-awesome-icon icon="star" class="star-icon"/>114 {{starNum}}
       </div>
   </div>
 </template>
@@ -11,20 +11,9 @@
 <script>
 export default {
   name: 'CityInfo',
-  data() {
-    return {
-      // default to Montreal to keep it simple
-      // change this to whatever makes sense
-      cityInfo: null,
-    };
-  },
-  firestore() {
-    return {
-      cityInfo: db.collection("users").doc(auth.currentUser.uid)
-                  .collection("cities").where("cityName","==",this.$route.params.cityName),
-      cityPlaces: db.collection("users").doc(auth.currentUser.uid)
-                  .collection("cities").where("cityName","==",this.$route.params.cityName).collection("places")
-    };
+  props: {
+    name: String,
+    starNum: Number
   },
 }
 </script>
