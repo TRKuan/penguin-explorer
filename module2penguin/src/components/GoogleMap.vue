@@ -181,7 +181,7 @@ export default {
           let currCityPlaces = users.doc(auth.currentUser.uid)
                               .collection("places")
                               .where("cityName","==", self.cityName);
-          self.penguin = currCityPlaces.length
+          self.penguin = currCityPlaces.filter(c=>c.visited==true).length
         });
       });
     },
