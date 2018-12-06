@@ -177,11 +177,7 @@ export default {
                 }
               }
            });
-        
-          let currCityPlaces = users.doc(auth.currentUser.uid)
-                              .collection("places")
-                              .where("cityName","==", self.cityName);
-          self.penguin = currCityPlaces.filter(c=>c.visited==true).length
+          self.penguin = markers.filter(c=>c.visited==true && c.cityName==self.cityName).length
         });
       });
     },
