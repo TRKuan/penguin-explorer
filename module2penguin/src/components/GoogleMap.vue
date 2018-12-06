@@ -1,42 +1,55 @@
 <template>
   <div>
     <div>
-      <!-- <h2>Search and add a pin</h2> -->
-      <label>
-        <gmap-autocomplete
-          @place_changed="setPlace">
-        </gmap-autocomplete>
-        <button @click="addMarker">Add</button>
-      </label>
-      <br/>
+      <div>
+        <div>
+          <div class="subcontainer">
+            <div class="penguin">
+              {{ city }}:
+              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> 123
+            </div>
+            <div class="search">
+              <gmap-autocomplete
+                @place_changed="setPlace">
+              </gmap-autocomplete>
+              <button @click="addMarker">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <br>
     <div>
       <gmap-map
+      ref="map"
+      :position="google"
       :center="center"
       :zoom="12"
-      style="width:100%;  height: 75vh; "
+      style="width:100%;  height: 75vh;"
       >
         <gmap-marker
             :key="index"
             v-for="(m, index) in markers"
             :position="m.position"
             :clickable="true"
-            @click="addInfoWindow(index)">
-            <gmap-info-window
-              :position="m.position"
-              :opened="infoWindows[index].open"
-              @closeclick="infoWindows[index].open=false">
-              <p>{{ m.position }}</p>
-          </gmap-info-window>
+            :icon="{ 
+              url: require('../assets/penguin.png'), 
+              size: {width: 46, height: 46, f: 'px', b: 'px'}, 
+              scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
+            }"
+            @click="showPlace()">
         </gmap-marker>
       </gmap-map>
     </div>
+    <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="true"/>
   </div>
 </template>
 
 <script>
+
 import { auth, users} from "@/firebaseConfig.js"
+import {gmapApi} from 'vue2-google-maps'
+import PlaceListItem from './PlaceListItem.vue'
+
 export default {
   name: "GoogleMap",
   data() {
@@ -45,18 +58,25 @@ export default {
       // change this to whatever makes sense
       map: null,
       center: { lat: 45.508, lng: -73.587 },
+      city: "Montreal",
       markers: [],
+      penguin: 114, 
       places: [],
       currentPlace: null,
-      infoWindows: []
+      placeInfo: false,
     };
   },
+
+  components: {
+    PlaceListItem
+  },
+
+  computed: {
+    google: gmapApi
+  },
+
   mounted() {
     this.geolocate();
-    this.markers.map(marker => {
-      this.$set(marker, 'open', true);
-      return marker;
-    });
     users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
             if (!docSnapshot.exists) {
               users.doc(auth.currentUser.uid).set({
@@ -81,52 +101,84 @@ export default {
         };
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
-        this.infoWindows.push({open : false});
         this.center = marker;
-        addVisited(this.currentPlace)        
+        this.addPlace(this.currentPlace, true, false)        
         this.currentPlace = null;
       }
     },
-    addVisited(currentPlace){
+    getCityName(address){
+      let addressArray = address.split(", ")
+      let l = addressArray.length
+      return addressArray[l-3].replace(/ /g, '-')+"-"
+            +addressArray[l-2].replace(/ /g, '-')+"-"
+            +addressArray[l-1].replace(/ /g, '-')
+    },
+    addPlace(currentPlace, visit, wishlist){
         const name = currentPlace.name
         const address = currentPlace.formatted_address
-        const visited = true;
-        const wishlist = false;
-        let addressArray = address.replace(/,/g, '').split(" ")
-        let l = addressArray.length
-        let tempName;
-        if(isNaN(addressArray[l-2])){
-          tempName = addressArray[l-3]+"-"+addressArray[l-2]+"-"+addressArray[l-1]
-        }
-        else{tempName = addressArray[l-4]+"-"+addressArray[l-3]+"-"+addressArray[l-1]}
-        const cityName = tempName
+        const visited = visit;
+        const wishlisted = wishlist;
+        const cityName = this.getCityName(address)
         const marker = {
           lat: currentPlace.geometry.location.lat(),
           lng: currentPlace.geometry.location.lng()
         };
-        console.log(currentPlace.formatted_address)
-        users.doc(auth.currentUser.uid).collection("places").add({name, address,cityName,marker,visited,wishlist})
+        console.log(currentPlace)
+        users.doc(auth.currentUser.uid).collection("places").add({name, address,cityName,marker,visited,wishlisted})
     },
 
-    addInfoWindow(index) {
-      this.infoWindows[index].open = true;
+    showPlace() {
+      this.placeInfo = !this.placeInfo;
     },
 
     geolocate: function() {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+      this.$refs.map.$mapPromise.then(() => {
+        navigator.geolocation.getCurrentPosition(position => {
+          this.center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+          var geocoder = new this.google.maps.Geocoder();
+          let self = this;
+          geocoder.geocode({'latLng': this.center}, function(results, status) {
+            if (status === 'OK') {
+              self.cityName = this.getCityName(results[0].formatted_address)
+              for (var i = 0; i < results[0].address_components.length; i++) {
+              var address = results[0].address_components[i];
+                if (address.types[0] == "locality" || address.types[0] == "political") {
+                    self.city = address.long_name
+                }
+              }
+            }
+          });
+          let currCityPlaces = users.doc(auth.currentUser.uid)
+                              .collection("places")
+                              .where("cityName","==", self.cityName);
+        });
       });
-    }
+    },
   }
 };
 </script>
 
 <style>
-.infowindow {
-  visibility: hidden;
+.penguin {
+  float: right;
+  margin: 0.3rem;
 }
-</style>
+.penguin-icon {
+  height: 2rem;
+  width: 2rem;
+  margin-bottom: 0.3rem;
+}
+.search {
+  display: inline-block;
+  margin: 0.3rem;
+}
 
+.subcontainer {
+  width: 100%;
+  flex-direction: row;
+}
+
+</style>
