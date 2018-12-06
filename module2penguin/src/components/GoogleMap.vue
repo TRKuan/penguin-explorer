@@ -6,7 +6,7 @@
           <div class="subcontainer">
             <div class="penguin">
               {{ city }}:
-              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> 123
+              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ penguin }}
             </div>
             <div class="search">
               <gmap-autocomplete
@@ -19,6 +19,9 @@
       </div>
     </div>
     <div>
+      
+    </div>
+    <div>
       <gmap-map
       ref="map"
       :position="google"
@@ -26,21 +29,34 @@
       :zoom="12"
       style="width:100%;  height: 75vh;"
       >
-        <gmap-marker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :clickable="true"
-            :icon="{ 
-              url: require('../assets/penguin.png'), 
-              size: {width: 46, height: 46, f: 'px', b: 'px'}, 
-              scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
-            }"
-            @click="showPlace()">
-        </gmap-marker>
+        <div :key="index"
+            v-for="(m, index) in markers">
+            <gmap-marker
+              v-if="!m.visited"
+              :position="m.marker"
+              :clickable="true"
+              :icon="{ 
+                url: require('../assets/heart.png'), 
+                size: {width: 46, height: 46, f: 'px', b: 'px'}, 
+                scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
+              }"
+              @click="showPlace(index)">
+            </gmap-marker>
+            <gmap-marker
+              v-if="m.visited"
+              :position="m.marker"
+              :clickable="true"
+              :icon="{ 
+                url: require('../assets/penguin.png'), 
+                size: {width: 46, height: 46, f: 'px', b: 'px'}, 
+                scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+              }"
+              @click="showPlace(index)">
+            </gmap-marker>
+        </div>
       </gmap-map>
     </div>
-    <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="true"/>
+    <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/>
   </div>
 </template>
 
@@ -60,7 +76,7 @@ export default {
       center: { lat: 45.508, lng: -73.587 },
       city: "Montreal",
       markers: [],
-      penguin: 114, 
+      penguin: 0, 
       places: [],
       currentPlace: null,
       placeInfo: false,
@@ -77,6 +93,14 @@ export default {
 
   mounted() {
     this.geolocate();
+  },
+
+  firestore() {
+    if (auth.currentUser) {
+      return {
+          markers: users.doc(auth.currentUser.uid).collection("places")
+      };
+    }
   },
 
   methods: {
@@ -106,27 +130,28 @@ export default {
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
         this.center = marker;
-        console.log(this.currentPlace.formatted_address)
         users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
-            if (docSnapshot.exists) {
+          if (docSnapshot.exists) {
+            users.doc(auth.currentUser.uid)
+              .collection("places").add({name, address,cityName, marker, visited, wishlist})
+          } else {
+            users.doc(auth.currentUser.uid).set({
+              userid:auth.currentUser.uid,
+              photo: auth.currentUser.photoURL,
+              name: auth.currentUser.displayName
+              })
               users.doc(auth.currentUser.uid)
-                .collection("places").add({name, address,cityName,marker, visited, wishlist})
-            } else {
-              users.doc(auth.currentUser.uid).set({
-                userid:auth.currentUser.uid,
-                photo: auth.currentUser.photoURL,
-                name: auth.currentUser.displayName
-                })
-                users.doc(auth.currentUser.uid)
-                .collection("places").add({name, address,cityName,marker, visited, wishlist})
-            } 
-          })
-        };
+              .collection("places").add({name, address, cityName, marker, visited, wishlist})
+          } 
+        });
+        this.penguin++;
+      }
       this.currentPlace = null;
     },
 
-    showPlace() {
-      this.placeInfo = !this.placeInfo;
+    showPlace(index) {
+      // Parse data for showing place here
+      this.placeInfo = true;
     },
 
     geolocate: function() {
@@ -140,14 +165,24 @@ export default {
           let self = this;
           geocoder.geocode({'latLng': this.center}, function(results, status) {
             if (status === 'OK') {
-              for (var i = 0; i < results[0].address_components.length; i++) {
-              var address = results[0].address_components[i];
-                if (address.types[0] == "locality" || address.types[0] == "political") {
-                    self.city = address.long_name
+              var address = results[0].formatted_address;
+              let addressArray = address.replace(/,/g, '').split(" ")
+              let l = addressArray.length
+              let tempName;
+              if(isNaN(addressArray[l-2])){
+                tempName = addressArray[l-3]+"-"+addressArray[l-2]+"-"+addressArray[l-1]
+              } else {
+                tempName = addressArray[l-4]+"-"+addressArray[l-3]+"-"+addressArray[l-1]}
+                const cityName = tempName
+                self.city = cityName
+                // get number of penguins
+                for (var i = 0; i < self.markers.length; i++) {
+                  if (self.markers[i].cityName == cityName && self.markers[i].visited == true) {
+                    self.penguin++;
+                  }
                 }
               }
-            }
-          });
+           });
         });
       });
     },
