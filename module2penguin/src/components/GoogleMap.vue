@@ -61,11 +61,11 @@
 </template>
 
 <script>
-
+/* eslint-disable */
 import { auth, users} from "@/firebaseConfig.js"
 import {gmapApi} from 'vue2-google-maps'
 import PlaceListItem from './PlaceListItem.vue'
-
+import moment from 'moment'
 export default {
   name: "GoogleMap",
   data() {
@@ -101,7 +101,7 @@ export default {
                 name: auth.currentUser.displayName
                 })
             } 
-          });
+    });
   },
 
   firestore() {
@@ -135,7 +135,7 @@ export default {
       let addressArray = address.split(", ")
       let l = addressArray.length
       return addressArray[l-3].replace(/ /g, '-')+"-"
-            +addressArray[l-2].replace(/ /g, '-')+"-"
+            +addressArray[l-2].split(' ')[0]+"-"
             +addressArray[l-1].replace(/ /g, '-')
     },
     addPlace(currentPlace, visit, wishlist){
@@ -149,7 +149,13 @@ export default {
           lng: currentPlace.geometry.location.lng()
         };
         console.log(currentPlace)
-        users.doc(auth.currentUser.uid).collection("places").add({name, address,cityName,marker,visited,wishlisted})
+        users.doc(auth.currentUser.uid).collection("cities").doc(cityName).get().then((docSnapshot) => {
+            if (!docSnapshot.exists) {
+              users.doc(auth.currentUser.uid).collection("cities").add({cityName})
+            } 
+        });
+        users.doc(auth.currentUser.uid).collection("places")
+              .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY')})
     },
 
     showPlace(index) {
@@ -166,9 +172,10 @@ export default {
           }
           var geocoder = new this.google.maps.Geocoder();
           let self = this;
+          const getCityName = this.getCityName
           geocoder.geocode({'latLng': this.center}, function(results, status) {
             if (status === 'OK') {
-              self.city = this.getCityName(results[0].formatted_address)
+              self.city = getCityName(results[0].formatted_address)
                 // get number of penguins
                 for (var i = 0; i < self.markers.length; i++) {
                   if (self.markers[i].cityName == self.city && self.markers[i].visited == true) {
@@ -177,7 +184,7 @@ export default {
                 }
               }
            });
-          self.penguin = markers.filter(c=>c.visited==true && c.cityName==self.cityName).length
+          self.penguin = this.markers.filter(c=>c.visited==true && c.cityName==self.cityName).length
         });
       });
     },

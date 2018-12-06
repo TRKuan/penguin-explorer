@@ -14,7 +14,7 @@
 
 <script>
 import { auth, provider } from "@/firebaseConfig";
-
+/* eslint-disable */
 export default {
   name: "auth",
 

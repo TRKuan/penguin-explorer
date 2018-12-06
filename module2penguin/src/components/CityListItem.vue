@@ -1,20 +1,37 @@
 <template lang="html">
-  <router-link :to="{name:'city', params:{city:cityName/*you may want to replace this with id*/}}" class="list-group-item" exact>
+  <router-link :to="{name:'city', params:{city:cityName}}" class="list-group-item" exact>
     <div class="name">
-      {{cityName.replace("-",", ")}}
+      {{name}}
     </div>
     <div class="penguin">
-      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">{{penguinNum}}
+      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
+      {{penguins.length}}
     </div>
   </router-link>
 </template>
 
 <script>
+import { auth, users} from "@/firebaseConfig.js"
 export default {
   name: 'CityListItem',
   props: {
-    cityName: String,
-    penguinNum: Number
+    cityName: String
+  },
+  data() {
+    return {
+      penguins: []
+    };
+  },
+  firestore() {
+    return {
+      profileInfo: users.doc(auth.currentUser.uid),
+      penguins: users.doc(auth.currentUser.uid).collection("places").where("cityName","==",this.cityName)
+    };
+  },
+  computed:{
+    name(){
+      return this.cityName.replace(/-/g," ")
+    }
   }
 }
 </script>

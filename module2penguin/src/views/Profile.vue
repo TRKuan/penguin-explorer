@@ -3,9 +3,10 @@
     <auth class="auth d-md-none"/>
     <user-info :photo="profileInfo.photo" :name="profileInfo.name"/>
     <div class="city-list list-group">
-      <city-list-item cityName="Minneapolis" :startNum="114"/>
-      <city-list-item cityName="St. Paul" :startNum="23"/>
-      <city-list-item cityName="New York" :startNum="5"/>
+      <h1 class="title">Cities</h1>
+      <template v-for="(city, idx) in cities">
+      <city-list-item :key="idx" :cityName="city.cityName"/>
+      </template>
     </div>
   </div>
 </template>
@@ -24,12 +25,14 @@ export default {
   },
   data() {
     return {
-      profileInfo: []
+      profileInfo: [],
+      cities: []
     };
   },
   firestore() {
     return {
       profileInfo: users.doc(auth.currentUser.uid),
+      cities: users.doc(auth.currentUser.uid).collection("cities")
     };
   },
 }

@@ -1,45 +1,44 @@
 <template lang="html">
   <div class="places">
     <h1 class="title">Places</h1>
-    <router-link :to="{name:'city', params:{city:'cityName'/*you may want to replace this with id*/}}" class="city"><h2>City</h2></router-link>
+    <template v-for="city in cities" >
+    <router-link :to="{name:'city', params:{city:city.cityName}}" class="city">
+      <h2>{{city.cityName.replace(/-/g," ")}}</h2></router-link>
     <div class="penguin">
-      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">123
+      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
+      {{places.filter(c=>c.cityName==city.cityName).length}}
     </div>
     <div class="place-list list-group">
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="true"/>
+      <template v-for="place in places.filter(c=>c.cityName==city.cityName)">
+      <place-list-item  :place="place ":placeName="place.name" :visiteDate="place.visitedDate" :visited="place.visited"/>
+      </template>
     </div>
     <br />
-    <router-link :to="{name:'city', params:{city:'cityName'/*you may want to replace this with id*/}}" class="city"><h2>City</h2></router-link>
-    <div class="penguin">
-      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">12
-    </div>
-    <div class="place-list list-group">
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="true"/>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="true"/>
-    </div>
-    <br />
-    <router-link :to="{name:'city', params:{city:'cityName'/*you may want to replace this with id*/}}" class="city"><h2>City</h2></router-link>
-    <div class="penguin">
-      <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">4
-    </div>
-    <div class="place-list list-group">
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="true"/>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="true"/>
-    </div>
+    </template>
+    
   </div>
 </template>
 
 <script>
 import PlaceListItem from '@/components/PlaceListItem.vue'
+import {auth, users} from "@/firebaseConfig.js"
 export default {
   name: 'Places',
   components: {
     PlaceListItem
-  }
+  },
+  data() {
+    return {
+      places: [],
+      cities: []
+    };
+  },
+  firestore() {
+    return {
+      places: users.doc(auth.currentUser.uid).collection("places"),
+      cities: users.doc(auth.currentUser.uid).collection("cities")
+    };
+  },
 }
 </script>
 
