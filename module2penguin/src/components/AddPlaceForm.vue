@@ -51,7 +51,8 @@ div.submit {
   text-align: center;
 }
 .img-div {
-  margin: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 img {
