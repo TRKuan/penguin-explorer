@@ -56,7 +56,7 @@
         </div>
       </gmap-map>
     </div>
-    <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/>
+    <!-- <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/> -->
   </div>
 </template>
 
@@ -64,7 +64,7 @@
 /* eslint-disable */
 import { auth, users} from "@/firebaseConfig.js"
 import {gmapApi} from 'vue2-google-maps'
-import PlaceListItem from './PlaceListItem.vue'
+import PlaceSummary from './PlaceSummary.vue'
 import moment from 'moment'
 export default {
   name: "GoogleMap",
@@ -84,7 +84,7 @@ export default {
   },
 
   components: {
-    PlaceListItem
+    PlaceSummary
   },
 
   computed: {
@@ -176,15 +176,10 @@ export default {
           geocoder.geocode({'latLng': this.center}, function(results, status) {
             if (status === 'OK') {
               self.city = getCityName(results[0].formatted_address)
-                // get number of penguins
-                for (var i = 0; i < self.markers.length; i++) {
-                  if (self.markers[i].cityName == self.city && self.markers[i].visited == true) {
-                    self.penguin++;
-                  }
-                }
+              self.penguin = self.markers.filter(c=>c.visited==true && c.cityName==self.city).length
+              self.city = self.city.split("-")[0]
               }
            });
-          self.penguin = this.markers.filter(c=>c.visited==true && c.cityName==self.cityName).length
         });
       });
     },
