@@ -1,5 +1,5 @@
 <template lang="html">
-  <router-link :to="{name:'place', params:{id:url/*you may want to replace this with id*/}}" class="list-group-item flex-column flex-md-row" exact>
+  <router-link :to="{name:'place', params:{id:placeId}}" class="list-group-item flex-column flex-md-row" exact>
     <div class="name">
       {{placeName}}
       <span v-if="visited" class="badge badge-success">Visited</span>
@@ -19,7 +19,9 @@ export default {
     placeName: String,
     visiteDate: String,
     visited: Boolean,
-    place: Object
+    place: Object,
+    placeId: String,
+
   },
   computed: {
     date: function(){

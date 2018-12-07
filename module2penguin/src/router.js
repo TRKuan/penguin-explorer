@@ -29,7 +29,7 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/place/:id',
+      path: '/places/:id',
       name: 'place',
       component: Place,
       meta: { requiresAuth: true }
