@@ -183,21 +183,6 @@ img {
   font-size: 2rem;
   opacity: 0.9;
 }
-/**button**/
-.btn-primary {
-  background-color: rgb(37, 53, 103);
-  color: white;
-  border: rgb(37, 53, 103);
-}
-.btn-primary:focus { outline:0; }
-.btn-primary:hover, .btn-primary:focus{
-  background-color: rgb(42, 60, 120);
-  color: white;
-}
-.btn-primary:active{
-  background: rgb(37, 53, 103);
-  color: white;
-}
 .scroll-down-div {
   margin-top: 1rem;
 }
