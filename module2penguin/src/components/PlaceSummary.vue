@@ -12,9 +12,9 @@
     <img v-else-if = "!OnWishlist" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
     <img class="icon" src="https://image.flaticon.com/icons/svg/447/447031.svg" alt="heart">
   </div>
-  <div v-if = "Visited" id = "usersNotesPhoto">
-    <img class = "place-photo" v-bind:src="UsersNotesPhoto.imgURL" alt="place photo">
-    <p class = "place-notes">{{UsersNotesPhoto.notes}}</p>
+  <div v-if = "Visited" id = "usersNotesPhoto" class = "media">
+    <img class="place-photo align-self-start mr-3" v-bind:src="UsersNotesPhoto.imgURL" alt="place photo">
+    <div class = "media-body"><p>{{UsersNotesPhoto.notes}}</p></div>
   </div>
   <!-- v-for looped collection of other users notes and photos of the place -->
   </div>
@@ -30,12 +30,12 @@ export default {
       PlaceAddress: "1518 Randolph Ave, St Paul, MN 55105",
       City: "Minneapolis",
       Visited: true,
-      OnWishlist: true,
+      OnWishlist: false,
       DateVisited: "Dec 5 2018",
       OtherUsersNotesPhotos: [],
       UsersNotesPhoto: {
         imgURL: "https://i.pinimg.com/originals/be/19/d1/be19d16586d664258625ef4aef738c43.jpg",
-        notes: "Best coffee in the world!!  Great spot to sit and chill.  Easy to get work done here.  Great spot in a great neighborhood."
+        notes: "Best coffee in the world!!  Great spot to sit and chill.  Easy to get work done here.  Good music, friendly people, nice neighborhood."
       },
     };
   },
@@ -64,20 +64,15 @@ margin: 1em;
   margin: .25em;
 }
 .place-photo {
-width: 40%;
+width: 10em;
 }
-.place-notes, .place-photo, #address {
-float: left;
-}
+
 #address{
 padding:0px;
 width: 100%;
 }
 .place-notes {
-width: 55%
+width: 100%
 }
-p{
-color: grey;
-margin-bottom: 0px !important;
-}
+
 </style>
