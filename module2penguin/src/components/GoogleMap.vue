@@ -19,7 +19,7 @@
       </div>
     </div>
     <div>
-      
+
     </div>
     <div>
       <gmap-map
@@ -35,9 +35,9 @@
               v-if="!m.visited"
               :position="m.marker"
               :clickable="true"
-              :icon="{ 
-                url: require('../assets/heart.png'), 
-                size: {width: 46, height: 46, f: 'px', b: 'px'}, 
+              :icon="{
+                url: require('../assets/heart.png'),
+                size: {width: 46, height: 46, f: 'px', b: 'px'},
                 scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
               }"
               @click="showPlace(index)">
@@ -46,9 +46,9 @@
               v-if="m.visited"
               :position="m.marker"
               :clickable="true"
-              :icon="{ 
-                url: require('../assets/penguin.png'), 
-                size: {width: 46, height: 46, f: 'px', b: 'px'}, 
+              :icon="{
+                url: require('../assets/penguin.png'),
+                size: {width: 46, height: 46, f: 'px', b: 'px'},
                 scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
               }"
               @click="showPlace(index)">
@@ -76,7 +76,7 @@ export default {
       center: { lat: 45.508, lng: -73.587 },
       city: "Montreal",
       markers: [],
-      penguin: 0, 
+      penguin: 0,
       places: [],
       currentPlace: null,
       placeInfo: false,
@@ -100,7 +100,7 @@ export default {
                 photo: auth.currentUser.photoURL,
                 name: auth.currentUser.displayName
                 })
-            } 
+            }
     });
   },
 
@@ -127,7 +127,7 @@ export default {
         this.places.push(this.currentPlace);
         this.center = marker;
         this.penguin++;
-        this.addPlace(this.currentPlace, true, false)        
+        this.addPlace(this.currentPlace, false, true)        
         this.currentPlace = null;
       }
     },
@@ -152,7 +152,7 @@ export default {
         users.doc(auth.currentUser.uid).collection("cities").doc(cityName).get().then((docSnapshot) => {
             if (!docSnapshot.exists) {
               users.doc(auth.currentUser.uid).collection("cities").add({cityName})
-            } 
+            }
         });
         users.doc(auth.currentUser.uid).collection("places")
               .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY')})

@@ -1,22 +1,22 @@
 <template>
   <div>
   <div id = "placeSummary">
-  <h3 id = "placename">{{PlaceName}}</h3>
-  <button v-if = "Visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-    Visited
+  <h4 id = "placename">{{this.PlaceDoc.name}}</h4>
+  <button v-if = "this.PlaceDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Add a Photo
   </button>
-  <div id = "visitDate" v-if = "Visited">
-    <p >{{DateVisited}}</p>
+  <div id = "visitDate" v-if = "this.PlaceDoc.visited">
+    <p>{{this.PlaceDoc.visitedDate}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
   </div>
 
-  <div id = "wishlist-checkin" v-if = "!Visited">
-    <img v-if = "OnWishlist" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
-    <img v-else-if = "!OnWishlist" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
+  <div id = "wishlist-checkin" v-if = "!this.PlaceDoc.visited">
+    <img v-if = "this.PlaceDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
+    <img v-else-if = "!this.PlaceDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
     <img class="icon" src="https://image.flaticon.com/icons/svg/447/447031.svg" alt="checkin">
   </div><br>
-  <p id = "address">{{PlaceAddress}}</p><br>
-  <div v-if = "Visited" id = "usersNotesPhoto" >
+  <p id = "address">{{this.PlaceDoc.address}}</p><br>
+  <div v-if = "this.PlaceDoc.visited" id = "usersNotesPhoto" >
     <img class = "place-photo" v-bind:src="UsersNotesPhoto.imgURL" alt="place photo">
     <div><p>{{UsersNotesPhoto.notes}}</p></div>
   </div>
@@ -35,6 +35,8 @@
 
 <script>
 import AddPlaceForm from '@/components/AddPlaceForm.vue'
+import {auth, users} from "@/firebaseConfig.js"
+
 export default {
   name: "PlaceSummary",
   components: {
@@ -42,23 +44,26 @@ export default {
   },
   data() {
     return {
-      PlaceName: "J&S Bean Factory",
-      PlaceAddress: "1518 Randolph Ave, St Paul, MN 55105",
-      City: "Minneapolis",
-      Visited: false,
-      OnWishlist: false,
-      DateVisited: "Dec 5 2018",
-      OtherUsersNotesPhotos: [],
+      DocID: this.$route.params.id,
+      PlaceDoc: {},
       UsersNotesPhoto: {
         imgURL: "https://i.pinimg.com/originals/be/19/d1/be19d16586d664258625ef4aef738c43.jpg",
-        notes: "Best coffee in the world!!  Great spot to sit and chill.  Easy to get work done here.  Good music, friendly people, nice neighborhood."
+        notes: "Your description and opinions of the place"
       },
     };
   },
 
+  firestore() {
+    var doctemp = users.doc(auth.currentUser.uid).collection("places").doc(this.DocID);
+    console.log(doctemp);
+    return {
+      PlaceDoc: users.doc(auth.currentUser.uid).collection("places").doc(this.DocID),
+    }
+
+  },
   methods: {
 
-  }
+  },
 };
 </script>
 <style>
