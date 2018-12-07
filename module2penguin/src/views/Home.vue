@@ -156,12 +156,13 @@ h1 {
 }
 img {
   width:250px;
+  margin: 1rem;
 }
 /**Jumbotron**/
 .jumbotron{
   width: 100%;
   height: 100%;
-  background-image: url("http://gimesy.com/wp-content/gallery/things-with-wings/Gimesy-4298.jpg");
+  background-image: url("/cover.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
