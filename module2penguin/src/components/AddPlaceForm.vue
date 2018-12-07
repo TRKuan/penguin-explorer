@@ -57,5 +57,6 @@ div.submit {
 }
 img {
   max-width: 100%;
+  max-height: 400px;
 }
 </style>
