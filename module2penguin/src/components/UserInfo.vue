@@ -1,13 +1,17 @@
 <template lang="html">
   <div class="user-info">
-      <img class="profile-img" src="https://image.flaticon.com/icons/svg/1338/1338023.svg" alt="profile image">
-        <p class="user-name">Username</p>
+      <img class="profile-img" :src="photo" alt="profile image">
+        <p class="user-name">{{name}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UserInfo'
+  name: 'UserInfo',
+  props: {
+    photo: String,
+    name: String
+  },
 }
 </script>
 

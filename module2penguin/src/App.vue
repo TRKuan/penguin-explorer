@@ -60,6 +60,20 @@ html, body {
   color: #2c3e50;
   align: center;
 }
+button.btn-primary {
+  background-color: rgb(37, 53, 103);
+  color: white;
+  border: rgb(37, 53, 103);
+}
+button.btn-primary:focus { outline:0; }
+button.btn-primary:hover, .btn-primary:focus{
+  background-color: rgb(42, 60, 120);
+  color: white;
+}
+button.btn-primary:active{
+  background: rgb(37, 53, 103);
+  color: white;
+}
 /*app*/
 .main {
   width: 100%;

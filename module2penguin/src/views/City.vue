@@ -1,8 +1,11 @@
 <template lang="html">
   <div class="city">
-    <city-info />
+    <city-info :name="this.$route.params.city" :starNum="starNum"/>
     <br />
     <div class="place-list list-group">
+      <template v-for="(place, idx) in cityPlaces">
+      <place-list-item :placeName="place.cityName" :key="idx" :visiteDate="place.date"/>
+      </template>
       <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
       <place-list-item placeName="Place2" visiteDate="2-21-2018" :visited="false"/>
       <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
@@ -32,11 +35,37 @@
 <script>
 import CityInfo from '@/components/CityInfo.vue'
 import PlaceListItem from '@/components/PlaceListItem.vue'
+import { auth, users} from "@/firebaseConfig.js"
 export default {
   name: 'City',
   components: {
     PlaceListItem,
     CityInfo
+  },
+  data() {
+    return {
+      // default to Montreal to keep it simple
+      // change this to whatever makes sense
+      cityInfo: null,
+      cityPlaces: []
+    };
+  },
+  firestore() {
+    return {
+      cityPlaces: users.doc(auth.currentUser.uid)
+                  .collection("places").where("cityName","==",this.$route.params.city)
+    };
+  },
+  computed:{
+    starNum(){
+      return this.cityPlaces.filter(c=>c.visited==true).length
+    },
+    visited(){
+      return this.cityPlaces.filter(c=>c.visited==true)
+    },
+    wishlist(){
+      return this.cityPlaces.filter(c=>c.wishlist==true)
+    }
   }
 }
 </script>

@@ -156,12 +156,13 @@ h1 {
 }
 img {
   width:250px;
+  margin: 1rem;
 }
 /**Jumbotron**/
 .jumbotron{
   width: 100%;
   height: 100%;
-  background-image: url("http://gimesy.com/wp-content/gallery/things-with-wings/Gimesy-4298.jpg");
+  background-image: url("/cover.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -181,21 +182,6 @@ img {
   font-style: italic;
   font-size: 2rem;
   opacity: 0.9;
-}
-/**button**/
-.btn-primary {
-  background-color: rgb(37, 53, 103);
-  color: white;
-  border: rgb(37, 53, 103);
-}
-.btn-primary:focus { outline:0; }
-.btn-primary:hover, .btn-primary:focus{
-  background-color: rgb(42, 60, 120);
-  color: white;
-}
-.btn-primary:active{
-  background: rgb(37, 53, 103);
-  color: white;
 }
 .scroll-down-div {
   margin-top: 1rem;

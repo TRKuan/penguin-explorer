@@ -1,5 +1,5 @@
 <template lang="html">
-  <router-link :to="{name:'place', params:{id:placeName/*you may want to replace this with id*/}}" class="list-group-item flex-column flex-md-row" exact>
+  <router-link :to="{name:'place', params:{id:url/*you may want to replace this with id*/}}" class="list-group-item flex-column flex-md-row" exact>
     <div class="name">
       {{placeName}}
       <span v-if="visited" class="badge badge-success">Visited</span>
@@ -18,11 +18,15 @@ export default {
   props: {
     placeName: String,
     visiteDate: String,
-    visited: Boolean
+    visited: Boolean,
+    place: Object
   },
   computed: {
     date: function(){
       return moment(this.visiteDate).format('MM-DD-YYYY')
+    },
+    url(){
+      return this.placeName.replace(/ /g,"_")+"_"+this.place.marker.lat+"_"+this.place.marker.lng
     }
   }
 }
