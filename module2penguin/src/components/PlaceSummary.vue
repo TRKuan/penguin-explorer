@@ -2,6 +2,9 @@
   <div>
   <div id = "placeSummary">
   <h3 id = "placename">{{PlaceName}}</h3>
+  <button class="btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Visited
+  </button>
   <div id = "visitDate" v-if = "Visited">
     <p >{{DateVisited}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
@@ -18,12 +21,24 @@
   </div>
   <!-- v-for looped collection of other users notes and photos of the place -->
   </div>
+  <!--Add place form-->
+  <div class="modal fade" id="form">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <AddPlaceForm />
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
+import AddPlaceForm from '@/components/AddPlaceForm.vue'
 export default {
   name: "PlaceSummary",
+  components: {
+    AddPlaceForm
+  },
   data() {
     return {
       PlaceName: "J&S Bean Factory",
