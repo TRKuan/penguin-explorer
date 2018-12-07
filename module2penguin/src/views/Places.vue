@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="places">
     <h1 class="title">Places</h1>
+    <p class="discription" v-if="cities.length===0">No place has been added. Add a place you've visited from the map!</p>
     <template v-for="city in cities" >
     <router-link :to="{name:'city', params:{city:city.cityName}}" class="city">
       <h2>{{city.cityName.replace(/-/g," ")}}</h2></router-link>
@@ -15,7 +16,7 @@
     </div>
     <br />
     </template>
-    
+
   </div>
 </template>
 
@@ -53,6 +54,9 @@ export default {
 }
 .title {
   margin-bottom: 2rem;
+}
+.discription {
+  text-align: center;
 }
 .city {
   white-space: nowrap;

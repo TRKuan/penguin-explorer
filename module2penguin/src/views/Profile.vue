@@ -1,9 +1,10 @@
 <template lang="html">
   <div class="proflie">
     <auth class="auth d-md-none"/>
-    <user-info :photo="profileInfo.photo" :name="profileInfo.name"/>
+    <user-info class="user-info" :photo="profileInfo.photo" :name="profileInfo.name"/>
+    <h1 class="title">Cities</h1>
+    <p class="discription" v-if="cities.length===0">No place has been added. Add a place you've visited from the map!</p>
     <div class="city-list list-group">
-      <h1 class="title">Cities</h1>
       <template v-for="(city, idx) in cities">
       <city-list-item :key="idx" :cityName="city.cityName"/>
       </template>
@@ -45,6 +46,16 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
+  padding-bottom: 2rem;
+}
+.user-info {
+  margin-bottom: 2rem;
+}
+.title {
+  margin-bottom: 2rem;
+}
+.discription {
+  text-align: center;
 }
 @media (max-width: 767px/*sm*/) {
   .proflie {
