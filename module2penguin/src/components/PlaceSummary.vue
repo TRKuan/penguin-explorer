@@ -95,4 +95,19 @@ p{
 color: grey;
 margin-bottom: 0px !important;
 }
+@media (min-width: 576px) {
+  #form .modal-dialog {
+    max-width: 500px;
+  }
+}
+@media (min-width: 768px) {
+  #form .modal-dialog {
+    max-width: 700px;
+  }
+}
+@media (min-width: 992px) {
+  #form .modal-dialog {
+    max-width: 800px;
+  }
+}
 </style>
