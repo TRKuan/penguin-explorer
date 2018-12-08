@@ -1,63 +1,43 @@
 <template>
-  <div>
-    <div>
-      <div>
-        <div>
-          <div class="subcontainer">
-            <div class="penguin">
-              {{ city }}:
-              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ penguin }}
-            </div>
-            <div class="search">
-              <gmap-autocomplete
-                @place_changed="setPlace">
-              </gmap-autocomplete>
-              <button @click="addMarker">Search</button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <gmap-map
+    ref="map"
+    :position="google"
+    :center="center"
+    :zoom="12"
+    style="width:100%;  height: 75vh;"
+    >
+    <div :key="index"
+        v-for="(m, index) in markers">
+        <gmap-marker
+          v-if="m.wishlisted"
+          :position="m.marker"
+          :clickable="true"
+          :icon="{
+            url: require('../assets/heart.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
+          }"
+          @click="showPlace(index)">
+        </gmap-marker>
+        <gmap-marker
+          v-else-if="m.visited"
+          :position="m.marker"
+          :clickable="true"
+          :icon="{
+            url: require('../assets/penguin.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+          }"
+          @click="showPlace(index)">
+        </gmap-marker>
+        <gmap-marker
+          v-else
+          :position="m.marker"
+          :clickable="true"
+          @click="showPlace(index)">
+        </gmap-marker>
     </div>
-    <div>
-
-    </div>
-    <div>
-      <gmap-map
-      ref="map"
-      :position="google"
-      :center="center"
-      :zoom="12"
-      style="width:100%;  height: 75vh;"
-      >
-        <div :key="index"
-            v-for="(m, index) in markers">
-            <gmap-marker
-              v-if="!m.visited"
-              :position="m.marker"
-              :clickable="true"
-              :icon="{
-                url: require('../assets/heart.png'),
-                size: {width: 46, height: 46, f: 'px', b: 'px'},
-                scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
-              }"
-              @click="showPlace(index)">
-            </gmap-marker>
-            <gmap-marker
-              v-if="m.visited"
-              :position="m.marker"
-              :clickable="true"
-              :icon="{
-                url: require('../assets/penguin.png'),
-                size: {width: 46, height: 46, f: 'px', b: 'px'},
-                scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
-              }"
-              @click="showPlace(index)">
-            </gmap-marker>
-        </div>
-      </gmap-map>
-    </div>
-    <!-- <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/> -->
-  </div>
+  </gmap-map>
 </template>
 
 <script>
@@ -117,18 +97,16 @@ export default {
     setPlace(place) {
       this.currentPlace = place;
     },
-    addMarker() {
-      if (this.currentPlace) {
+    addMarker(currentPlace) {
+      if (currentPlace) {
         const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lat: currentPlace.geometry.location.lat(),
+          lng: currentPlace.geometry.location.lng()
         };
         this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
+        this.places.push(currentPlace);
         this.center = marker;
-        this.penguin++;
-        this.addPlace(this.currentPlace, false, true)        
-        this.currentPlace = null;
+        this.addPlace(currentPlace, false, false)        
       }
     },
     getCityName(address){
