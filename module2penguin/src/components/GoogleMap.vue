@@ -106,7 +106,17 @@ export default {
         this.markers.push({ position: marker });
         this.places.push(currentPlace);
         this.center = marker;
-        this.addPlace(currentPlace, false, false)        
+
+        var query = users.doc(auth.currentUser.uid).collection("places")
+              .where("visited", "==", false)
+              .where("wishlisted", "==", false);
+        let self = this;
+        query.get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            doc.ref.delete();
+          });
+          self.addPlace(currentPlace, false, false)
+        });        
       }
     },
     getCityName(address){
