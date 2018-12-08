@@ -4,30 +4,8 @@
     <br />
     <div class="place-list list-group">
       <template v-for="(place, idx) in cityPlaces">
-      <place-list-item :placeName="place.cityName" :key="idx" :visiteDate="place.date"/>
+      <place-list-item :placeName="place.name" :key="idx" :visiteDate="place.visitedDate" :visited="place.visited" :placeId="place.id"/>
       </template>
-      <place-list-item placeName="Place1" visiteDate="9-11-2018" :visited="false"/>
-      <place-list-item placeName="Place2" visiteDate="2-21-2018" :visited="false"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="false"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
-      <place-list-item placeName="Place3" visiteDate="12-27-2017" :visited="true"/>
     </div>
   </div>
 </template>

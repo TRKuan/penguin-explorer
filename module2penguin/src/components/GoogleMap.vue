@@ -107,7 +107,8 @@ export default {
   firestore() {
     if (auth.currentUser) {
       return {
-          markers: users.doc(auth.currentUser.uid).collection("places")
+          markers: users.doc(auth.currentUser.uid).collection("places"),
+          cities: users.doc(auth.currentUser.uid).collection("cities")
       };
     }
   },
@@ -148,12 +149,9 @@ export default {
           lat: currentPlace.geometry.location.lat(),
           lng: currentPlace.geometry.location.lng()
         };
-        console.log(currentPlace)
-        users.doc(auth.currentUser.uid).collection("cities").doc(cityName).get().then((docSnapshot) => {
-            if (!docSnapshot.exists) {
+        if(this.cities.filter(c=>c.cityName==cityName).length==0)
               users.doc(auth.currentUser.uid).collection("cities").add({cityName})
-            }
-        });
+           
         users.doc(auth.currentUser.uid).collection("places")
               .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY')})
     },
@@ -172,19 +170,20 @@ export default {
           }
           var geocoder = new this.google.maps.Geocoder();
           let self = this;
-          const getCityName = this.getCityName
           geocoder.geocode({'latLng': this.center}, function(results, status) {
             if (status === 'OK') {
-              self.city = getCityName(results[0].formatted_address)
+              self.city = self.getCityName(results[0].formatted_address)
                 // get number of penguins
                 for (var i = 0; i < self.markers.length; i++) {
                   if (self.markers[i].cityName == self.city && self.markers[i].visited == true) {
                     self.penguin++;
                   }
                 }
+              self.penguin = self.markers.filter(c=>c.visited==true && c.cityName==self.city).length
+              self.city = self.city.replace(/-/g,", ")
+              console.log(self.city)
               }
            });
-          self.penguin = this.markers.filter(c=>c.visited==true && c.cityName==self.cityName).length
         });
       });
     },
