@@ -1,70 +1,50 @@
 <template>
-  <div>
-    <div>
-      <div>
-        <div>
-          <div class="subcontainer">
-            <div class="penguin">
-              {{ city }}:
-              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ penguin }}
-            </div>
-            <div class="search">
-              <gmap-autocomplete
-                @place_changed="setPlace">
-              </gmap-autocomplete>
-              <button @click="addMarker">Search</button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <gmap-map
+    ref="map"
+    :position="google"
+    :center="center"
+    :zoom="12"
+    style="width:100%;  height: 75vh;"
+    >
+    <div :key="index"
+        v-for="(m, index) in markers">
+        <gmap-marker
+          v-if="m.wishlisted"
+          :position="m.marker"
+          :clickable="true"
+          :icon="{
+            url: require('../assets/heart.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
+          }"
+          @click="showPlace(index)">
+        </gmap-marker>
+        <gmap-marker
+          v-else-if="m.visited"
+          :position="m.marker"
+          :clickable="true"
+          :icon="{
+            url: require('../assets/penguin.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+          }"
+          @click="showPlace(index)">
+        </gmap-marker>
+        <gmap-marker
+          v-else
+          :position="m.marker"
+          :clickable="true"
+          @click="showPlace(index)">
+        </gmap-marker>
     </div>
-    <div>
-
-    </div>
-    <div>
-      <gmap-map
-      ref="map"
-      :position="google"
-      :center="center"
-      :zoom="12"
-      style="width:100%;  height: 75vh;"
-      >
-        <div :key="index"
-            v-for="(m, index) in markers">
-            <gmap-marker
-              v-if="!m.visited"
-              :position="m.marker"
-              :clickable="true"
-              :icon="{
-                url: require('../assets/heart.png'),
-                size: {width: 46, height: 46, f: 'px', b: 'px'},
-                scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
-              }"
-              @click="showPlace(index)">
-            </gmap-marker>
-            <gmap-marker
-              v-if="m.visited"
-              :position="m.marker"
-              :clickable="true"
-              :icon="{
-                url: require('../assets/penguin.png'),
-                size: {width: 46, height: 46, f: 'px', b: 'px'},
-                scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
-              }"
-              @click="showPlace(index)">
-            </gmap-marker>
-        </div>
-      </gmap-map>
-    </div>
-    <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/>
-  </div>
+  </gmap-map>
 </template>
 
 <script>
 /* eslint-disable */
 import { auth, users} from "@/firebaseConfig.js"
 import {gmapApi} from 'vue2-google-maps'
-import PlaceListItem from './PlaceListItem.vue'
+import PlaceSummary from './PlaceSummary.vue'
 import moment from 'moment'
 export default {
   name: "GoogleMap",
@@ -84,7 +64,7 @@ export default {
   },
 
   components: {
-    PlaceListItem
+    PlaceSummary
   },
 
   computed: {
@@ -118,18 +98,26 @@ export default {
     setPlace(place) {
       this.currentPlace = place;
     },
-    addMarker() {
-      if (this.currentPlace) {
+    addMarker(currentPlace) {
+      if (currentPlace) {
         const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lat: currentPlace.geometry.location.lat(),
+          lng: currentPlace.geometry.location.lng()
         };
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
+        // this.markers.push({ position: marker });
+        this.places.push(currentPlace);
         this.center = marker;
-        this.penguin++;
-        this.addPlace(this.currentPlace, false, true)        
-        this.currentPlace = null;
+
+        var query = users.doc(auth.currentUser.uid).collection("places")
+              .where("visited", "==", false)
+              .where("wishlisted", "==", false);
+        let self = this;
+        query.get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            doc.ref.delete();
+          });
+          self.addPlace(currentPlace, false, false)
+        });        
       }
     },
     getCityName(address){
@@ -172,16 +160,9 @@ export default {
           let self = this;
           geocoder.geocode({'latLng': this.center}, function(results, status) {
             if (status === 'OK') {
-              self.city = self.getCityName(results[0].formatted_address)
-                // get number of penguins
-                for (var i = 0; i < self.markers.length; i++) {
-                  if (self.markers[i].cityName == self.city && self.markers[i].visited == true) {
-                    self.penguin++;
-                  }
-                }
+              self.city = getCityName(results[0].formatted_address)
               self.penguin = self.markers.filter(c=>c.visited==true && c.cityName==self.city).length
-              self.city = self.city.replace(/-/g,", ")
-              console.log(self.city)
+              self.city = self.city.split("-")[0]
               }
            });
         });

@@ -1,17 +1,17 @@
 <template>
 <div>
 
-<GoogleMap/>
+<google-map-with-search-box/>
 
 </div>
 </template>
 
 <script>
-import GoogleMap from "@/components/GoogleMap.vue"
+import GoogleMapWithSearchBox from "@/components/GoogleMapWithSearchBox.vue"
 export default {
   name: 'Map',
   components: {
-    GoogleMap,
+    GoogleMapWithSearchBox,
   },
   data() {
     return {
