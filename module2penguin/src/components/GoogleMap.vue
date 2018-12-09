@@ -72,19 +72,11 @@ export default {
       return this.markers.filter(c=>c.city=this.city)
     }
   },
-    
-  firestore() {
-      return {
-          markers: users.doc(auth.currentUser.uid).collection("places")
-      };
-  },
 
   mounted() {
     this.geolocate(this.page);
     users
-      .doc(auth.currentUser.uid)
-      .get()
-      .then(docSnapshot => {
+      .doc(auth.currentUser.uid).get().then(docSnapshot => {
         if (!docSnapshot.exists) {
           users.doc(auth.currentUser.uid).set({
             userid: auth.currentUser.uid,
