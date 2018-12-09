@@ -2,7 +2,7 @@
   <div>
   <div id = "placeSummary">
   <h4 id = "placename">{{this.PlaceDoc.name}}</h4>
-  <button v-if = "this.PlaceDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+  <button class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
     Add a Photo
   </button>
   <div id = "visitDate" v-if = "this.PlaceDoc.visited">
@@ -13,7 +13,6 @@
   <div id = "wishlist-checkin" v-if = "!this.PlaceDoc.visited">
     <img v-if = "this.PlaceDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
     <img v-else-if = "!this.PlaceDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
-    <img class="icon" src="https://image.flaticon.com/icons/svg/447/447031.svg" alt="checkin">
   </div><br>
   <p id = "address">{{this.PlaceDoc.address}}</p><br>
   <div v-if = "this.PlaceDoc.visited" id = "usersNotesPhoto" >

@@ -1,5 +1,6 @@
 <template>
   <div>
+  <PlaceSummary v-if="showSummary"/>
     <div>
       <div>
         <div>
@@ -65,6 +66,7 @@
 import { auth, users} from "@/firebaseConfig.js"
 import {gmapApi} from 'vue2-google-maps'
 import PlaceListItem from './PlaceListItem.vue'
+import PlaceSummary from '@/components/PlaceSummary.vue'
 import moment from 'moment'
 export default {
   name: "GoogleMap",
@@ -80,11 +82,13 @@ export default {
       places: [],
       currentPlace: null,
       placeInfo: false,
+      showSummary: false,
     };
   },
 
   components: {
-    PlaceListItem
+    PlaceListItem,
+    PlaceSummary
   },
 
   computed: {
@@ -127,7 +131,7 @@ export default {
         this.places.push(this.currentPlace);
         this.center = marker;
         this.penguin++;
-        this.addPlace(this.currentPlace, false, true)        
+        this.addPlace(this.currentPlace, false, true)
         this.currentPlace = null;
       }
     },
@@ -160,7 +164,7 @@ export default {
 
     showPlace(index) {
       // Parse data for showing place here
-      this.placeInfo = true;
+      this.showSummary = true;
     },
 
     geolocate: function() {
@@ -210,6 +214,14 @@ export default {
 .subcontainer {
   width: 100%;
   flex-direction: row;
+}
+#placeSummary {
+  position: fixed;
+  bottom: 0em;
+  width: 100%;
+  height: 7em;
+  background-color: #eef2fb;
+  z-index: 100000;
 }
 
 </style>
