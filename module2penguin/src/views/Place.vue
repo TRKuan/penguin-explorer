@@ -24,6 +24,12 @@ export default {
       PlaceDoc: users.doc(auth.currentUser.uid).collection("places").doc(this.DocID),
     }
   },
+  methods: {
+    toggleWishlist (val){
+      users.doc(auth.currentUser.uid).collection("places").doc(this.PlaceDoc.id).update({wishlisted: val})
+      this.PlaceDoc.wishlisted = val;
+    },
+  }
 
 }
 </script>
