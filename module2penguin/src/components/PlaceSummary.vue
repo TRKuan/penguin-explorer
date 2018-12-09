@@ -12,10 +12,9 @@
     <p>{{placeDoc.visitedDate}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
   </div>
-
   <div id = "wishlist-checkin" v-if = "!placeDoc.visited">
-    <img v-if = "placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
-    <img v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
+    <img @click="toggleWishlist(false)" v-if = "placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
+    <img @click="toggleWishlist(true)" v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
   </div><br>
   <p id = "address">{{placeDoc.address}}</p><br>
   <div v-if = "placeDoc.visited" id = "usersNotesPhoto" >
@@ -55,7 +54,9 @@ export default {
   },
 
   methods: {
-
+    toggleWishlist (val) {
+       this.$emit('toggleWishlist', val)
+    }
   },
 };
 </script>

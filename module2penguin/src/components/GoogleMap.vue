@@ -2,7 +2,7 @@
   <div>
   {{this.PlaceDoc.placeName}}
   <div v-if="showSummary" id = "placeSummaryDiv">
-  <PlaceSummary :placeDoc="PlaceDoc"/>
+  <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
   </div>
 
   <gmap-map
@@ -69,6 +69,7 @@ export default {
       placeInfo: false,
       showSummary: false,
       PlaceDoc :{},
+      PlaceIndex: null,
     };
   },
 
@@ -162,6 +163,7 @@ export default {
       console.log(this.markers[index]);
       console.log("check3");
       this.PlaceDoc = this.markers[index];
+      this.PlaceIndex = index;
     },
 
     geolocate: function() {
@@ -182,6 +184,11 @@ export default {
            });
         });
       });
+    },
+
+    toggleWishlist (val){
+      users.doc(auth.currentUser.uid).collection("places").doc(this.PlaceDoc.id).update({wishlisted: val})
+      this.PlaceDoc.wishlisted = val;
     },
   }
 };

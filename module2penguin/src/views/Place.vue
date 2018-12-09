@@ -1,5 +1,5 @@
 <template lang="html">
-  <PlaceSummary :placeDoc="PlaceDoc"/>
+  <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
 </template>
 
 <script>
