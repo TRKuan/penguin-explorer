@@ -23,9 +23,14 @@
     <div>
     </div>
     <div>
-        <google-map ref="map" page="home"/>
+        <google-map 
+          ref="map"
+          v-on:showPlace="showPlace" page="home"/>
     </div>
-    <!-- <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/> -->
+    {{this.PlaceDoc.placeName}}
+      <div v-if="showSummary" id = "placeSummaryDiv">
+      <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
+    </div>
   </div>
 </template>
 
@@ -49,8 +54,11 @@ export default {
       penguin: 0,
       places: [],
       currentPlace: null,
+      mounted: false,
       placeInfo: false,
-      mounted: false
+      showSummary: false,
+      PlaceDoc :{},
+      PlaceIndex: null,
     };
   },
 
@@ -87,6 +95,22 @@ export default {
         this.currentPlace = null;
       }
     },
+    showPlace(index) {
+      // Parse data for showing place here
+      this.showSummary = true;
+      console.log(index);
+      console.log(this.places[index]);
+      console.log("check2");
+      console.log(this.markers[index]);
+      console.log("check3");
+      this.PlaceDoc = this.markers[index];
+      this.PlaceIndex = index;
+    },
+
+    toggleWishlist (val){
+      users.doc(auth.currentUser.uid).collection("places").doc(this.PlaceDoc.id).update({wishlisted: val})
+      this.PlaceDoc.wishlisted = val;
+    },
   }
 };
 </script>
@@ -110,5 +134,4 @@ export default {
   width: 100%;
   flex-direction: row;
 }
-
 </style>

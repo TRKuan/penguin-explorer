@@ -1,4 +1,5 @@
 <template>
+  <div>
   <gmap-map
     ref="map"
     :position="google"
@@ -14,9 +15,9 @@
         :icon="{
             url: require('../assets/heart.png'),
             size: {width: 46, height: 46, f: 'px', b: 'px'},
-            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
+            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
           }"
-        @click="showPlace(index)"
+        @click="$emit('showPlace', index)"
       ></gmap-marker>
       <gmap-marker
         v-else-if="m.visited"
@@ -25,13 +26,19 @@
         :icon="{
             url: require('../assets/penguin.png'),
             size: {width: 46, height: 46, f: 'px', b: 'px'},
-            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
           }"
-        @click="showPlace(index)"
-      ></gmap-marker>
-      <gmap-marker v-else :position="m.marker" :clickable="true" @click="showPlace(index)"></gmap-marker>
+          @click="$emit('showPlace', index)">
+        </gmap-marker>
+        <gmap-marker
+          v-else
+          :position="m.marker"
+          :clickable="true"
+          @click="$emit('showPlace', index)">
+        </gmap-marker>
     </div>
   </gmap-map>
+  </div>
 </template>
 
 <script>
@@ -168,7 +175,14 @@ export default {
 
     showPlace(index) {
       // Parse data for showing place here
-      this.placeInfo = true;
+      this.showSummary = true;
+      console.log(index);
+      console.log(this.places[index]);
+      console.log("check2");
+      console.log(this.markers[index]);
+      console.log("check3");
+      this.PlaceDoc = this.markers[index];
+      this.PlaceIndex = index;
     },
 
     geolocate: function(page) {
@@ -223,4 +237,17 @@ export default {
   width: 100%;
   flex-direction: row;
 }
+<<<<<<< HEAD
+=======
+
+#placeSummaryDiv {
+  position: fixed;
+  bottom: 0em;
+  width: 100%;
+  height: 7em;
+  background-color: #eef2fb;
+  z-index: 100000;
+}
+
+>>>>>>> 52f0b01d650007059a73419ebd1499d6d666305d
 </style>
