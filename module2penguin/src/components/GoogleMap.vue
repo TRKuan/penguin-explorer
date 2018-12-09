@@ -5,49 +5,46 @@
     :center="center"
     :zoom="12"
     style="width:100%;  height: 75vh;"
-    >
-    <div :key="index"
-        v-for="(m, index) in markers">
-        <gmap-marker
-          v-if="m.wishlisted"
-          :position="m.marker"
-          :clickable="true"
-          :icon="{
+  >
+    <div :key="index" v-for="(m, index) in filteredMarkers">
+      <gmap-marker
+        v-if="m.wishlisted"
+        :position="m.marker"
+        :clickable="true"
+        :icon="{
             url: require('../assets/heart.png'),
             size: {width: 46, height: 46, f: 'px', b: 'px'},
             scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
           }"
-          @click="showPlace(index)">
-        </gmap-marker>
-        <gmap-marker
-          v-else-if="m.visited"
-          :position="m.marker"
-          :clickable="true"
-          :icon="{
+        @click="showPlace(index)"
+      ></gmap-marker>
+      <gmap-marker
+        v-else-if="m.visited"
+        :position="m.marker"
+        :clickable="true"
+        :icon="{
             url: require('../assets/penguin.png'),
             size: {width: 46, height: 46, f: 'px', b: 'px'},
             scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
           }"
-          @click="showPlace(index)">
-        </gmap-marker>
-        <gmap-marker
-          v-else
-          :position="m.marker"
-          :clickable="true"
-          @click="showPlace(index)">
-        </gmap-marker>
+        @click="showPlace(index)"
+      ></gmap-marker>
+      <gmap-marker v-else :position="m.marker" :clickable="true" @click="showPlace(index)"></gmap-marker>
     </div>
   </gmap-map>
 </template>
 
 <script>
 /* eslint-disable */
-import { auth, users} from "@/firebaseConfig.js"
-import {gmapApi} from 'vue2-google-maps'
-import PlaceSummary from './PlaceSummary.vue'
-import moment from 'moment'
+import { auth, users } from "@/firebaseConfig.js";
+import { gmapApi } from "vue2-google-maps";
+import PlaceSummary from "./PlaceSummary.vue";
+import moment from "moment";
 export default {
   name: "GoogleMap",
+  props: {
+    page: String
+  },
   data() {
     return {
       // default to Montreal to keep it simple
@@ -59,7 +56,7 @@ export default {
       penguin: 0,
       places: [],
       currentPlace: null,
-      placeInfo: false,
+      placeInfo: false
     };
   },
 
@@ -68,27 +65,41 @@ export default {
   },
 
   computed: {
-    google: gmapApi
+    google: gmapApi,
+    filteredMarkers(){
+      console.log(this.markers.city)
+      console.log(this.city)
+      return this.markers.filter(c=>c.city=this.city)
+    }
+  },
+    
+  firestore() {
+      return {
+          markers: users.doc(auth.currentUser.uid).collection("places")
+      };
   },
 
   mounted() {
-    this.geolocate();
-    users.doc(auth.currentUser.uid).get().then((docSnapshot) => {
-            if (!docSnapshot.exists) {
-              users.doc(auth.currentUser.uid).set({
-                userid:auth.currentUser.uid,
-                photo: auth.currentUser.photoURL,
-                name: auth.currentUser.displayName
-                })
-            }
-    });
+    this.geolocate(this.page);
+    users
+      .doc(auth.currentUser.uid)
+      .get()
+      .then(docSnapshot => {
+        if (!docSnapshot.exists) {
+          users.doc(auth.currentUser.uid).set({
+            userid: auth.currentUser.uid,
+            photo: auth.currentUser.photoURL,
+            name: auth.currentUser.displayName
+          });
+        }
+      });
   },
 
   firestore() {
     if (auth.currentUser) {
       return {
-          markers: users.doc(auth.currentUser.uid).collection("places"),
-          cities: users.doc(auth.currentUser.uid).collection("cities")
+        markers: users.doc(auth.currentUser.uid).collection("places"),
+        cities: users.doc(auth.currentUser.uid).collection("cities")
       };
     }
   },
@@ -108,40 +119,59 @@ export default {
         this.places.push(currentPlace);
         this.center = marker;
 
-        var query = users.doc(auth.currentUser.uid).collection("places")
-              .where("visited", "==", false)
-              .where("wishlisted", "==", false);
+        var query = users
+          .doc(auth.currentUser.uid)
+          .collection("places")
+          .where("visited", "==", false)
+          .where("wishlisted", "==", false);
         let self = this;
         query.get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             doc.ref.delete();
           });
-          self.addPlace(currentPlace, false, false)
-        });        
+          self.addPlace(currentPlace, false, false);
+        });
       }
     },
-    getCityName(address){
-      let addressArray = address.split(", ")
-      let l = addressArray.length
-      return addressArray[l-3].replace(/ /g, '-')+"-"
-            +addressArray[l-2].split(' ')[0]+"-"
-            +addressArray[l-1].replace(/ /g, '-')
+    getCityName(address) {
+      let addressArray = address.split(", ");
+      let l = addressArray.length;
+      return (
+        addressArray[l - 3].replace(/ /g, "-") +
+        "-" +
+        addressArray[l - 2].split(" ")[0] +
+        "-" +
+        addressArray[l - 1].replace(/ /g, "-")
+      );
     },
-    addPlace(currentPlace, visit, wishlist){
-        const name = currentPlace.name
-        const address = currentPlace.formatted_address
-        const visited = visit;
-        const wishlisted = wishlist;
-        const cityName = this.getCityName(address)
-        const marker = {
-          lat: currentPlace.geometry.location.lat(),
-          lng: currentPlace.geometry.location.lng()
-        };
-        if(this.cities.filter(c=>c.cityName==cityName).length==0)
-              users.doc(auth.currentUser.uid).collection("cities").add({cityName})
-           
-        users.doc(auth.currentUser.uid).collection("places")
-              .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY')})
+    addPlace(currentPlace, visit, wishlist) {
+      const name = currentPlace.name;
+      const address = currentPlace.formatted_address;
+      const visited = visit;
+      const wishlisted = wishlist;
+      const cityName = this.getCityName(address);
+      const marker = {
+        lat: currentPlace.geometry.location.lat(),
+        lng: currentPlace.geometry.location.lng()
+      };
+      if (this.cities.filter(c => c.cityName == cityName).length == 0)
+        users
+          .doc(auth.currentUser.uid)
+          .collection("cities")
+          .add({ cityName });
+
+      users
+        .doc(auth.currentUser.uid)
+        .collection("places")
+        .add({
+          name,
+          address,
+          cityName,
+          marker,
+          visited,
+          wishlisted,
+          visitedDate: moment().format("MM-DD-YYYY")
+        });
     },
 
     showPlace(index) {
@@ -149,25 +179,35 @@ export default {
       this.placeInfo = true;
     },
 
-    geolocate: function() {
+    geolocate: function(page) {
       this.$refs.map.$mapPromise.then(() => {
-        navigator.geolocation.getCurrentPosition(position => {
-          this.center = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-          var geocoder = new this.google.maps.Geocoder();
-          let self = this;
-          geocoder.geocode({'latLng': this.center}, function(results, status) {
-            if (status === 'OK') {
-              self.city = getCityName(results[0].formatted_address)
-              self.penguin = self.markers.filter(c=>c.visited==true && c.cityName==self.city).length
-              self.city = self.city.split("-")[0]
+        var geocoder = new this.google.maps.Geocoder();
+        let self = this;
+        if (page == "home") {
+          navigator.geolocation.getCurrentPosition(position => {
+            this.center = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            geocoder.geocode({ latLng: this.center }, function(results,status) {
+              if (status === "OK") {
+                self.city = self.getCityName(results[0].formatted_address);
               }
-           });
-        });
+            });
+          });
+        } else {
+          this.city = page.replace(/-/g, ", ");
+          geocoder.geocode({ address: this.city }, function(results, status) {
+            if (status === "OK") {
+              self.center = results[0].geometry.location;
+            }
+          });
+        }
+        this.penguin = this.markers.filter(c => c.visited == true && c.cityName == this.city).length;
+        this.city = this.city.split("-")[0];
       });
-    },
+    }
   }
 };
 </script>
@@ -191,5 +231,4 @@ export default {
   width: 100%;
   flex-direction: row;
 }
-
 </style>

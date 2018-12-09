@@ -5,7 +5,7 @@
         <div>
           <div class="subcontainer">
             <div v-if="mounted" class="penguin">
-              {{ $refs.map.city }}:
+              {{ $refs.map.city.split("-")[0] }}:
               <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ $refs.map.penguin }}
             </div>
             <div class="search">
@@ -23,7 +23,7 @@
     <div>
     </div>
     <div>
-        <google-map ref="map"/>
+        <google-map ref="map" page="home"/>
     </div>
     <!-- <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/> -->
   </div>
