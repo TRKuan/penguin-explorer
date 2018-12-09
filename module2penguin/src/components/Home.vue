@@ -8,6 +8,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Auth from "@/components/Auth.vue";
 import { auth, provider } from "@/firebaseConfig";
 
