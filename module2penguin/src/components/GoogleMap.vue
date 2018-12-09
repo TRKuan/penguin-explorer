@@ -1,10 +1,5 @@
 <template>
   <div>
-  {{this.PlaceDoc.placeName}}
-  <div v-if="showSummary" id = "placeSummaryDiv">
-  <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
-  </div>
-
   <gmap-map
     ref="map"
     :position="google"
@@ -15,18 +10,7 @@
     <div :key="index"
         v-for="(m, index) in markers">
         <gmap-marker
-          v-if="m.wishlisted"
-          :position="m.marker"
-          :clickable="true"
-          :icon="{
-            url: require('../assets/heart.png'),
-            size: {width: 46, height: 46, f: 'px', b: 'px'},
-            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
-          }"
-          @click="showPlace(index)">
-        </gmap-marker>
-        <gmap-marker
-          v-else-if="m.visited"
+          v-if="m.visited"
           :position="m.marker"
           :clickable="true"
           :icon="{
@@ -34,13 +18,24 @@
             size: {width: 46, height: 46, f: 'px', b: 'px'},
             scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
           }"
-          @click="showPlace(index)">
+          @click="$emit('showPlace', index)">
+        </gmap-marker>
+        <gmap-marker
+          v-else-if="m.wishlisted"
+          :position="m.marker"
+          :clickable="true"
+          :icon="{
+            url: require('../assets/heart.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
+          }"
+          @click="$emit('showPlace', index)">
         </gmap-marker>
         <gmap-marker
           v-else
           :position="m.marker"
           :clickable="true"
-          @click="showPlace(index)">
+          @click="$emit('showPlace', index)">
         </gmap-marker>
     </div>
   </gmap-map>
@@ -66,10 +61,6 @@ export default {
       penguin: 0,
       places: [],
       currentPlace: null,
-      placeInfo: false,
-      showSummary: false,
-      PlaceDoc :{},
-      PlaceIndex: null,
     };
   },
 
@@ -177,18 +168,13 @@ export default {
           let self = this;
           geocoder.geocode({'latLng': this.center}, function(results, status) {
             if (status === 'OK') {
-              self.city = getCityName(results[0].formatted_address)
+              self.city = self.getCityName(results[0].formatted_address)
               self.penguin = self.markers.filter(c=>c.visited==true && c.cityName==self.city).length
               self.city = self.city.split("-")[0]
               }
            });
         });
       });
-    },
-
-    toggleWishlist (val){
-      users.doc(auth.currentUser.uid).collection("places").doc(this.PlaceDoc.id).update({wishlisted: val})
-      this.PlaceDoc.wishlisted = val;
     },
   }
 };
@@ -213,6 +199,7 @@ export default {
   width: 100%;
   flex-direction: row;
 }
+
 #placeSummaryDiv {
   position: fixed;
   bottom: 0em;
