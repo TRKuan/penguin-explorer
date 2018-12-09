@@ -1,21 +1,24 @@
 <template>
   <div>
   <div id = "placeSummary">
-  <h4 id = "placename">{{this.PlaceDoc.name}}</h4>
-  <button class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-    Add a Photo
+  <h4 id = "placename">{{placeDoc.name}}</h4>
+  <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Edit Check-in
   </button>
-  <div id = "visitDate" v-if = "this.PlaceDoc.visited">
-    <p>{{this.PlaceDoc.visitedDate}}</p>
+  <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Check In
+  </button>
+  <div id = "visitDate" v-if = "placeDoc.visited">
+    <p>{{placeDoc.visitedDate}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
   </div>
 
-  <div id = "wishlist-checkin" v-if = "!this.PlaceDoc.visited">
-    <img v-if = "this.PlaceDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
-    <img v-else-if = "!this.PlaceDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
+  <div id = "wishlist-checkin" v-if = "!placeDoc.visited">
+    <img v-if = "placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
+    <img v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
   </div><br>
-  <p id = "address">{{this.PlaceDoc.address}}</p><br>
-  <div v-if = "this.PlaceDoc.visited" id = "usersNotesPhoto" >
+  <p id = "address">{{placeDoc.address}}</p><br>
+  <div v-if = "placeDoc.visited" id = "usersNotesPhoto" >
     <img class = "place-photo" v-bind:src="UsersNotesPhoto.imgURL" alt="place photo">
     <div><p>{{UsersNotesPhoto.notes}}</p></div>
   </div>
@@ -41,10 +44,9 @@ export default {
   components: {
     AddPlaceForm
   },
+  props: ['placeDoc'],
   data() {
     return {
-      DocID: this.$route.params.id,
-      PlaceDoc: {},
       UsersNotesPhoto: {
         imgURL: "https://i.pinimg.com/originals/be/19/d1/be19d16586d664258625ef4aef738c43.jpg",
         notes: "Your description and opinions of the place"
@@ -52,14 +54,6 @@ export default {
     };
   },
 
-  firestore() {
-    var doctemp = users.doc(auth.currentUser.uid).collection("places").doc(this.DocID);
-    console.log(doctemp);
-    return {
-      PlaceDoc: users.doc(auth.currentUser.uid).collection("places").doc(this.DocID),
-    }
-
-  },
   methods: {
 
   },

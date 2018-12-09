@@ -1,4 +1,10 @@
 <template>
+  <div>
+  {{this.PlaceDoc.placeName}}
+  <div v-if="showSummary" id = "placeSummaryDiv">
+  <PlaceSummary :placeDoc="PlaceDoc"/>
+  </div>
+
   <gmap-map
     ref="map"
     :position="google"
@@ -38,13 +44,13 @@
         </gmap-marker>
     </div>
   </gmap-map>
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
 import { auth, users} from "@/firebaseConfig.js"
 import {gmapApi} from 'vue2-google-maps'
-import PlaceListItem from './PlaceListItem.vue'
 import PlaceSummary from '@/components/PlaceSummary.vue'
 import moment from 'moment'
 export default {
@@ -62,11 +68,11 @@ export default {
       currentPlace: null,
       placeInfo: false,
       showSummary: false,
+      PlaceDoc :{},
     };
   },
 
   components: {
-    PlaceListItem,
     PlaceSummary
   },
 
@@ -91,7 +97,7 @@ export default {
     if (auth.currentUser) {
       return {
           markers: users.doc(auth.currentUser.uid).collection("places"),
-          cities: users.doc(auth.currentUser.uid).collection("cities")
+          cities: users.doc(auth.currentUser.uid).collection("cities"),
       };
     }
   },
@@ -150,6 +156,12 @@ export default {
     showPlace(index) {
       // Parse data for showing place here
       this.showSummary = true;
+      console.log(index);
+      console.log(this.places[index]);
+      console.log("check2");
+      console.log(this.markers[index]);
+      console.log("check3");
+      this.PlaceDoc = this.markers[index];
     },
 
     geolocate: function() {
@@ -194,7 +206,7 @@ export default {
   width: 100%;
   flex-direction: row;
 }
-#placeSummary {
+#placeSummaryDiv {
   position: fixed;
   bottom: 0em;
   width: 100%;
