@@ -9,10 +9,11 @@ import firebase from 'firebase'
 import * as VueGoogleMaps from "vue2-google-maps";
 import {gmapApi} from 'vue2-google-maps'
 //style
-import 'bootstrap'; import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap';import 'bootstrap/dist/css/bootstrap.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStar, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import './registerServiceWorker'
 library.add(faStar, faAngleDown)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -74,9 +74,8 @@ export default {
   computed: {
     google: gmapApi,
     filteredMarkers(){
-      console.log(this.markers.city)
-      console.log(this.city)
-      return this.markers.filter(c=>c.city=this.city)
+      console.log(this.markers)
+      return this.markers.filter(c=>c.cityName==this.city)
     }
   },
 

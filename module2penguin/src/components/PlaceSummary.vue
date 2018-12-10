@@ -29,7 +29,7 @@
   <div class="modal fade" id="form">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <AddPlaceForm v-if="placeDoc" :placeDoc="placeDoc"/>
+        <AddPlaceForm v-if="placeDoc" :placeDoc="placeDoc" :edit="placeDoc.visited" :visitDate="placeDoc.visitedDate" />
       </div>
     </div>
   </div>

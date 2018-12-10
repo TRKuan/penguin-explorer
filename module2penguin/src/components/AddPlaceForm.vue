@@ -1,6 +1,13 @@
 <template lang="html">
   <div class="add-place-form">
     <form>
+      <div v-if="edit" class="delete">
+        <button v-if="placeDoc.visited" type="button" class="btn btn-danger" @click="deletePlace()">Delete</button>
+      </div>
+      <div v-if="edit" class="form-group">
+        <label for="date-input">Date</label>
+        <input class="form-control" type="date" :value="date" id="date-input">
+      </div>
       <div class="form-group">
         <label for="textarea">Comment</label>
         <textarea v-if="placeDoc" class="form-control" id="textarea" rows="3" v-model="placeDoc.notes"></textarea>
@@ -13,7 +20,6 @@
         <img v-if="imgUrl" :src="imgUrl">
       </div>
       <div class="submit">
-        <button v-if="placeDoc.visited" type="button" class="btn btn-primary" @click="deletePlace()">Delete</button>
         <button type="button" class="btn btn-primary" @click="checkIn()">Submit</button>
       </div>
     </form>
@@ -27,6 +33,7 @@ import { storage, auth, users } from "@/firebaseConfig.js";
 import router from "@/router.js";
 import JQuery from "jquery";
 let $ = JQuery;
+import moment from 'moment'
 export default {
   name: "AddPlaceForm",
   data() {
@@ -44,7 +51,15 @@ export default {
     }
   },
   props: {
-    placeDoc: Object
+    placeDoc: Object,
+    edit: Boolean,
+    visitDate: String
+  },
+  computed: {
+    date: function(){
+      return moment(this.visiteDate).format('YYYY-MM-DD')
+    }
+
   },
   methods: {
     onChange(files) {
@@ -67,6 +82,9 @@ export default {
     checkIn() {
       const place = this.placeDoc
       var comment = $("#textarea").val();
+      var date = $("#date-input").val()
+      if(date == undefined)
+        date = moment().format('YYYY-MM-DD')
       if (this.img) {
         var uploadTask = storage.ref()
           .child(auth.currentUser.uid + "/images/" + place.id)
@@ -88,10 +106,14 @@ export default {
                   .doc(place.id).update({
                     imgURL: downloadURL,
                     notes: comment,
+                    visitedDate: date,
                     visited: true
                   });
                 console.log("File available at", downloadURL);
-                $("#form").hide() 
+                $(".modal-backdrop").remove()
+                $("#form").attr('aria-hidden', 'true').hide()
+                $("#form").removeClass("show")
+                $("body").removeClass("modal-open") 
                 router.push('/places/'+ place.id)
               });
           }
@@ -100,9 +122,13 @@ export default {
         users.doc(auth.currentUser.uid).collection("places")
           .doc(place.id).update({
             notes: comment,
+            visitedDate: date,
             visited: true
           });
-        $("#form").hide() 
+        $(".modal-backdrop").remove()
+        $("#form").attr('aria-hidden', 'true').hide() 
+        $("#form").removeClass("show")
+        $("body").removeClass("modal-open")
         router.push('/places/'+ place.id)
       } 
         let cityName = place.cityName
@@ -111,7 +137,6 @@ export default {
           cities.doc(cityName).set({ cityName, places:1});
         else{ 
           let places = this.places.filter(c => c.cityName == cityName).length
-          console.log(places)
           cities.doc(cityName).update({places});
         }
     }
@@ -129,6 +154,9 @@ export default {
 }
 form {
   width: 90%;
+}
+div.delete {
+  text-align: right;
 }
 div.submit {
   margin-top: 1rem;
