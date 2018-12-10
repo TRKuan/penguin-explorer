@@ -143,12 +143,14 @@ export default {
         addressArray[l - 1].replace(/ /g, "-")
       );
     },
+
     addPlace(currentPlace, visit, wishlist) {
       const name = currentPlace.name;
       const address = currentPlace.formatted_address;
       const visited = visit;
       const wishlisted = wishlist;
       const cityName = this.getCityName(address);
+      const googId = currentPlace.id;
       const marker = {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
@@ -163,7 +165,7 @@ export default {
 
       users.doc(auth.currentUser.uid).collection("places").add({
           name,address,cityName,marker,visited,wishlisted,
-          visitedDate: moment().format("MM-DD-YYYY")
+          visitedDate: moment().format("MM-DD-YYYY"), googId
         });
     },
 
