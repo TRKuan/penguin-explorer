@@ -1,6 +1,13 @@
 <template lang="html">
   <div class="add-place-form">
     <form>
+      <div v-if="edit" class="delete">
+        <button class="btn btn-danger">Delete</button>
+      </div>
+      <div v-if="edit" class="form-group">
+        <label for="date-input">Date</label>
+        <input class="form-control" type="date" :value="date" id="date-input">
+      </div>
       <div class="form-group">
         <label for="textarea">Comment</label>
         <textarea class="form-control" id="textarea" rows="3"></textarea>
@@ -20,11 +27,21 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'AddPlaceForm',
   data() {
     return {
       imgUrl: null
+    }
+  },
+  props: {
+    edit: Boolean,
+    visitDate: String
+  },
+  computed: {
+    date: function(){
+      return moment(this.visiteDate).format('YYYY-MM-DD')
     }
   },
   methods: {
@@ -45,6 +62,9 @@ export default {
 }
 form {
   width: 90%;
+}
+div.delete {
+  text-align: right;
 }
 div.submit {
   margin-top: 1rem;

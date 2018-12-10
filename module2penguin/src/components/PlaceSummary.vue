@@ -27,7 +27,7 @@
   <div class="modal fade" id="form">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <AddPlaceForm />
+        <AddPlaceForm :edit="placeDoc.visited" :visitDate="placeDoc.visitedDate" />
       </div>
     </div>
   </div>
