@@ -19,7 +19,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyDwLDlQ82BrKXcU930SJOoZWcj4_zVY4FU",
-    libraries: "places" // necessary for places input
+    libraries: "places"
   }
 });
 Vue.use(VueFire);

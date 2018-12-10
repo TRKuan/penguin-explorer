@@ -58,11 +58,11 @@ export default {
     PlaceSummary,
     GoogleMap
   },
-  
+
   mounted() {
     this.mounted = true;
   },
-    
+
   firestore() {
     if (auth.currentUser) {
       return {
@@ -77,6 +77,7 @@ export default {
       this.currentPlace = place;
     },
     addMarker() {
+      console.log("current place", this.currentPlace.id);
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),

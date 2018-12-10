@@ -142,6 +142,7 @@ export default {
         const address = currentPlace.formatted_address
         const visited = visit;
         const wishlisted = wishlist;
+        const googId = currentPlace.id;
         const cityName = this.getCityName(address)
         const marker = {
           lat: currentPlace.geometry.location.lat(),
@@ -151,7 +152,7 @@ export default {
               users.doc(auth.currentUser.uid).collection("cities").add({cityName})
 
         users.doc(auth.currentUser.uid).collection("places")
-              .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY')})
+              .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY'), googId})
     },
 
     showPlace(index) {

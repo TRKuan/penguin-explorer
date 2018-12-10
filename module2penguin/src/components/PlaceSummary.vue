@@ -21,9 +21,7 @@
     <img class = "place-photo" v-bind:src="UsersNotesPhoto.imgURL" alt="place photo">
     <div><p>{{UsersNotesPhoto.notes}}</p></div>
   </div>
-  <!-- v-for looped collection of other users notes and photos of the place -->
   </div>
-  <!--Add place form-->
   <div class="modal fade" id="form">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -37,6 +35,7 @@
 <script>
 import AddPlaceForm from '@/components/AddPlaceForm.vue'
 import {auth, users} from "@/firebaseConfig.js"
+import {gmapApi} from 'vue2-google-maps'
 
 export default {
   name: "PlaceSummary",
@@ -48,7 +47,8 @@ export default {
     return {
       UsersNotesPhoto: {
         imgURL: "https://i.pinimg.com/originals/be/19/d1/be19d16586d664258625ef4aef738c43.jpg",
-        notes: "Your description and opinions of the place"
+        notes: "Your description and opinions of the place",
+        service: new google.maps.places.PlacesService(map)
       },
     };
   },
