@@ -5,7 +5,7 @@
         <div>
           <div class="subcontainer">
             <div v-if="mounted" class="penguin">
-              {{ $refs.map.city.split("-")[0] }}:
+              {{ $refs.map.city.split("_")[0].replace(/-/g," ")}}:
               <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ $refs.map.penguin }}
             </div>
             <div class="search">
