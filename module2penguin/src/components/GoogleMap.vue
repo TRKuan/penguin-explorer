@@ -9,18 +9,7 @@
   >
     <div :key="index" v-for="(m, index) in filteredMarkers">
       <gmap-marker
-        v-if="m.wishlisted"
-        :position="m.marker"
-        :clickable="true"
-        :icon="{
-            url: require('../assets/heart.png'),
-            size: {width: 46, height: 46, f: 'px', b: 'px'},
-            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
-          }"
-        @click="$emit('showPlace', index)"
-      ></gmap-marker>
-      <gmap-marker
-        v-else-if="m.visited"
+        v-if="m.visited"
         :position="m.marker"
         :clickable="true"
         :icon="{
@@ -30,6 +19,17 @@
           }"
           @click="$emit('showPlace', index)">
         </gmap-marker>
+      <gmap-marker
+        v-else-if="m.wishlisted"
+        :position="m.marker"
+        :clickable="true"
+        :icon="{
+            url: require('../assets/heart.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+          }"
+        @click="$emit('showPlace', index)"
+      ></gmap-marker>
         <gmap-marker
           v-else
           :position="m.marker"
