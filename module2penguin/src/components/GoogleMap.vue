@@ -153,22 +153,16 @@ export default {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
       };
-      if (this.cities.filter(c => c.cityName == cityName).length == 0)
-        users
-          .doc(auth.currentUser.uid)
-          .collection("cities")
-          .add({ cityName });
+      if((visited || wishlist)){
+        if (this.cities.filter(c => c.cityName == cityName).length == 0)
+          users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1});
+        else{ let places = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).update({ places: places+1});
+        }
+      }
 
-      users
-        .doc(auth.currentUser.uid)
-        .collection("places")
-        .add({
-          name,
-          address,
-          cityName,
-          marker,
-          visited,
-          wishlisted,
+      users.doc(auth.currentUser.uid).collection("places").add({
+          name,address,cityName,marker,visited,wishlisted,
           visitedDate: moment().format("MM-DD-YYYY")
         });
     },
@@ -176,11 +170,6 @@ export default {
     showPlace(index) {
       // Parse data for showing place here
       this.showSummary = true;
-      console.log(index);
-      console.log(this.places[index]);
-      console.log("check2");
-      console.log(this.markers[index]);
-      console.log("check3");
       this.PlaceDoc = this.markers[index];
       this.PlaceIndex = index;
     },
@@ -237,8 +226,6 @@ export default {
   width: 100%;
   flex-direction: row;
 }
-<<<<<<< HEAD
-=======
 
 #placeSummaryDiv {
   position: fixed;
@@ -249,5 +236,4 @@ export default {
   z-index: 100000;
 }
 
->>>>>>> 52f0b01d650007059a73419ebd1499d6d666305d
 </style>

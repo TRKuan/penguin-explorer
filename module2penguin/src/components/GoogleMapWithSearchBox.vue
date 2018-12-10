@@ -28,7 +28,7 @@
           v-on:showPlace="showPlace" page="home"/>
     </div>
     {{this.PlaceDoc.placeName}}
-      <div v-if="showSummary" id = "placeSummaryDiv">
+      <div v-if="showSummary && PlaceDoc" id = "placeSummaryDiv">
       <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
     </div>
   </div>
@@ -95,14 +95,12 @@ export default {
         this.currentPlace = null;
       }
     },
+    hidePlace(){
+      this.showSummary = false;
+    },
     showPlace(index) {
       // Parse data for showing place here
       this.showSummary = true;
-      console.log(index);
-      console.log(this.places[index]);
-      console.log("check2");
-      console.log(this.markers[index]);
-      console.log("check3");
       this.PlaceDoc = this.markers[index];
       this.PlaceIndex = index;
     },
