@@ -142,30 +142,14 @@ export default {
         addressArray[l - 1].replace(/ /g, "-")
       );
     },
-<<<<<<< HEAD
-    addPlace(currentPlace, visit, wishlist){
-        const name = currentPlace.name
-        const address = currentPlace.formatted_address
-        const visited = visit;
-        const wishlisted = wishlist;
-        const googId = currentPlace.id;
-        const cityName = this.getCityName(address)
-        const marker = {
-          lat: currentPlace.geometry.location.lat(),
-          lng: currentPlace.geometry.location.lng()
-        };
-        if(this.cities.filter(c=>c.cityName==cityName).length==0)
-              users.doc(auth.currentUser.uid).collection("cities").add({cityName})
 
-        users.doc(auth.currentUser.uid).collection("places")
-              .add({name, address,cityName,marker,visited,wishlisted,visitedDate:moment().format('MM-DD-YYYY'), googId})
-=======
     addPlace(currentPlace, visit, wishlist) {
       const name = currentPlace.name;
       const address = currentPlace.formatted_address;
       const visited = visit;
       const wishlisted = wishlist;
       const cityName = this.getCityName(address);
+      const googId = currentPlace.id;
       const marker = {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
@@ -180,9 +164,8 @@ export default {
 
       users.doc(auth.currentUser.uid).collection("places").add({
           name,address,cityName,marker,visited,wishlisted,
-          visitedDate: moment().format("MM-DD-YYYY")
+          visitedDate: moment().format("MM-DD-YYYY"), googId
         });
->>>>>>> d0466fa903da624f516b64ec5686c04645f26cc1
     },
 
     showPlace(index) {
