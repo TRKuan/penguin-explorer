@@ -47,6 +47,8 @@ import { auth, users } from "@/firebaseConfig.js";
 import { gmapApi } from "vue2-google-maps";
 import PlaceSummary from "./PlaceSummary.vue";
 import moment from "moment";
+import JQuery from "jquery";
+let $ = JQuery;
 export default {
   name: "GoogleMap",
   props: {
@@ -74,7 +76,6 @@ export default {
   computed: {
     google: gmapApi,
     filteredMarkers(){
-      console.log(this.markers)
       return this.markers.filter(c=>c.cityName==this.city)
     }
   },
@@ -136,9 +137,9 @@ export default {
       let l = addressArray.length;
       return (
         addressArray[l - 3].replace(/ /g, "-") +
-        "-" +
+        "_" +
         addressArray[l - 2].split(" ")[0] +
-        "-" +
+        "_" +
         addressArray[l - 1].replace(/ /g, "-")
       );
     },
@@ -177,9 +178,21 @@ export default {
 
     geolocate: function(page) {
       this.$refs.map.$mapPromise.then(() => {
-        var geocoder = new this.google.maps.Geocoder();
-        let self = this;
-        if (page == "home") {
+      var geocoder = new this.google.maps.Geocoder();
+      let self = this;
+      var map = this.$refs.map.$mapObject
+      this.google.maps.event.addListener(map,'dragend', function() { 
+        this.center = map.getCenter();
+        geocoder.geocode({ latLng: this.center }, function(results,status) {
+              if (status === "OK") {
+                self.city = self.getCityName(results[0].formatted_address);
+                console.log(results[0].formatted_address)
+                self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
+              }
+            });
+      });
+        
+      if (page == "home") {
           navigator.geolocation.getCurrentPosition(position => {
             this.center = {
               lat: position.coords.latitude,
@@ -189,6 +202,7 @@ export default {
             geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
                 self.city = self.getCityName(results[0].formatted_address);
+                self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }
             });
           });
@@ -197,11 +211,11 @@ export default {
           geocoder.geocode({ address: this.city }, function(results, status) {
             if (status === "OK") {
               self.center = results[0].geometry.location;
+              self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
             }
           });
         }
-        this.penguin = this.markers.filter(c => c.visited == true && c.cityName == this.city).length;
-        this.city = this.city.split("-")[0];
+        
       });
     }
   }
