@@ -2,7 +2,8 @@
   <div>
   <div v-if="placeDoc" id = "placeSummary">
   <router-link  :to="{name:'place', params:{id:placeDoc.id}}" >
-    <h4 id = "placename">{{placeDoc.name}}</h4>
+    <!--h4 id = "placename">{{placeDoc.name}}</h4-->
+    <h4 id = "placename">{{details.name}}</h4>
   </router-link>
   <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
     Edit Check-in
@@ -37,7 +38,6 @@
 <script>
 import AddPlaceForm from '@/components/AddPlaceForm.vue'
 import {auth, users} from "@/firebaseConfig.js"
-import {gmapApi} from 'vue2-google-maps'
 
 export default {
   name: "PlaceSummary",
@@ -51,14 +51,20 @@ export default {
     return {
       UsersNotesPhoto: {
         imgURL: null,
-        notes: ""
+        notes: "",
       },
+      details: {name: "waiting"}
     };
   },
+
   methods: {
     toggleWishlist (val) {
        this.$emit('toggleWishlist', val)
-    }
+    },
+
+  },
+  beforeCreate(){
+     this.getDetails();
   },
 };
 </script>

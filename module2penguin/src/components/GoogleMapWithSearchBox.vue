@@ -23,7 +23,7 @@
     <div>
     </div>
     <div>
-        <google-map 
+        <google-map
           ref="map"
           v-on:showPlace="showPlace" page="home"/>
     </div>
@@ -85,7 +85,7 @@ export default {
       this.currentPlace = place;
     },
     addMarker() {
-      console.log("current place", this.currentPlace.id);
+      console.log("current place", this.currentPlace);
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
