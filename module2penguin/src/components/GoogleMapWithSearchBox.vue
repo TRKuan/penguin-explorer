@@ -5,7 +5,7 @@
         <div>
           <div class="subcontainer">
             <div v-if="mounted" class="penguin">
-              {{ $refs.map.city }}:
+              {{ $refs.map.city.split("-")[0] }}:
               <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ $refs.map.penguin }}
             </div>
             <div class="search">
@@ -23,9 +23,14 @@
     <div>
     </div>
     <div>
-        <google-map ref="map"/>
+        <google-map 
+          ref="map"
+          v-on:showPlace="showPlace" page="home"/>
     </div>
-    <!-- <place-list-item v-if="placeInfo" placeName="Place" visiteDate="9-11-2018" :visited="placeInfo"/> -->
+    {{this.PlaceDoc.placeName}}
+      <div v-if="showSummary && PlaceDoc" id = "placeSummaryDiv">
+      <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
+    </div>
   </div>
 </template>
 
@@ -49,8 +54,11 @@ export default {
       penguin: 0,
       places: [],
       currentPlace: null,
+      mounted: false,
       placeInfo: false,
-      mounted: false
+      showSummary: false,
+      PlaceDoc :{},
+      PlaceIndex: null,
     };
   },
 
@@ -88,6 +96,20 @@ export default {
         this.currentPlace = null;
       }
     },
+    hidePlace(){
+      this.showSummary = false;
+    },
+    showPlace(index) {
+      // Parse data for showing place here
+      this.showSummary = true;
+      this.PlaceDoc = this.markers[index];
+      this.PlaceIndex = index;
+    },
+
+    toggleWishlist (val){
+      users.doc(auth.currentUser.uid).collection("places").doc(this.PlaceDoc.id).update({wishlisted: val})
+      this.PlaceDoc.wishlisted = val;
+    },
   }
 };
 </script>
@@ -111,5 +133,4 @@ export default {
   width: 100%;
   flex-direction: row;
 }
-
 </style>

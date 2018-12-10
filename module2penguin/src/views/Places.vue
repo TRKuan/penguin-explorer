@@ -35,6 +35,12 @@ export default {
     };
   },
   firestore() {
+    users.doc(auth.currentUser.uid).collection("cities")
+          .where("places", "==", 0).get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            doc.ref.delete();
+          });
+        });
     return {
       places: users.doc(auth.currentUser.uid).collection("places"),
       cities: users.doc(auth.currentUser.uid).collection("cities")

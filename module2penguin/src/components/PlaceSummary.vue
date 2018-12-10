@@ -1,7 +1,9 @@
 <template>
   <div>
-  <div id = "placeSummary">
-  <h4 id = "placename">{{placeDoc.name}}</h4>
+  <div v-if="placeDoc" id = "placeSummary">
+  <router-link  :to="{name:'place', params:{id:placeDoc.id}}" >
+    <h4 id = "placename">{{placeDoc.name}}</h4>
+  </router-link>
   <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
     Edit Check-in
   </button>
@@ -17,15 +19,15 @@
     <img @click="toggleWishlist(true)" v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
   </div><br>
   <p id = "address">{{placeDoc.address}}</p><br>
-  <div v-if = "placeDoc.visited" id = "usersNotesPhoto" >
-    <img class = "place-photo" v-bind:src="UsersNotesPhoto.imgURL" alt="place photo">
-    <div><p>{{UsersNotesPhoto.notes}}</p></div>
+  <div v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
+    <img v-if="placeDoc.imgURL" class = "place-photo" v-bind:src="placeDoc.imgURL" alt="place photo">
+    <div><p>{{placeDoc.notes}}</p></div>
   </div>
   </div>
   <div class="modal fade" id="form">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <AddPlaceForm />
+        <AddPlaceForm v-if="placeDoc" :placeDoc="placeDoc" :edit="placeDoc.visited" :visitDate="placeDoc.visitedDate" />
       </div>
     </div>
   </div>
@@ -42,17 +44,17 @@ export default {
   components: {
     AddPlaceForm
   },
-  props: ['placeDoc'],
+  props:{
+    placeDoc: Object
+  },
   data() {
     return {
       UsersNotesPhoto: {
-        imgURL: "https://i.pinimg.com/originals/be/19/d1/be19d16586d664258625ef4aef738c43.jpg",
-        notes: "Your description and opinions of the place",
-        service: new google.maps.places.PlacesService(map)
+        imgURL: null,
+        notes: ""
       },
     };
   },
-
   methods: {
     toggleWishlist (val) {
        this.$emit('toggleWishlist', val)

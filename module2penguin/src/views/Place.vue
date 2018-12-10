@@ -3,6 +3,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import PlaceSummary from '@/components/PlaceSummary.vue'
 import {auth, users} from "@/firebaseConfig.js"
 export default {
@@ -19,7 +20,6 @@ export default {
 
   firestore() {
     var doctemp = users.doc(auth.currentUser.uid).collection("places").doc(this.DocID);
-    console.log(doctemp);
     return {
       PlaceDoc: users.doc(auth.currentUser.uid).collection("places").doc(this.DocID),
     }

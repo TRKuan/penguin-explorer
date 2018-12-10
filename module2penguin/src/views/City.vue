@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="city">
+    <google-map ref="map" :page="this.$route.params.city"/>
     <city-info :name="this.$route.params.city" :starNum="starNum"/>
     <br />
     <div class="place-list list-group">
@@ -13,12 +14,14 @@
 <script>
 import CityInfo from '@/components/CityInfo.vue'
 import PlaceListItem from '@/components/PlaceListItem.vue'
+import GoogleMap from '@/components/GoogleMap.vue'
 import { auth, users} from "@/firebaseConfig.js"
 export default {
   name: 'City',
   components: {
     PlaceListItem,
-    CityInfo
+    CityInfo, 
+    GoogleMap
   },
   data() {
     return {
