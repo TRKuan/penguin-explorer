@@ -10,16 +10,19 @@
     <p>{{placeDoc.visitedDate}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
   </div>
-  <div id = "wishlist-checkin" v-if = "!placeDoc.visited">
+  <div id = "wishlist-toggle" v-if = "!placeDoc.visited">
     <img @click="toggleWishlist(false)" v-if = "placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
     <img @click="toggleWishlist(true)" v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
   </div>
-  </span><br>
-  <p id = "address">{{placeDoc.address}}</p><br>
+  </span>
+  <p id = "address">{{placeDoc.address}}</p>
+  <router-link v-if ="this.$route.path == '/map'" id = "seemore" :to="{name:'place', params:{id:placeDoc.id}}" >
+    <p>See more</p>
+  </router-link>
   </div>
-  <div v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
+  <div class = "card" v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
     <img v-if="placeDoc.imgURL" id = "user-photo" v-bind:src="placeDoc.imgURL" alt="place photo">
-    <div><p>{{placeDoc.notes}}</p></div>
+    <p class = "notes" >{{placeDoc.notes}}</p>
   </div>
   <div v-if ="this.$route.path !== '/map'" id = "photos" >
     <img v-for="photo in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
@@ -72,7 +75,7 @@ export default {
 };
 </script>
 <style>
-#visitDate, wishlist-checkin{
+#visitDate, wishlist-toggle{
 color: darkgrey;
 float: right;
 font-size: .7em;
@@ -96,14 +99,19 @@ margin: 0px
 
 .visited-button {
 position: fixed;
-bottom: .5em;
-right: .5em;
+bottom: .6em;
+right: .6em;
 }
 
-#user-photo, .place-photo {
+#user-photo {
+  padding: .2em;
+}
+
+.place-photo {
 width: 96%;
 display: block;
 margin: auto;
+margin-bottom: .6em
 }
 
 @media (min-width: 576px) {
@@ -129,5 +137,14 @@ margin: auto;
 .card {
   margin: .4em;
   padding: .2em;
+}
+
+#seemore {
+
+  margin-bottom: 0px;
+}
+
+.notes {
+  margin: 0px;
 }
 </style>

@@ -269,9 +269,9 @@ export default {
   position: fixed;
   bottom: 0em;
   width: 100%;
-  height: 7em;
-  background-color: #eef2fb;
+  height: 8.15em;
   z-index: 100000;
+  overflow-y: scroll;
 }
 
 </style>
