@@ -134,15 +134,14 @@ export default {
       }
     },
     getCityName(address) {
-      console.log(address)
-      // let addressArray = address.split(", ");
-      // addressArray = address
-      // let l = addressArray.length;
-      let city = address.filter(c=>c.types[0]=="locality")['short_name']
-      let state = address.filter(c=>c.types[0]=="administrative_area_level_1")['short_name']
-      let country = address.filter(c=>c.types[0]=="country")['short_name']
+      let addressArray = address.split(", ");
+      let l = addressArray.length;
       return (
-        city.replace(/ /g, "-") +"_" +state.replace(/ /g, "-") +"_" +country.replace(/ /g, "-")
+        addressArray[l - 3].replace(/ /g, "-") +
+        "_" +
+        addressArray[l - 2].split(" ")[0] +
+        "_" +
+        addressArray[l - 1].replace(/ /g, "-")
       );
     },
 
@@ -189,7 +188,7 @@ export default {
           this.center = map.getCenter();
           geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
-                self.city = self.getCityName(results[0].address_components.filter(c=>c.types.length==2&&c.types[1]=="political"));
+                self.city = self.getCityName(results[0].formatted_address);
                 console.log(self.city)
                 self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }

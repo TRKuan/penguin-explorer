@@ -1,14 +1,16 @@
 <template lang="html">
-  <router-link :to="{name:'place', params:{id:placeId}}" class="list-group-item flex-column flex-md-row" exact>
-    <div class="name">
-      {{placeName}}
-      <span v-if="visited" class="badge badge-success">Visited</span>
-      <span v-if="!visited" class="badge badge-dark">Wishlist</span>
-    </div>
-    <div v-if="visited" class="date">
-      {{date}}
-    </div>
-  </router-link>
+  <div v-if="visited|wishlisted">
+    <router-link :to="{name:'place', params:{id:placeId}}" class="list-group-item flex-column flex-md-row" exact>
+      <div class="name">
+        {{placeName}}
+        <span v-if="visited" class="badge badge-success">Visited</span>
+        <span v-else-if="wishlisted" class="badge badge-dark">Wishlist</span>
+      </div>
+      <div v-if="visited" class="date">
+        {{date}}
+      </div>
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
     placeName: String,
     visiteDate: String,
     visited: Boolean,
+    wishlisted: Boolean,
     place: Object,
     placeId: String,
 

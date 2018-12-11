@@ -11,7 +11,7 @@
     </div>
     <div class="place-list list-group">
       <template v-for="place in places.filter(c=>c.cityName==city.cityName)">
-      <place-list-item  :place="place ":placeName="place.name" :visiteDate="place.visitedDate" :placeId="place.id" :visited="place.visited"/>
+      <place-list-item  :place="place ":placeName="place.name" :visiteDate="place.visitedDate" :placeId="place.id" :visited="place.visited" :wishlisted="place.wishlisted"/>
       </template>
     </div>
     <br />
