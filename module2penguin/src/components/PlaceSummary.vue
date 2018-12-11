@@ -22,7 +22,7 @@
     <div><p>{{placeDoc.notes}}</p></div>
   </div>
   <div v-if ="this.$route.path !== '/map'" id = "photos" >
-    <img v-for="photo in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
+    <img :key="idx" v-for="(photo, idx) in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
   </div>
   </div>
   <div class="modal fade" id="form">
@@ -101,6 +101,7 @@ right: .5em;
 }
 
 #user-photo, .place-photo {
+max-width: 650px;
 width: 96%;
 display: block;
 margin: auto;
