@@ -110,7 +110,10 @@ export default {
       this.currentPlace = place;
     },
     addMarker(currentPlace) {
-      if (currentPlace) {
+      let exists = this.markers.filter(c=>c.name==currentPlace.name)[0]
+      if(exists)
+        this.$emit("showPlace",this.markers.indexOf(exists))
+      else if (currentPlace) {
         const marker = {
           lat: currentPlace.geometry.location.lat(),
           lng: currentPlace.geometry.location.lng()
