@@ -37,7 +37,6 @@
 <script>
 import AddPlaceForm from '@/components/AddPlaceForm.vue'
 import {auth, users} from "@/firebaseConfig.js"
-import {gmapApi} from 'vue2-google-maps'
 
 export default {
   name: "PlaceSummary",
@@ -51,15 +50,18 @@ export default {
     return {
       UsersNotesPhoto: {
         imgURL: null,
-        notes: ""
+        notes: "",
       },
     };
   },
+
   methods: {
     toggleWishlist (val) {
        this.$emit('toggleWishlist', val)
-    }
+    },
+
   },
+
 };
 </script>
 <style>
