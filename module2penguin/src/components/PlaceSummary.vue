@@ -2,6 +2,7 @@
   <div>
   <div>
   <div v-if="placeDoc" class = "card" id = "placeSummary">
+  <span>
   <router-link  id = "placename" :to="{name:'place', params:{id:placeDoc.id}}" >
     <h4 >{{placeDoc.name}}</h4>
   </router-link>
@@ -12,7 +13,8 @@
   <div id = "wishlist-checkin" v-if = "!placeDoc.visited">
     <img @click="toggleWishlist(false)" v-if = "placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
     <img @click="toggleWishlist(true)" v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
-  </div><br>
+  </div>
+  </span><br>
   <p id = "address">{{placeDoc.address}}</p><br>
   </div>
   <div v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
@@ -29,13 +31,13 @@
         <AddPlaceForm v-if="placeDoc" :placeDoc="placeDoc" :edit="placeDoc.visited" :visitDate="placeDoc.visitedDate" />
       </div>
     </div>
-    <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-      Edit Check-in
-    </button>
-    <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-      Check In
-    </button>
   </div>
+  <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Edit Check-in
+  </button>
+  <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Check In
+  </button>
   </div>
 </template>
 
@@ -72,17 +74,16 @@ export default {
 <style>
 #visitDate, wishlist-checkin{
 color: darkgrey;
-position: absolute;
-right: .7em;
+float: right;
+font-size: .7em;
 }
 #placename {
 float: left;
 margin-bottom: 0px !important;
-width: 70%;
 }
 .icon {
-  height: 2rem;
-  width: 2rem;
+  height: 1.7rem;
+  width: 1.7rem;
   float: right;
   margin: .25em;
 }
@@ -90,6 +91,7 @@ width: 70%;
 #address{
 padding:0px;
 width: 100%;
+margin: 0px
 }
 
 .visited-button {
@@ -99,16 +101,19 @@ right: .5em;
 }
 
 #user-photo, .place-photo {
-width: 94%;
+width: 96%;
 display: block;
 margin: auto;
-padding: 3%;
 }
 
 @media (min-width: 576px) {
   #form .modal-dialog {
     max-width: 500px;
   }
+}
+
+#visitDate p {
+  margin-bottom: 0px;
 }
 @media (min-width: 768px) {
   #form .modal-dialog {
@@ -122,6 +127,7 @@ padding: 3%;
 }
 
 .card {
-  margin: .7em;
+  margin: .4em;
+  padding: .2em;
 }
 </style>
