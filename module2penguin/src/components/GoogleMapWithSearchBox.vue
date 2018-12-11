@@ -24,7 +24,7 @@
     </div>
     <div>
         <google-map
-          ref="map" width="width:100%;" height="height: 75vh;"
+          ref="map" width="width:100%;" height="height: 79vh;"
           v-on:showPlace="showPlace" page="home"/>
     </div>
     <template v-if="PlaceDoc">{{this.PlaceDoc.placeName}}</template>
