@@ -5,7 +5,7 @@
     :position="google"
     :center="center"
     :zoom="12"
-    style="width:100%;  height: 75vh;"
+    style="width:100%;  height: 79vh;"
   >
     <div :key="index" v-for="(m, index) in filteredMarkers">
       <gmap-marker
