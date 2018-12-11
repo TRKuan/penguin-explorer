@@ -126,22 +126,29 @@ export default {
         let self = this;
         query.get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
-            doc.ref.delete();
+            doc.ref.delete().then(() => {
+              self.addPlace(currentPlace, false, false);
+            });
           });
-          self.addPlace(currentPlace, false, false);
         });
       }
     },
-    getCityName(address) {
-      let addressArray = address.split(", ");
-      let l = addressArray.length;
-      return (
-        addressArray[l - 3].replace(/ /g, "-") +
-        "_" +
-        addressArray[l - 2].split(" ")[0] +
-        "_" +
-        addressArray[l - 1].replace(/ /g, "-")
-      );
+
+    getCityName(components) {
+      let cityname, statename, countryname = "";
+      for (var i = 0; i < components.length; i++) {
+        var address = components[i];
+        if (address.types[0] == "locality") {
+          cityname = address.long_name
+        }
+        if (address.types[0] == "administrative_area_level_1") {
+          statename = address.short_name
+        }
+        if (address.types[0] == "country") {
+          countryname = address.short_name
+        }
+      }
+      return cityname + "_" + statename + "_" + countryname
     },
 
     addPlace(currentPlace, visit, wishlist) {
@@ -149,7 +156,7 @@ export default {
       const address = currentPlace.formatted_address;
       const visited = visit;
       const wishlisted = wishlist;
-      const cityName = this.getCityName(address);
+      const cityName = this.getCityName(currentPlace.address_components);
       const googId = currentPlace.id;
       const marker = {
         lat: currentPlace.geometry.location.lat(),
@@ -185,8 +192,7 @@ export default {
         this.center = map.getCenter();
         geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
-                self.city = self.getCityName(results[0].formatted_address);
-                console.log(results[0].formatted_address)
+                self.city = self.getCityName(results[0].address_components);
                 self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }
             });
@@ -201,7 +207,7 @@ export default {
 
             geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
-                self.city = self.getCityName(results[0].formatted_address);
+                self.city = self.getCityName(results[0].address_components);
                 self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }
             });
