@@ -158,6 +158,7 @@ export default {
       const wishlisted = wishlist;
       const cityName = this.getCityName(currentPlace.address_components);
       const googId = currentPlace.id;
+      console.log(currentPlace);
       const marker = {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
@@ -188,7 +189,7 @@ export default {
       var geocoder = new this.google.maps.Geocoder();
       let self = this;
       var map = this.$refs.map.$mapObject
-      this.google.maps.event.addListener(map,'dragend', function() { 
+      this.google.maps.event.addListener(map,'dragend', function() {
         this.center = map.getCenter();
         geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
@@ -197,7 +198,7 @@ export default {
               }
             });
       });
-        
+
       if (page == "home") {
           navigator.geolocation.getCurrentPosition(position => {
             this.center = {
@@ -221,7 +222,7 @@ export default {
             }
           });
         }
-        
+
       });
     }
   }

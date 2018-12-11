@@ -92,7 +92,6 @@ export default {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
         };
-        console.log(this.currentPlace);
         this.$refs.map.addMarker(this.currentPlace, marker);
         this.$refs.autocomplete.$refs.input.value = "";
         this.currentPlace = null;
