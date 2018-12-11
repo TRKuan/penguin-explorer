@@ -16,7 +16,7 @@
             size: {width: 46, height: 46, f: 'px', b: 'px'},
             scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
           }"
-        @click="$emit('showPlace', index)"
+        @click="$emit('showPlace', markers.indexOf(m))"
       ></gmap-marker>
       <gmap-marker
         v-else-if="m.visited"
@@ -27,13 +27,13 @@
             size: {width: 46, height: 46, f: 'px', b: 'px'},
             scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
           }"
-          @click="$emit('showPlace', index)">
+          @click="$emit('showPlace', markers.indexOf(m))">
         </gmap-marker>
         <gmap-marker
           v-else
           :position="m.marker"
           :clickable="true"
-          @click="$emit('showPlace', index)">
+          @click="$emit('showPlace', markers.indexOf(m))">
         </gmap-marker>
     </div>
   </gmap-map>
@@ -47,6 +47,7 @@ import { gmapApi } from "vue2-google-maps";
 import PlaceSummary from "./PlaceSummary.vue";
 import moment from "moment";
 import JQuery from "jquery";
+import { exists } from 'fs';
 let $ = JQuery;
 export default {
   name: "GoogleMap",
@@ -110,9 +111,12 @@ export default {
       this.currentPlace = place;
     },
     addMarker(currentPlace) {
+      //console.log(currentPlace.address_components)
       let exists = this.markers.filter(c=>c.name==currentPlace.name)[0]
-      if(exists)
+      if(exists){
+        this.center = exists.marker
         this.$emit("showPlace",this.markers.indexOf(exists))
+      }
       else if (currentPlace) {
         const marker = {
           lat: currentPlace.geometry.location.lat(),
@@ -130,22 +134,23 @@ export default {
         let self = this;
         query.get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
-            doc.ref.delete();
+            doc.ref.delete()
           });
           self.addPlace(currentPlace, false, false);
         });
       }
     },
-    getCityName(address) {
-      let addressArray = address.split(", ");
-      let l = addressArray.length;
-      return (
-        addressArray[l - 3].replace(/ /g, "-") +
-        "_" +
-        addressArray[l - 2].split(" ")[0] +
-        "_" +
-        addressArray[l - 1].replace(/ /g, "-")
-      );
+
+    getCityName(components) {
+      let city, state, country = "";
+      city = components.filter(c=>c.types[0]=="locality")[0]
+      if(!city) city = components.filter(c=>c.types[0]=="administrative_area_level_2")[0]
+      state = components.filter(c=>c.types[0]=="administrative_area_level_1")[0]
+      country = components.filter(c=>c.types[0]=="country")[0]
+      
+      return city.long_name.replace(/ /g, "-") + "_" 
+          + state.short_name.replace(/ /g, "-") + "_" 
+          + country.short_name.replace(/ /g, "-")
     },
 
     addPlace(currentPlace, visit, wishlist) {
@@ -153,7 +158,7 @@ export default {
       const address = currentPlace.formatted_address;
       const visited = visit;
       const wishlisted = wishlist;
-      const cityName = this.getCityName(address);
+      const cityName = this.getCityName(currentPlace.address_components);
       const googId = currentPlace.id;
       const marker = {
         lat: currentPlace.geometry.location.lat(),
@@ -171,6 +176,13 @@ export default {
           name,address,cityName,marker,visited,wishlisted,
           visitedDate: moment().format("MM-DD-YYYY"), googId
         });
+        let exists = null
+        let self = this
+        setTimeout(function(){
+          exists = self.markers.filter(c=>c.name==currentPlace.name)[0]
+          self.$emit("showPlace",self.markers.indexOf(exists))
+          console.log(exists)
+        }, 500);
     },
 
     showPlace(index) {
@@ -191,8 +203,7 @@ export default {
           this.center = map.getCenter();
           geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
-                self.city = self.getCityName(results[0].formatted_address);
-                console.log(self.city)
+                self.city = self.getCityName(results[0].address_components);
                 self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }
             });
@@ -205,7 +216,7 @@ export default {
 
             geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
-                self.city = self.getCityName(results[0].formatted_address);
+                self.city = self.getCityName(results[0].address_components);
                 self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }
             });

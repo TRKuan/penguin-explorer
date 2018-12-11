@@ -27,7 +27,7 @@
           ref="map" width="width:100%;" height="height: 75vh;"
           v-on:showPlace="showPlace" page="home"/>
     </div>
-    {{this.PlaceDoc.placeName}}
+    <template v-if="PlaceDoc">{{this.PlaceDoc.placeName}}</template>
       <div v-if="showSummary && PlaceDoc" id = "placeSummaryDiv">
       <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
     </div>
