@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="city">
-    <google-map ref="map" :page="this.$route.params.city"/>
+    <google-map class="map" width="width:100%;" height="height: 35vh;" 
+        ref="map" :page="this.$route.params.city"/>
     <city-info :name="this.$route.params.city" :starNum="starNum"/>
     <br />
     <div class="place-list list-group">
@@ -58,6 +59,12 @@ export default {
   flex-flow: column;
   align-items: center;
   padding-bottom: 2rem;
+}
+.map {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 .place-list {
   width: 100%;

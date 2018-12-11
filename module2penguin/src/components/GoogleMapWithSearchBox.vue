@@ -24,7 +24,7 @@
     </div>
     <div>
         <google-map 
-          ref="map"
+          ref="map" width="width:100%;" height="height: 75vh;"
           v-on:showPlace="showPlace" page="home"/>
     </div>
     {{this.PlaceDoc.placeName}}
@@ -85,13 +85,8 @@ export default {
       this.currentPlace = place;
     },
     addMarker() {
-      console.log("current place", this.currentPlace.id);
       if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
-        };
-        this.$refs.map.addMarker(this.currentPlace, marker);
+        this.$refs.map.addMarker(this.currentPlace);
         this.$refs.autocomplete.$refs.input.value = "";
         this.currentPlace = null;
       }

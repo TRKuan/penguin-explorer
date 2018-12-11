@@ -5,8 +5,7 @@
     :position="google"
     :center="center"
     :zoom="12"
-    style="width:100%;  height: 75vh;"
-  >
+    :style="width + height">
     <div :key="index" v-for="(m, index) in filteredMarkers">
       <gmap-marker
         v-if="m.wishlisted"
@@ -52,7 +51,9 @@ let $ = JQuery;
 export default {
   name: "GoogleMap",
   props: {
-    page: String
+    page: String,
+    width: String,
+    height: String
   },
   data() {
     return {
@@ -133,14 +134,15 @@ export default {
       }
     },
     getCityName(address) {
-      let addressArray = address.split(", ");
-      let l = addressArray.length;
+      console.log(address)
+      // let addressArray = address.split(", ");
+      // addressArray = address
+      // let l = addressArray.length;
+      let city = address.filter(c=>c.types[0]=="locality")['short_name']
+      let state = address.filter(c=>c.types[0]=="administrative_area_level_1")['short_name']
+      let country = address.filter(c=>c.types[0]=="country")['short_name']
       return (
-        addressArray[l - 3].replace(/ /g, "-") +
-        "_" +
-        addressArray[l - 2].split(" ")[0] +
-        "_" +
-        addressArray[l - 1].replace(/ /g, "-")
+        city.replace(/ /g, "-") +"_" +state.replace(/ /g, "-") +"_" +country.replace(/ /g, "-")
       );
     },
 
@@ -180,19 +182,19 @@ export default {
       this.$refs.map.$mapPromise.then(() => {
       var geocoder = new this.google.maps.Geocoder();
       let self = this;
-      var map = this.$refs.map.$mapObject
-      this.google.maps.event.addListener(map,'dragend', function() { 
-        this.center = map.getCenter();
-        geocoder.geocode({ latLng: this.center }, function(results,status) {
+        
+      if (page == "home") {
+          var map = this.$refs.map.$mapObject
+          this.google.maps.event.addListener(map,'idle', function() { 
+          this.center = map.getCenter();
+          geocoder.geocode({ latLng: this.center }, function(results,status) {
               if (status === "OK") {
-                self.city = self.getCityName(results[0].formatted_address);
-                console.log(results[0].formatted_address)
+                self.city = self.getCityName(results[0].address_components.filter(c=>c.types.length==2&&c.types[1]=="political"));
+                console.log(self.city)
                 self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
               }
             });
-      });
-        
-      if (page == "home") {
+          });
           navigator.geolocation.getCurrentPosition(position => {
             this.center = {
               lat: position.coords.latitude,
@@ -207,8 +209,9 @@ export default {
             });
           });
         } else {
-          this.city = page.replace(/-/g, ", ");
-          geocoder.geocode({ address: this.city }, function(results, status) {
+          let address = page.replace(/_/g, ", ").replace(/-/g," ");
+          this.city = page;
+          geocoder.geocode({ address: address }, function(results, status) {
             if (status === "OK") {
               self.center = results[0].geometry.location;
               self.penguin = self.markers.filter(c => c.visited == true && c.cityName == self.city).length;
