@@ -82,15 +82,17 @@ export default {
   methods: {
     // receives a place object via the autocomplete component
     setPlace(place) {
+
       this.currentPlace = place;
     },
     addMarker() {
-      console.log("current place", this.currentPlace);
+
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
         };
+        console.log(this.currentPlace);
         this.$refs.map.addMarker(this.currentPlace, marker);
         this.$refs.autocomplete.$refs.input.value = "";
         this.currentPlace = null;

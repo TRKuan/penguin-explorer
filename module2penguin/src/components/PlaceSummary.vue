@@ -2,8 +2,7 @@
   <div>
   <div v-if="placeDoc" id = "placeSummary">
   <router-link  :to="{name:'place', params:{id:placeDoc.id}}" >
-    <!--h4 id = "placename">{{placeDoc.name}}</h4-->
-    <h4 id = "placename">{{details.name}}</h4>
+    <h4 id = "placename">{{placeDoc.name}}</h4>
   </router-link>
   <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
     Edit Check-in
@@ -53,7 +52,6 @@ export default {
         imgURL: null,
         notes: "",
       },
-      details: {name: "waiting"}
     };
   },
 
@@ -63,9 +61,7 @@ export default {
     },
 
   },
-  beforeCreate(){
-     this.getDetails();
-  },
+
 };
 </script>
 <style>
