@@ -24,10 +24,10 @@
     </div>
     <div>
         <google-map
-          ref="map"
+          ref="map" width="width:100%;" height="height: 75vh;"
           v-on:showPlace="showPlace" page="home"/>
     </div>
-    {{this.PlaceDoc.placeName}}
+    <template v-if="PlaceDoc">{{this.PlaceDoc.placeName}}</template>
       <div v-if="showSummary && PlaceDoc" id = "placeSummaryDiv">
       <PlaceSummary v-on:toggleWishlist="toggleWishlist" :placeDoc="PlaceDoc"/>
     </div>
@@ -86,13 +86,8 @@ export default {
       this.currentPlace = place;
     },
     addMarker() {
-
       if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
-        };
-        this.$refs.map.addMarker(this.currentPlace, marker);
+        this.$refs.map.addMarker(this.currentPlace);
         this.$refs.autocomplete.$refs.input.value = "";
         this.currentPlace = null;
       }

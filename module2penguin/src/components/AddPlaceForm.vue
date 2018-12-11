@@ -109,7 +109,6 @@ export default {
                     visitedDate: date,
                     visited: true
                   });
-                console.log("File available at", downloadURL);
                 $(".modal-backdrop").remove()
                 $("#form").attr('aria-hidden', 'true').hide()
                 $("#form").removeClass("show")
