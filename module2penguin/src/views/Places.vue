@@ -4,17 +4,17 @@
     <p class="discription" v-if="cities.length===0">No place has been added. Add a place you've visited from the map!</p>
     <template v-for="city in cities" >
     <router-link :to="{name:'city', params:{city:city.cityName}}" class="city">
-      <h2>{{city.cityName.replace(/_/g,", ").replace(/-/g," ")}}</h2></router-link>
+      <h2>{{city.cityName.replace(/-/g," ")}}</h2></router-link>
     <div class="penguin">
       <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
-      {{places.filter(c=>c.cityName==city.cityName).length}}
+      {{places.filter(c=>c.cityName==city.cityName && c.visited == true).length}}
     </div>
     <div class="place-list list-group">
       <template v-for="place in places.filter(c=>c.cityName==city.cityName)">
-      <place-list-item  :place="place ":placeName="place.name" :visiteDate="place.visitedDate" :placeId="place.id" :visited="place.visited" :wishlisted="place.wishlisted"/>
+        <place-list-item  :place="place ":placeName="place.name" :visiteDate="place.visitedDate" :placeId="place.id" :visited="place.visited" :wishlisted="place.wishlisted"/>
       </template>
     </div>
-    <br />
+    <br/>
     </template>
 
   </div>

@@ -1,9 +1,8 @@
 <template lang="html">
   <div class="city-info">
-      <div class="city-img"></div>
       <p class="city-name">{{name.replace(/-/g," ").replace(/_/g,", ")}}</p>
       <div class="penguin">
-        <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">{{starNum}}
+        <img class="penguin-icon" src="../assets/penguin.png" alt="penguin">{{starNum}}
       </div>
   </div>
 </template>
