@@ -160,7 +160,14 @@ export default {
       const wishlisted = wishlist;
       const cityName = this.getCityName(currentPlace.address_components);
       const googId = currentPlace.id;
-      console.log(currentPlace);
+      var photoURLs = [];
+      for (var i = 0; i < currentPlace.photos.length; i++) {
+        photoURLs.push(currentPlace.photos[i].getUrl());
+        console.log(currentPlace.photos[i]);
+        console.log(currentPlace.photos[i].getUrl());
+      }
+      console.log(currentPlace.photos);
+      console.log(photoURLs);
       const marker = {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
@@ -174,7 +181,7 @@ export default {
 
       users.doc(auth.currentUser.uid).collection("places").add({
           name,address,cityName,marker,visited,wishlisted,
-          visitedDate: moment().format("MM-DD-YYYY"), googId
+          visitedDate: moment().format("MM-DD-YYYY"), googId, photoURLs
         });
         let exists = null
         let self = this

@@ -1,15 +1,10 @@
 <template>
   <div>
-  <div v-if="placeDoc" id = "placeSummary">
-  <router-link  :to="{name:'place', params:{id:placeDoc.id}}" >
-    <h4 id = "placename">{{placeDoc.name}}</h4>
+  <div>
+  <div v-if="placeDoc" class = "card" id = "placeSummary">
+  <router-link  id = "placename" :to="{name:'place', params:{id:placeDoc.id}}" >
+    <h4 >{{placeDoc.name}}</h4>
   </router-link>
-  <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-    Edit Check-in
-  </button>
-  <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-    Check In
-  </button>
   <div id = "visitDate" v-if = "placeDoc.visited">
     <p>{{placeDoc.visitedDate}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
@@ -19,9 +14,13 @@
     <img @click="toggleWishlist(true)" v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
   </div><br>
   <p id = "address">{{placeDoc.address}}</p><br>
+  </div>
   <div v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
-    <img v-if="placeDoc.imgURL" class = "place-photo" v-bind:src="placeDoc.imgURL" alt="place photo">
+    <img v-if="placeDoc.imgURL" id = "user-photo" v-bind:src="placeDoc.imgURL" alt="place photo">
     <div><p>{{placeDoc.notes}}</p></div>
+  </div>
+  <div v-if ="this.$route.path !== '/map'" id = "photos" >
+    <img v-for="photo in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
   </div>
   </div>
   <div class="modal fade" id="form">
@@ -30,6 +29,12 @@
         <AddPlaceForm v-if="placeDoc" :placeDoc="placeDoc" :edit="placeDoc.visited" :visitDate="placeDoc.visitedDate" />
       </div>
     </div>
+    <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+      Edit Check-in
+    </button>
+    <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+      Check In
+    </button>
   </div>
   </div>
 </template>
@@ -67,11 +72,13 @@ export default {
 <style>
 #visitDate, wishlist-checkin{
 color: darkgrey;
-float: right;
+position: absolute;
+right: .7em;
 }
 #placename {
 float: left;
 margin-bottom: 0px !important;
+width: 70%;
 }
 .icon {
   height: 2rem;
@@ -91,10 +98,11 @@ bottom: .5em;
 right: .5em;
 }
 
-place-photo {
-width: 100%;
+#user-photo, .place-photo {
+width: 94%;
 display: block;
 margin: auto;
+padding: 3%;
 }
 
 @media (min-width: 576px) {
@@ -111,5 +119,9 @@ margin: auto;
   #form .modal-dialog {
     max-width: 800px;
   }
+}
+
+.card {
+  margin: .7em;
 }
 </style>
