@@ -8,18 +8,7 @@
     :style="width + height">
     <div :key="index" v-for="(m, index) in filteredMarkers">
       <gmap-marker
-        v-if="m.wishlisted"
-        :position="m.marker"
-        :clickable="true"
-        :icon="{
-            url: require('../assets/heart.png'),
-            size: {width: 46, height: 46, f: 'px', b: 'px'},
-            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
-          }"
-        @click="$emit('showPlace', markers.indexOf(m))"
-      ></gmap-marker>
-      <gmap-marker
-        v-else-if="m.visited"
+        v-if="m.visited"
         :position="m.marker"
         :clickable="true"
         :icon="{
@@ -28,13 +17,24 @@
             scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
           }"
           @click="$emit('showPlace', markers.indexOf(m))">
-        </gmap-marker>
-        <gmap-marker
-          v-else
-          :position="m.marker"
-          :clickable="true"
-          @click="$emit('showPlace', markers.indexOf(m))">
-        </gmap-marker>
+      </gmap-marker>
+      <gmap-marker
+        v-else-if="m.wishlisted"
+        :position="m.marker"
+        :clickable="true"
+        :icon="{
+            url: require('../assets/heart.png'),
+            size: {width: 46, height: 46, f: 'px', b: 'px'},
+            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+          }"
+        @click="$emit('showPlace', markers.indexOf(m))">
+      </gmap-marker>
+      <gmap-marker
+        v-else
+        :position="m.marker"
+        :clickable="true"
+        @click="$emit('showPlace', markers.indexOf(m))">
+      </gmap-marker>
     </div>
   </gmap-map>
   </div>
@@ -164,12 +164,11 @@ export default {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
       };
-      if((visited || wishlist)){
-        if (this.cities.filter(c => c.cityName == cityName).length == 0)
-          users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1});
-        else{ let places = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places
-            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).update({ places: places+1});
-        }
+
+      if (this.cities.filter(c => c.cityName == cityName).length == 0)
+        users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1});
+      else{ let places = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places
+          users.doc(auth.currentUser.uid).collection("cities").doc(cityName).update({ places: places+1});
       }
 
       users.doc(auth.currentUser.uid).collection("places").add({
