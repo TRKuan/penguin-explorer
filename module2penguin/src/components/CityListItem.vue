@@ -50,11 +50,13 @@ div.name {
   text-overflow: ellipsis;
 }
 div.penguin {
-  width: 4rem;
+  width: fit content;
   margin-left: auto;
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
+  color: darkgrey;
+  font-size: .8em;
 }
 .penguin-icon {
   height: 1.5rem;
