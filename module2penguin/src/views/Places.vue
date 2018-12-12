@@ -4,7 +4,7 @@
     <p class="discription" v-if="cities.length===0">No place has been added. Add a place you've visited from the map!</p>
     <template v-for="city in cities" >
     <router-link :to="{name:'city', params:{city:city.cityName}}" class="city">
-      <h2>{{city.cityName.replace(/-/g," ")}}</h2></router-link>
+      <h2>{{city.cityName.replace(/-/g," ").replace(/_/g,", ")}}</h2></router-link>
     <div class="penguin">
       <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
       {{places.filter(c=>c.cityName==city.cityName && c.visited == true).length}}
