@@ -13,7 +13,7 @@
         <textarea v-if="placeDoc" class="form-control" id="textarea" rows="3" v-model="placeDoc.notes"></textarea>
       </div>
       <div class="custom-file">
-        <label class="custom-file-label" for="image-file">Upload an Image</label>
+        <label class="custom-file-label" for="image-file">Upload a Photo</label>
         <input type="file" accept="image/*" class="custom-file-input" id="image-file" @change="onChange($event.target.files)">
       </div>
       <div class="img-div">
@@ -76,9 +76,9 @@ export default {
       if(this.img)
         storage.ref().child(auth.currentUser.uid + "/images/" + this.placeDoc.id).delete()
       $(".modal-backdrop").remove()
-      $("#form").hide() 
+      $("#form").hide()
       this.imgUrl, this.img = null;
-      router.push({name: 'home'})          
+      router.push({name: 'home'})
     },
     checkIn() {
       const place = this.placeDoc
@@ -113,12 +113,12 @@ export default {
                 $(".modal-backdrop").remove()
                 $("#form").attr('aria-hidden', 'true').hide()
                 $("#form").removeClass("show")
-                $("body").removeClass("modal-open") 
+                $("body").removeClass("modal-open")
                 router.push('/places/'+ place.id)
               });
           }
         );
-      } else{ 
+      } else{
         users.doc(auth.currentUser.uid).collection("places")
           .doc(place.id).update({
             notes: comment,
@@ -126,16 +126,16 @@ export default {
             visited: true
           });
         $(".modal-backdrop").remove()
-        $("#form").attr('aria-hidden', 'true').hide() 
+        $("#form").attr('aria-hidden', 'true').hide()
         $("#form").removeClass("show")
         $("body").removeClass("modal-open")
         router.push('/places/'+ place.id)
-      } 
+      }
         let cityName = place.cityName
         let cities = users.doc(auth.currentUser.uid).collection("cities")
         if (this.cities.filter(c => c.cityName == cityName).length == 0)
           cities.doc(cityName).set({ cityName, places:1});
-        else{ 
+        else{
           let places = this.places.filter(c => c.cityName == cityName).length
           cities.doc(cityName).update({places});
         }
