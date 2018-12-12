@@ -21,11 +21,15 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Check in a place and upload content to firebase database and storage
+* Update city name and penguin count when map is dragged 
+* List cities and places in profile, places and city pages ordered by date visited or number of penguins descending
+* Pull google place information to show in a place summary for users to get some info before checking in
 
 Which device integration(s) does your app support?
 
-* ...
+* Geolocation
+* Camera
 
 Which progressive web app feature(s) does your app support?
 
@@ -36,7 +40,7 @@ Which progressive web app feature(s) does your app support?
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
 
-* ...
+* Sometimes pages of the app might freeze or not allow scrolling, but a refresh should fix it. We don't know why that is happening and it seems to randomly happen without a certain consistency or pattern.
 
 
 ## Screenshots of Site
