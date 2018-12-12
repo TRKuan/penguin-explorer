@@ -33,7 +33,7 @@ export default {
   firestore() {
     return {
       profileInfo: users.doc(auth.currentUser.uid),
-      cities: users.doc(auth.currentUser.uid).collection("cities")
+      cities: users.doc(auth.currentUser.uid).collection("cities").orderBy("places","desc")
     };
   },
 }

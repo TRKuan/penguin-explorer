@@ -5,10 +5,10 @@
         {{placeName}}
         <span v-if="visited" class="badge badge-success">Visited</span>
         <span v-else-if="wishlisted" class="badge badge-dark">Wishlist</span>
-      </div>
+      
       <div v-if="visited" class="date">
         {{date}}
-      </div>
+      </div></div>
     </router-link>
   </div>
 </template>
@@ -46,11 +46,10 @@ a {
   color: black;
 }
 div.name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space:normal;
 }
 div.date {
+  float: right;
   width: 7rem;
   margin-left: auto;
   flex-shrink: 0;
