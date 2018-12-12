@@ -18,7 +18,8 @@
   <p id = "address">{{placeDoc.address}}</p>
   <span>
     <span v-if = "placeDoc.website!='none'" class = "infobit"><a v-bind:href="placeDoc.website">Visit their website</a></span>
-    <span v-if = "placeDoc.price!='none'" class = "infobit"> <span v-for= "n in placeDoc.price">$</span></span>
+    <span v-if = "placeDoc.price!='none'" class = "infobit"> 
+      <span :key="index" v-for="(n, index) in placeDoc.price">$</span></span>
     <span v-if = "placeDoc.rating!='none'" class = "infobit" >Rating: {{placeDoc.rating}}</span>
   </span>
   <router-link v-if ="this.$route.path == '/map'" id = "seemore" :to="{name:'place', params:{id:placeDoc.id}}" >

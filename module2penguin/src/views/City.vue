@@ -6,7 +6,9 @@
     <br />
     <div class="place-list list-group">
       <template v-for="(place, idx) in cityPlaces">
-      <place-list-item :placeName="place.name" :key="idx" :visiteDate="place.visitedDate" :visited="place.visited" :placeId="place.id"/>
+      <place-list-item :placeName="place.name" :key="idx" 
+                        :visiteDate="place.visitedDate" :wishlisted="place.wishlisted" 
+                        :visited="place.visited" :placeId="place.id"/>
       </template>
     </div>
   </div>
@@ -34,8 +36,9 @@ export default {
   },
   firestore() {
     return {
-      cityPlaces: users.doc(auth.currentUser.uid)
-                  .collection("places").where("cityName","==",this.$route.params.city)
+      cityPlaces: users.doc(auth.currentUser.uid).collection("places")
+                  .where("cityName","==",this.$route.params.city)
+                  .orderBy("visitedDate","desc")
     };
   },
   computed:{

@@ -2,10 +2,19 @@
   <div>
   <gmap-map
     ref="map"
+    :options="{
+      zoonControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      scrollwheel: false,
+      navigationControl: false,
+      streetViewControl: false,
+    }"
     :position="google"
     :center="center"
     :zoom="12"
-    :style="width + height">
+    :style="width + height"
+    >
     <div :key="index" v-for="(m, index) in filteredMarkers">
       <gmap-marker
         v-if="m.visited"
@@ -25,7 +34,7 @@
         :icon="{
             url: require('../assets/heart.png'),
             size: {width: 46, height: 46, f: 'px', b: 'px'},
-            scaledSize: {width: 45, height: 45, f: 'px', b: 'px'}
+            scaledSize: {width: 40, height: 40, f: 'px', b: 'px'}
           }"
         @click="$emit('showPlace', markers.indexOf(m))">
       </gmap-marker>
@@ -258,8 +267,7 @@ export default {
 
 <style>
 .penguin {
-  float: right;
-  margin: 0.3rem;
+  float:right;
 }
 .penguin-icon {
   height: 2rem;

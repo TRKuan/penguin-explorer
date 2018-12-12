@@ -38,7 +38,7 @@ export default {
   name: "AddPlaceForm",
   data() {
     return {
-      imgUrl: this.placeDoc.imgURL,
+      imgUrl: null,
       img: null
     };
   },
@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     date: function(){
-      return moment(this.visiteDate).format('MM-DD-YYYY')
+      return moment(this.visitDate).format('YYYY-MM-DD')
     }
 
   },
@@ -77,6 +77,7 @@ export default {
         storage.ref().child(auth.currentUser.uid + "/images/" + this.placeDoc.id).delete()
       $(".modal-backdrop").remove()
       $("#form").hide() 
+      this.imgUrl, this.img = null;
       router.push({name: 'home'})          
     },
     checkIn() {
@@ -84,7 +85,7 @@ export default {
       var comment = $("#textarea").val();
       var date = $("#date-input").val()
       if(date == undefined)
-        date = moment().format('YYYY-MM-DD')
+        date = moment().format('MM-DD-YYYY')
       if (this.img) {
         var uploadTask = storage.ref()
           .child(auth.currentUser.uid + "/images/" + place.id)
@@ -106,7 +107,7 @@ export default {
                   .doc(place.id).update({
                     imgURL: downloadURL,
                     notes: comment,
-                    visitedDate: date,
+                    visitedDate: date.format('MM-DD-YYYY'),
                     visited: true
                   });
                 $(".modal-backdrop").remove()
@@ -138,6 +139,7 @@ export default {
           let places = this.places.filter(c => c.cityName == cityName).length
           cities.doc(cityName).update({places});
         }
+        this.imgUrl, this.img = null;
     }
   }
 };
