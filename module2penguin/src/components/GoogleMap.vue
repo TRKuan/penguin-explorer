@@ -264,7 +264,7 @@ export default {
             });
           });
         } else {
-          let address = page.replace(/_/g, ", ").replace(/-/g," ");
+          let address = page.replace(/_/g, ", ");
           this.city = page;
           geocoder.geocode({ address: address }, function(results, status) {
             if (status === "OK") {
