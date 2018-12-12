@@ -161,13 +161,24 @@ export default {
       const cityName = this.getCityName(currentPlace.address_components);
       const googId = currentPlace.id;
       var photoURLs = [];
+
+      console.log(currentPlace.website);
+      console.log(currentPlace.price_level);
+      console.log(currentPlace.rating);
+
+      const website = currentPlace.website ? currentPlace.website : "none";
+      const price = currentPlace.price_level ? currentPlace.price_level : "none";
+      const rating = currentPlace.rating ? currentPlace.rating : "none";
+
+      console.log(website);
+      console.log(price);
+      console.log(rating);
+
       for (var i = 0; i < currentPlace.photos.length; i++) {
         photoURLs.push(currentPlace.photos[i].getUrl());
-        console.log(currentPlace.photos[i]);
-        console.log(currentPlace.photos[i].getUrl());
+
       }
-      console.log(currentPlace.photos);
-      console.log(photoURLs);
+      console.log(currentPlace);
       const marker = {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
@@ -181,7 +192,7 @@ export default {
 
       users.doc(auth.currentUser.uid).collection("places").add({
           name,address,cityName,marker,visited,wishlisted,
-          visitedDate: moment().format("MM-DD-YYYY"), googId, photoURLs
+          visitedDate: moment().format("MM-DD-YYYY"), googId, photoURLs, website, price, rating
         });
         let exists = null
         let self = this

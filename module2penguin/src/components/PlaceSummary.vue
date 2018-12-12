@@ -16,6 +16,11 @@
   </div>
   </span>
   <p id = "address">{{placeDoc.address}}</p>
+  <span>
+    <span v-if = "placeDoc.website!='none'" class = "infobit"><a v-bind:href="placeDoc.website">Visit their website</a></span>
+    <span v-if = "placeDoc.price!='none'" class = "infobit"> <span v-for= "n in placeDoc.price">$</span></span>
+    <span v-if = "placeDoc.rating!='none'" class = "infobit" >Rating: {{placeDoc.rating}}</span>
+  </span>
   <router-link v-if ="this.$route.path == '/map'" id = "seemore" :to="{name:'place', params:{id:placeDoc.id}}" >
     <p>See more</p>
   </router-link>
@@ -146,5 +151,11 @@ margin-bottom: .6em
 
 .notes {
   margin: 0px;
+}
+
+.infobit {
+  background-color: #ebedef;
+  padding: .1em;
+  margin: .2em;
 }
 </style>
