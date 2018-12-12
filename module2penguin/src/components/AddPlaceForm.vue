@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     date: function(){
-      return moment(this.visiteDate).format('YYYY-MM-DD')
+      return moment(this.visiteDate).format('MM-DD-YYYY')
     }
 
   },
