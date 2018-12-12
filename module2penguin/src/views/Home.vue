@@ -4,7 +4,7 @@
     <div class="jumbotron jumbotron-fluid d-flex align-items-center justify-content-around flex-column text-center section-dark">
             <header>
                 <h1>Penguin Explorer</h1>
-                <h3 class="slogan text-center">Where are penguins?</h3>
+                <h3 class="slogan text-center">Where are the penguins?</h3>
             </header>
             <button class="btn btn-primary" @click="signInWithGoogle">Get Started</button>
             <div class="scroll-down-div">
@@ -19,12 +19,15 @@
         <div class="row col-12 align-items-center justify-content-center">
           <article class="col-12 col-sm-6 col-md-7">
             <header>
-              <h2 class="article_title">"There are lots of penguins in the city. You just need to know where to find them."</h2>
+              <h2 class="article_title">There are lots of penguins in the city...</h2>
             </header>
             <p>
-              Once upon a time, there was a place called "The City of Penguin". One day, millions of penguins in that city got lost... 
-              Nowadays, many people are looking for those penguins. Bad people, who are hunters, try to find those penguins and kill them. Some like us, however, try to find them to save them from the bad people.
-              According to some experienced explorers, there are a lot of penguins in the city. You just need to know where to find them. They are hiding in restaurants, local shops, or maybe some grocery stores.
+            You just need to know where to find them.
+            <br><br>
+              Once upon a time, the penguins lived among us.
+              But the penguins grew disappointed in us humans when they realized that we habitually visit the same restaurants all the time.
+              The penguins decided to go into hiding.  One in each local restaurant...
+
             </p>
           </article>
           <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
@@ -45,8 +48,11 @@
               <h2 class="article_title">Explore the Cities</h2>
             </header>
             <p>
-              Penguin Explorer is an app that helps you find those penguins and explore the cities at the same time. Sometimes, there may be a lot of places in your area but you haven't explore yet. Sometimes, when you go to another city and you don't know where, Penguin Explorer will be where you want to start with.
-              Penguin Explorer will also be a good tool to help you keep track of places where you visited or wish to vist. 
+              If you find a penguin, they will give you a "penguin point"!
+              <br><br>
+              "Check in" to local establishments to earn points in each city you visit
+              or add places to your wishlist so you can remember to visit them later on.
+
             </p>
           </article>
           <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
@@ -64,12 +70,11 @@
         <div class="row col-12 align-items-center justify-content-center">
           <article class="col-12 col-sm-6 col-md-7">
             <header>
-              <h2 class="article_title">Cross off your bucket list</h2>
+              <h2 class="article_title">Track Memories & Expeditions</h2>
             </header>
             <p>
-              This app is a great tool for you to keep track of where you have been to but you can do so much more with the app. 
-              If your goal is to cross off some places in your bucket list, you can easily add those places in the wish list and check in when you visit to find penguins.
-              Just remember, those penguins are waiting for you to save them, so find them quick!
+              Every time you check into a place, add a photo and a note to remember your visit.
+              On the map, you can view your progress and see all the places you've explored.
             </p>
           </article>
           <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center justify-content-center">
@@ -88,7 +93,7 @@
         <div class="row col-12 align-items-center justify-content-center flex-sm-row-reverse">
             <article class="col-12 col-sm-6 col-md-7">
               <div>
-                <h2 class="article_title">Can't Wait to Start?</h2>
+                <h2 class="article_title">How well do you know the city?</h2>
                 <br/>
                 <button class="btn btn-primary" @click="signInWithGoogle">Get Started</button>
               </div>
