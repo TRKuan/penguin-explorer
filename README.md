@@ -46,16 +46,16 @@ Which progressive web app feature(s) does your app support?
 ## Screenshots of Site
 
 
-![](Screenshots/Profile.png =100x)
+![](Screenshots/Profile.png | width=100)
 *On the profile page, a user can see all of their cities and their score in each city.  Clicking on a city will take you to the page for that city.*
 
-![](Screenshots/CityPage.png =100x)
+![](Screenshots/CityPage.png | width=100)
 *Here in the city page the user can see the map for a particular city and all their places in that city.  Click on a city to access the place page, which holds more info.*
 
-![](Screenshots/Place.png =100x)
+![](Screenshots/Place.png | width=100)
 *The place page is where the user can see info about a place.  If they have added a post about the place after checking in, it will appear on this page.  Otherwise, they will see photos pulled from google maps.  Here they can also toggle whether the place is on their wishlist (if they have not checked in)*
 
-![](Screenshots/SearchResultMap.png =100x)
+![](Screenshots/SearchResultMap.png | width=100)
 *On the map, users can search for places to add and either check-in at a place or add it to their wishlist.  Search result will pull up some info about the place.  You can also click on markers for your places to see their info or review your post for that place.  Click on the name of a place or "see more" to view the full place page.*
 
 
