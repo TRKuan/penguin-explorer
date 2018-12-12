@@ -128,9 +128,6 @@ z-index: 20;
 #user-photo {
   padding: .2em;
 }
-.carousel {
-  margin: 1rem;
-}
 img {
   margin: auto;
   max-width: 100%;
