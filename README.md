@@ -77,6 +77,8 @@ Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 * Font Awesome: icons
 * Flaticon: icons
 * momentjs: date
+* vue2-google-maps
+* google maps api
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
