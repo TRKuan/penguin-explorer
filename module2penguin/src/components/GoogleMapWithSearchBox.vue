@@ -2,19 +2,22 @@
   <div>
     <div>
       <div>
-        <div>
-          <div class="subcontainer">
-            <div v-if="mounted" class="penguin">
-              {{ $refs.map.city.split("_")[0].replace(/-/g," ")}}:
-              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ $refs.map.penguin }}
-            </div>
+        <div class="subcontainer">
+          <div class = "card">
             <div class="search">
               <gmap-autocomplete
                 :types="['establishment']"
                 ref="autocomplete"
-                @place_changed="setPlace">
+                @place_changed="setPlace"
+                style = "width: 75%">
               </gmap-autocomplete>
-              <button @click="addMarker">Search</button>
+              <button style = "float: right"@click="addMarker">Search</button>
+            </div>
+          </div>
+          <div >
+            <div v-if="mounted" class="penguin">
+              {{ $refs.map.city.split("_")[0].replace(/-/g," ")}}:
+              <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ $refs.map.penguin }}
             </div>
           </div>
         </div>
@@ -24,7 +27,7 @@
     </div>
     <div>
         <google-map
-          ref="map" width="width:100%;" height="height: 86vh;"
+          ref="map" width="width:100%;" height="height: 93vh;"
           v-on:showPlace="showPlace" page="home"/>
     </div>
     <template v-if="PlaceDoc">{{this.PlaceDoc.placeName}}</template>
@@ -128,5 +131,7 @@ export default {
 .subcontainer {
   width: 100%;
   flex-direction: row;
+  position: fixed;
+  z-index:10000;
 }
 </style>
