@@ -129,6 +129,6 @@ export default {
   width: 100%;
   flex-direction: row;
   position: fixed;
-  z-index:10000;
+  z-index:10;
 }
 </style>
