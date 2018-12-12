@@ -2,6 +2,7 @@
   <div>
   <div>
   <div v-if="placeDoc" class = "card" id = "placeSummary">
+  <span>
   <router-link  id = "placename" :to="{name:'place', params:{id:placeDoc.id}}" >
     <h4 >{{placeDoc.name}}</h4>
   </router-link>
@@ -9,18 +10,27 @@
     <p>{{placeDoc.visitedDate}}</p>
     <img class="icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
   </div>
-  <div id = "wishlist-checkin" v-if = "!placeDoc.visited">
+  <div id = "wishlist-toggle" v-if = "!placeDoc.visited">
     <img @click="toggleWishlist(false)" v-if = "placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="heart">
     <img @click="toggleWishlist(true)" v-else-if = "!placeDoc.wishlisted" class="icon" src="https://image.flaticon.com/icons/svg/149/149217.svg" alt="heart">
-  </div><br>
-  <p id = "address">{{placeDoc.address}}</p><br>
   </div>
-  <div v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
+  </span>
+  <p id = "address">{{placeDoc.address}}</p>
+  <span>
+    <span v-if = "placeDoc.website!='none'" class = "infobit"><a v-bind:href="placeDoc.website">Visit their website</a></span>
+    <span v-if = "placeDoc.price!='none'" class = "infobit"> <span v-for= "n in placeDoc.price">$</span></span>
+    <span v-if = "placeDoc.rating!='none'" class = "infobit" >Rating: {{placeDoc.rating}}</span>
+  </span>
+  <router-link v-if ="this.$route.path == '/map'" id = "seemore" :to="{name:'place', params:{id:placeDoc.id}}" >
+    <p>See more</p>
+  </router-link>
+  </div>
+  <div class = "card" v-if ="placeDoc.visited && this.$route.path !== '/map'" id = "usersNotesPhoto" >
     <img v-if="placeDoc.imgURL" id = "user-photo" v-bind:src="placeDoc.imgURL" alt="place photo">
-    <div><p>{{placeDoc.notes}}</p></div>
+    <p class = "notes" >{{placeDoc.notes}}</p>
   </div>
   <div v-if ="this.$route.path !== '/map'" id = "photos" >
-    <img v-for="photo in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
+    <img :key="idx" v-for="(photo, idx) in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
   </div>
   </div>
   <div class="modal fade" id="form">
@@ -29,13 +39,13 @@
         <AddPlaceForm v-if="placeDoc" :placeDoc="placeDoc" :edit="placeDoc.visited" :visitDate="placeDoc.visitedDate" />
       </div>
     </div>
-    <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-      Edit Check-in
-    </button>
-    <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
-      Check In
-    </button>
   </div>
+  <button v-if="placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Edit Check-in
+  </button>
+  <button v-if="!placeDoc.visited" class="visited-button btn btn-success" type="button" data-toggle="modal" data-target="#form">
+    Check In
+  </button>
   </div>
 </template>
 
@@ -70,19 +80,18 @@ export default {
 };
 </script>
 <style>
-#visitDate, wishlist-checkin{
+#visitDate, wishlist-toggle{
 color: darkgrey;
-position: absolute;
-right: .7em;
+float: right;
+font-size: .7em;
 }
 #placename {
 float: left;
 margin-bottom: 0px !important;
-width: 70%;
 }
 .icon {
-  height: 2rem;
-  width: 2rem;
+  height: 1.7rem;
+  width: 1.7rem;
   float: right;
   margin: .25em;
 }
@@ -90,25 +99,36 @@ width: 70%;
 #address{
 padding:0px;
 width: 100%;
+margin: 0px
 }
 
 .visited-button {
 position: fixed;
-bottom: .5em;
-right: .5em;
+bottom: .6em;
+right: .6em;
 }
 
-#user-photo, .place-photo {
-width: 94%;
+#user-photo {
+  padding: .2em;
+  max-width: 650px;
+}
+
+.place-photo {
+width: 96%;
 display: block;
 margin: auto;
-padding: 3%;
+margin-bottom: .6em;
+max-width: 650px;
 }
 
 @media (min-width: 576px) {
   #form .modal-dialog {
     max-width: 500px;
   }
+}
+
+#visitDate p {
+  margin-bottom: 0px;
 }
 @media (min-width: 768px) {
   #form .modal-dialog {
@@ -122,6 +142,22 @@ padding: 3%;
 }
 
 .card {
-  margin: .7em;
+  margin: .4em;
+  padding: .2em;
+}
+
+#seemore {
+
+  margin-bottom: 0px;
+}
+
+.notes {
+  margin: 0px;
+}
+
+.infobit {
+  background-color: #ebedef;
+  padding: .1em;
+  margin: .2em;
 }
 </style>
