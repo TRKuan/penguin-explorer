@@ -25,7 +25,7 @@ export default {
   firestore() {
     return {
       profileInfo: users.doc(auth.currentUser.uid),
-      penguins: users.doc(auth.currentUser.uid).collection("places").where("cityName","==",this.cityName)
+      penguins: users.doc(auth.currentUser.uid).collection("places").where("visited", "==", true).where("cityName","==",this.cityName)
     };
   },
   computed:{
