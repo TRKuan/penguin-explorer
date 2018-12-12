@@ -114,10 +114,7 @@ export default {
 </script>
 
 <style>
-.penguin {
-  float: right;
-  margin: 0.3rem;
-}
+
 .penguin-icon {
   height: 2rem;
   width: 2rem;
