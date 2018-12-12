@@ -72,6 +72,11 @@ export default {
 .city h2{
   margin-bottom: 0;
 }
+@media (max-width: 767px/*sm*/) {
+  .city h2{
+    font-size: 1.5rem;
+  }
+}
 .list-group {
   width: 100%;
   max-width: 600px;
