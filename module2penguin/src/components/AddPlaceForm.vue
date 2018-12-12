@@ -4,7 +4,7 @@
       <div v-if="edit" class="delete">
         <button v-if="placeDoc.visited" type="button" class="btn btn-danger" @click="deletePlace()">Delete</button>
       </div>
-      <div v-if="edit" class="form-group">
+      <div class="form-group">
         <label for="date-input">Date</label>
         <input class="form-control" type="date" :value="date" id="date-input">
       </div>
@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     date: function(){
-      return moment(this.visitDate).format('YYYY-MM-DD')
+      return moment(this.visitDate||Date()).format('YYYY-MM-DD')
     }
 
   },
