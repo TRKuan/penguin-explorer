@@ -11,7 +11,7 @@
                 @place_changed="setPlace"
                 style = "width: 75%">
               </gmap-autocomplete>
-              <button style = "float: right"@click="addMarker">Search</button>
+              <button style = "float: right" @click="addMarker">Search</button>
             </div>
           </div>
           <div >
