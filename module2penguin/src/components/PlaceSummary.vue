@@ -103,16 +103,11 @@ bottom: .6em;
 right: .6em;
 }
 
-<<<<<<< HEAD
 #user-photo {
   padding: .2em;
 }
 
 .place-photo {
-=======
-#user-photo, .place-photo {
-max-width: 650px;
->>>>>>> 648b44bbf7fcf4960eaf09e27e2fa0a92e19e23d
 width: 96%;
 display: block;
 margin: auto;
