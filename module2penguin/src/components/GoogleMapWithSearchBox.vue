@@ -107,17 +107,6 @@ export default {
 
     toggleWishlist (val){
       users.doc(auth.currentUser.uid).collection("places").doc(this.PlaceDoc.id).update({wishlisted: val})
-      var query = users
-          .doc(auth.currentUser.uid)
-          .collection("places")
-          .where("visited", "==", false)
-          .where("wishlisted", "==", false);
-        let self = this;
-        query.get().then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            doc.ref.delete()
-          });
-        });
       this.PlaceDoc.wishlisted = val;
     },
   }
