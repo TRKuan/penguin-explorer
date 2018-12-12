@@ -107,7 +107,7 @@ export default {
                   .doc(place.id).update({
                     imgURL: downloadURL,
                     notes: comment,
-                    visitedDate: date.format('MM-DD-YYYY'),
+                    visitedDate: date,
                     visited: true
                   });
                 $(".modal-backdrop").remove()
