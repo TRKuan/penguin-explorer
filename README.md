@@ -4,14 +4,16 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
+* Team Name: Penguin
+* App Name: PenguinExplorer
 * App Link: <https://module2penguin.firebaseapp.com>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* Adel Al-Dawood, aldaw004@umn.edu
+* Kathleen Watson, watso559@umn.edu
+* Tu Do, doxxx160@umn.edu
+* Tian-Ruei Kuan, kuan0021@umn.edu
 
 
 ## Key Features
@@ -27,7 +29,7 @@ Which device integration(s) does your app support?
 
 Which progressive web app feature(s) does your app support?
 
-* ...
+* Add to home screen(only works for Android)
 
 
 ## Testing Notes
@@ -59,8 +61,9 @@ Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
 * Library or service name: description of use
 * Bootstrap
-* Font Awesome
-* momentjs
+* Font Awesome: icons
+* Flaticon: icons
+* momentjs: date
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
