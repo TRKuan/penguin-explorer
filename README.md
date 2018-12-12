@@ -47,16 +47,16 @@ Which progressive web app feature(s) does your app support?
 
 
 <img src="Screenshots/Profile.png" width="40%">
-*On the profile page, a user can see all of their cities and their score in each city.  Clicking on a city will take you to the page for that city.*
+On the profile page, a user can see all of their cities and their score in each city.  Clicking on a city will take you to the page for that city.
 
 <img src="Screenshots/CityPage.png" width="40%">
-*Here in the city page the user can see the map for a particular city and all their places in that city.  Click on a city to access the place page, which holds more info.*
+Here in the city page the user can see the map for a particular city and all their places in that city.  Click on a city to access the place page, which holds more info.
 
 <img src="Screenshots/Place.png" width="40%">
-*The place page is where the user can see info about a place.  If they have added a post about the place after checking in, it will appear on this page.  Otherwise, they will see photos pulled from google maps.  Here they can also toggle whether the place is on their wishlist (if they have not checked in)*
+The place page is where the user can see info about a place.  If they have added a post about the place after checking in, it will appear on this page.  Otherwise, they will see photos pulled from google maps.  Here they can also toggle whether the place is on their wishlist (if they have not checked in)
 
 <img src="Screenshots/SearchResultMap.png" width="40%">
-*On the map, users can search for places to add and either check-in at a place or add it to their wishlist.  Search result will pull up some info about the place.  You can also click on markers for your places to see their info or review your post for that place.  Click on the name of a place or "see more" to view the full place page.*
+On the map, users can search for places to add and either check-in at a place or add it to their wishlist.  Search result will pull up some info about the place.  You can also click on markers for your places to see their info or review your post for that place.  Click on the name of a place or "see more" to view the full place page.
 
 
 
