@@ -267,7 +267,6 @@ export default {
 
 <style>
 .penguin {
-  margin-right: 0.8rem;
   float:right;
 }
 .penguin-icon {

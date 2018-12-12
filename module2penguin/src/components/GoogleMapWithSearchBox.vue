@@ -14,7 +14,7 @@
               <button style = "float: right" @click="addMarker">Search</button>
             </div>
           </div>
-          <div >
+          <div class = "card" id = "penguincard" >
             <div v-if="mounted" class="penguin">
               {{ $refs.map.city.split("_")[0].replace(/-/g," ")}}:
               <img class="penguin-icon" src="../assets/penguin.png" alt="penguin"> {{ $refs.map.penguin }}
@@ -130,5 +130,13 @@ export default {
   flex-direction: row;
   position: fixed;
   z-index:10;
+}
+
+#penguincard {
+  width: fit-content;
+  padding-right: .5em;
+  padding-left: .5em;
+  float:right;
+  margin-top: 0px;
 }
 </style>
