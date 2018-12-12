@@ -3,12 +3,15 @@
     <router-link :to="{name:'place', params:{id:placeId}}" class="list-group-item flex-column flex-md-row" exact>
       <div class="name">
         {{placeName}}
-        <span v-if="visited" class="badge badge-success">Visited</span>
-        <span v-else-if="wishlisted" class="badge badge-dark">Wishlist</span>
+          <div v-if="visited"  class="penguin">
+            {{date}}
+            <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/826/826963.svg" alt="penguin">
+          </div>
+          <div v-else-if="wishlisted" class="penguin">
+            <img class="penguin-icon" src="https://image.flaticon.com/icons/svg/148/148836.svg" alt="penguin">
+          </div>
 
-      <div v-if="visited" class="date">
-        {{date}}
-      </div></div>
+      </div>
     </router-link>
   </div>
 </template>
@@ -61,5 +64,19 @@ div.date {
 }
 .badge {
   margin-left: 0.5rem;
+}
+div.penguin {
+  width: fit content;
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: darkgrey;
+  font-size: .8em;
+}
+.penguin-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.3rem;
 }
 </style>
