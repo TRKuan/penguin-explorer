@@ -110,13 +110,15 @@ right: .6em;
 
 #user-photo {
   padding: .2em;
+  max-width: 650px;
 }
 
 .place-photo {
 width: 96%;
 display: block;
 margin: auto;
-margin-bottom: .6em
+margin-bottom: .6em;
+max-width: 650px;
 }
 
 @media (min-width: 576px) {
