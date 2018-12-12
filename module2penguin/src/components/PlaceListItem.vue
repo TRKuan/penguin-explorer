@@ -5,7 +5,7 @@
         {{placeName}}
         <span v-if="visited" class="badge badge-success">Visited</span>
         <span v-else-if="wishlisted" class="badge badge-dark">Wishlist</span>
-      
+
       <div v-if="visited" class="date">
         {{date}}
       </div></div>
@@ -47,6 +47,7 @@ a {
 }
 div.name {
   white-space:normal;
+  width: 100%;
 }
 div.date {
   float: right;
