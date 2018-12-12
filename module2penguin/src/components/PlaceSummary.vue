@@ -29,8 +29,23 @@
     <img v-if="placeDoc.imgURL" id = "user-photo" v-bind:src="placeDoc.imgURL" alt="place photo">
     <p class = "notes" >{{placeDoc.notes}}</p>
   </div>
-  <div v-if ="this.$route.path !== '/map'" id = "photos" >
-    <img :key="idx" v-for="(photo, idx) in placeDoc.photoURLs" class = "place-photo" v-bind:src="photo" alt="place photo">
+  <div id="photos" v-if ="this.$route.path !== '/map'"  class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li :key="idx" v-for="(photo, idx) in placeDoc.photoURLs" data-target="#photos" :data-slide-to="idx" :class="{active: idx===0}"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div :key="idx" v-for="(photo, idx) in placeDoc.photoURLs" class="carousel-item" :class="{active: idx===0}">
+        <img class="d-block w-100" v-bind:src="photo" alt="place photo">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#photos" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#photos" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
   </div>
   <div class="modal fade" id="form">
@@ -106,19 +121,15 @@ margin: 0px
 position: fixed;
 bottom: .6em;
 right: .6em;
+z-index: 20;
 }
 
 #user-photo {
   padding: .2em;
   max-width: 650px;
 }
-
-.place-photo {
-width: 96%;
-display: block;
-margin: auto;
-margin-bottom: .6em;
-max-width: 650px;
+.carousel {
+  margin: 1rem;
 }
 
 @media (min-width: 576px) {
