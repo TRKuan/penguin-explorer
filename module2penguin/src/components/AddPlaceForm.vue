@@ -71,7 +71,8 @@ export default {
       let city = users.doc(auth.currentUser.uid).collection("cities").doc(this.placeDoc.cityName)
       let places = this.cities.filter(c => c.cityName == this.placeDoc.cityName)[0].places-1
       city.update({places})
-      if(places==0)
+      let wishlists = this.cities.filter(c => c.cityName == this.placeDoc.cityName)[0].wishlists
+      if(!places&&!wishlists)
         city.delete()
       if(this.img)
         storage.ref().child(auth.currentUser.uid + "/images/" + this.placeDoc.id).delete()

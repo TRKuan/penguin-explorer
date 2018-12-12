@@ -43,9 +43,8 @@ export default {
 .city-name {
   font-size: 2rem;
   margin-bottom: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space:normal;
+  text-align: center;
 }
 div.penguin {
   font-size: 1.5rem;

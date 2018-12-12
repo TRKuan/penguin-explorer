@@ -192,13 +192,28 @@ export default {
         lat: currentPlace.geometry.location.lat(),
         lng: currentPlace.geometry.location.lng()
       };
-
-      if (this.cities.filter(c => c.cityName == cityName).length == 0)
-        users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1});
-      else{ let places = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places
-          users.doc(auth.currentUser.uid).collection("cities").doc(cityName).update({ places: places+1});
+      if(visited){
+        if (this.cities.filter(c => c.cityName == cityName).length == 0){
+          if(!users.doc(auth.currentUser.uid).collection("cities").doc(cityName).wishlists)
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1, wishlists:0});
+          else 
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1});
+        }
+        else{ let places = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).update({ places: places+1});
+        }
       }
-
+      else{
+        if (this.cities.filter(c => c.cityName == cityName).length == 0){
+          if(!users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places)
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:0, wishlists:1});
+          else 
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, wishlists:1});
+        }
+        else{ let wishlists = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).wishlists
+            users.doc(auth.currentUser.uid).collection("cities").doc(cityName).update({ places: wishlists+1});
+        }
+      }
       users.doc(auth.currentUser.uid).collection("places").add({
           name,address,cityName,marker,visited,wishlisted,
           visitedDate: moment().format("MM-DD-YYYY"), googId, photoURLs, website, price, rating

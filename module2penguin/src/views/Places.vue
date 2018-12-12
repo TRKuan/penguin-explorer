@@ -36,7 +36,7 @@ export default {
   },
   firestore() {
     users.doc(auth.currentUser.uid).collection("cities")
-          .where("places", "==", 0).get().then(function(querySnapshot) {
+          .where("places", "==", 0).where("wishlists", "==", 0).get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             doc.ref.delete();
           });
