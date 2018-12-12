@@ -258,7 +258,8 @@ export default {
 
 <style>
 .penguin {
-  margin: 0.3rem;
+  margin-right: 0.8rem;
+  float:right;
 }
 .penguin-icon {
   height: 2rem;
