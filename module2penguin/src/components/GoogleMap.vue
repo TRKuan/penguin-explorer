@@ -157,9 +157,13 @@ export default {
       state = components.filter(c=>c.types[0]=="administrative_area_level_1")[0]
       country = components.filter(c=>c.types[0]=="country")[0]
 
-      return city.long_name.replace(/ /g, "-") + "_"
-          + state.short_name.replace(/ /g, "-") + "_"
-          + country.short_name.replace(/ /g, "-")
+      if(!city)
+        return state.short_name.replace(/ /g, "-") + "_"
+           + country.short_name.replace(/ /g, "-")
+      else
+        return city.long_name.replace(/ /g, "-") + "_"
+            + state.short_name.replace(/ /g, "-") + "_"
+            + country.short_name.replace(/ /g, "-")
     },
 
     addPlace(currentPlace, visit, wishlist) {
@@ -196,7 +200,7 @@ export default {
         if (this.cities.filter(c => c.cityName == cityName).length == 0){
           if(!users.doc(auth.currentUser.uid).collection("cities").doc(cityName).wishlists)
             users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1, wishlists:0});
-          else 
+          else
             users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:1});
         }
         else{ let places = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places
@@ -207,7 +211,7 @@ export default {
         if (this.cities.filter(c => c.cityName == cityName).length == 0){
           if(!users.doc(auth.currentUser.uid).collection("cities").doc(cityName).places)
             users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, places:0, wishlists:1});
-          else 
+          else
             users.doc(auth.currentUser.uid).collection("cities").doc(cityName).set({ cityName, wishlists:1});
         }
         else{ let wishlists = users.doc(auth.currentUser.uid).collection("cities").doc(cityName).wishlists
